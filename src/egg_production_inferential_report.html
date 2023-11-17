@@ -357,25 +357,20 @@ display: none;
 <ul>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#methods" id="toc-methods">Methods</a></li>
+<li><a href="#methods" id="toc-methods">Methods</a>
+<ul>
+<li><a href="#data" id="toc-data">Data</a></li>
+<li><a href="#analysis" id="toc-analysis">Analysis</a></li>
+</ul></li>
 <li><a href="#result-discussion" id="toc-result-discussion">Result &amp;
 Discussion</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
 
-<pre class="r"><code>library(infer)
-library(digest)
-library(ggplot2)
-library(ottr)
-library(tidyr)
+<pre class="r"><code>library(readr)
 library(dplyr)
-library(forcats)
-library(purrr)
-library(readr)
-library(knitr)
-library(cowplot)
-library(datateachr)</code></pre>
+library(infer)</code></pre>
 <div id="summary" class="section level1">
 <h1>Summary</h1>
 <p>Type Summary here.</p>
@@ -386,18 +381,105 @@ library(datateachr)</code></pre>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
-<div id="data" class="section level3">
-<h3>Data</h3>
+<div id="data" class="section level2">
+<h2>Data</h2>
 <p>Type here.</p>
 </div>
-<div id="analysis" class="section level3">
-<h3>Analysis</h3>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
 <p>Type here.</p>
 </div>
 </div>
 <div id="result-discussion" class="section level1">
 <h1>Result &amp; Discussion</h1>
-<p>Type here.</p>
+<div id="define-the-question" class="section level3">
+<h3>Define the Question</h3>
+<p>Is there a difference in the average number of eggs produced between
+hatching and table eggs?</p>
+</div>
+<div id="specify-the-hypotheses-and-observed-test-statistic" class="section level3">
+<h3>Specify the Hypotheses and Observed Test Statistic</h3>
+<p><span class="math inline">\(H_{0}\)</span>: The mean number of eggs
+produced by hens for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is equal to the mean
+number of eggs produced by hens for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} = \mu_{table}\)</span>.</p>
+<p><span class="math inline">\(H_{A}\)</span>: The mean number of eggs
+produced by hens for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is NOT equal to the mean
+number of eggs produced by hens for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} \ne \mu_{table}\)</span>.</p>
+<p><em>where</em> <span class="math inline">\(\mu_{hatching}\)</span>
+<em>represents the population mean number of eggs produced by hens for
+hatching, and</em> <span class="math inline">\(\mu_{table}\)</span>
+<em>represents the population mean number of eggs produced by hens for
+table eggs.</em></p>
+<p>The observed test statistic <span class="math inline">\(\delta^{*}\)</span> = <span class="math inline">\(\hat{\mu}_\text{hatching} -
+\hat{\mu}_\text{table}\)</span></p>
+<p><em>The estimate</em> <span class="math inline">\(\delta^{*}\)</span>
+<em>is the difference of the observed mean number of eggs for hatching
+and the observed mean number of eggs for table eggs coming from our egg
+production data set.</em></p>
+</div>
+<div id="hypothesis-test-using-the-permutation-method" class="section level3">
+<h3>Hypothesis Test Using the Permutation Method</h3>
+<pre class="r"><code># read in data
+egg_prod &lt;- read_csv(&quot;../data/egg-production.csv&quot;)</code></pre>
+<pre><code>## Rows: 320 Columns: 6
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (3): prod_type, prod_process, source
+## dbl  (2): n_hens, n_eggs
+## date (1): observed_month
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>egg_prod</code></pre>
+<pre><code>## # A tibble: 320 × 6
+##    observed_month prod_type     prod_process   n_hens     n_eggs source         
+##    &lt;date&gt;         &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;          
+##  1 2016-07-31     hatching eggs all          57975000 1147000000 ChicEggs-09-23…
+##  2 2016-08-31     hatching eggs all          57595000 1142700000 ChicEggs-10-21…
+##  3 2016-09-30     hatching eggs all          57161000 1093300000 ChicEggs-11-22…
+##  4 2016-10-31     hatching eggs all          56857000 1126700000 ChicEggs-12-23…
+##  5 2016-11-30     hatching eggs all          57116000 1096600000 ChicEggs-01-24…
+##  6 2016-12-31     hatching eggs all          57750000 1132900000 ChicEggs-02-28…
+##  7 2017-01-31     hatching eggs all          57991000 1123400000 ChicEggs-03-21…
+##  8 2017-02-28     hatching eggs all          58286000 1014500000 ChicEggs-04-21…
+##  9 2017-03-31     hatching eggs all          58735000 1128500000 ChicEggs-05-22…
+## 10 2017-04-30     hatching eggs all          59072000 1097200000 ChicEggs-06-23…
+## # ℹ 310 more rows</code></pre>
+<pre class="r"><code># manipulate the data to calculate the test statistic
+n_eggs_set &lt;- egg_prod |&gt;
+  group_by(prod_type) |&gt;
+  summarise(n = n(),mean_n_eggs = mean(n_eggs))
+test_stat &lt;- diff(n_eggs_set$mean_n_eggs)
+n_eggs_set</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##   prod_type         n mean_n_eggs
+##   &lt;chr&gt;         &lt;int&gt;       &lt;dbl&gt;
+## 1 hatching eggs    80 1202418750 
+## 2 table eggs      240 3201005192.</code></pre>
+<pre class="r"><code>test_stat</code></pre>
+<pre><code>## [1] 1998586442</code></pre>
+<pre class="r"><code># set prod_type as factor
+egg_prod &lt;- egg_prod |&gt;
+  mutate( prod_type = factor(prod_type))
+
+# implement Hypothesis test using the permutation
+set.seed(522)
+null_distribution &lt;- egg_prod |&gt;
+  specify(formula = n_eggs ~ prod_type) |&gt;
+  hypothesize(null = &quot;independence&quot;) |&gt;
+  generate(reps = 1000, type = &quot;permute&quot;) |&gt;
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;table eggs&quot;, &quot;hatching eggs&quot;))
+
+# calculate the p-value
+p_value &lt;- null_distribution |&gt;
+  get_pvalue(obs_stat = test_stat, direction = &quot;both&quot;)
+
+p_value</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   p_value
+##     &lt;dbl&gt;
+## 1       0</code></pre>
+</div>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
