@@ -1,25 +1,19 @@
 ---
 title: "DSCI 522 Milestone 1"
 subtitle: Inferential Analysis for Egg Production
-output:
- html_document:
-  toc: yes
-  toc_depth: '2'
-editor_options: 
-  markdown: 
-    wrap: 72
+format:
+  html:
+    toc: true
+editor_options:
+  markdown:
+    wrap: none
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ```{r load libraries, message=FALSE, warning=FALSE}
 library(readr)
 library(dplyr)
 library(infer)
 ```
-
 # Summary
 
 Type Summary here.
@@ -42,31 +36,19 @@ Type here.
 
 ### Define the Question
 
-Is there a difference in the average number of eggs produced between
-hatching and table eggs?
+Is there a difference in the average number of eggs produced between hatching and table eggs?
 
 ### Specify the Hypotheses and Observed Test Statistic
 
-$H_{0}$: The mean number of eggs produced by hens for hatching,
-$\mu_{hatching}$, is equal to the mean number of eggs produced by hens
-for table eggs, $\mu_{table}$. Mathematically,
-$\mu_{hatching} = \mu_{table}$.
+$H_{0}$: The mean number of eggs produced by hens for hatching, $\mu_{hatching}$, is equal to the mean number of eggs produced by hens for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} = \mu_{table}$.
 
-$H_{A}$: The mean number of eggs produced by hens for hatching,
-$\mu_{hatching}$, is NOT equal to the mean number of eggs produced by
-hens for table eggs, $\mu_{table}$. Mathematically,
-$\mu_{hatching} \ne \mu_{table}$.
+$H_{A}$: The mean number of eggs produced by hens for hatching, $\mu_{hatching}$, is NOT equal to the mean number of eggs produced by hens for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} \ne \mu_{table}$.
 
-*where* $\mu_{hatching}$ *represents the population mean number of eggs
-produced by hens for hatching, and* $\mu_{table}$ *represents the
-population mean number of eggs produced by hens for table eggs.*
+*where* $\mu_{hatching}$ *represents the population mean number of eggs produced by hens for hatching, and* $\mu_{table}$ *represents the population mean number of eggs produced by hens for table eggs.*
 
-The observed test statistic $\delta^{*}$ =
-$\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}$
+The observed test statistic $\delta^{*}$ = $\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}$
 
-*The estimate* $\delta^{*}$ *is the difference of the observed mean
-number of eggs for hatching and the observed mean number of eggs for
-table eggs coming from our egg production data set.*
+*The estimate* $\delta^{*}$ *is the difference of the observed mean number of eggs for hatching and the observed mean number of eggs for table eggs coming from our egg production data set.*
 
 ### Hypothesis Test Using the Permutation Method
 
