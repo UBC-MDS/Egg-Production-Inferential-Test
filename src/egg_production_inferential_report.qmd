@@ -14,6 +14,7 @@ library(readr)
 library(dplyr)
 library(infer)
 ```
+
 # Summary
 
 Type Summary here.
@@ -36,37 +37,48 @@ Type here.
 
 ### Define the Question
 
-Is there a difference in the average number of eggs produced between hatching and table eggs?
+Is there a difference in the average number of eggs produced by each hen between hatching and table eggs?
 
 ### Specify the Hypotheses and Observed Test Statistic
 
-$H_{0}$: The mean number of eggs produced by hens for hatching, $\mu_{hatching}$, is equal to the mean number of eggs produced by hens for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} = \mu_{table}$.
+$H_{0}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} = \mu_{table}$.
 
-$H_{A}$: The mean number of eggs produced by hens for hatching, $\mu_{hatching}$, is NOT equal to the mean number of eggs produced by hens for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} \ne \mu_{table}$.
+$H_{A}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is NOT equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} \ne \mu_{table}$.
 
-*where* $\mu_{hatching}$ *represents the population mean number of eggs produced by hens for hatching, and* $\mu_{table}$ *represents the population mean number of eggs produced by hens for table eggs.*
+*where* $\mu_{hatching}$ *represents the population mean number of eggs produced by each hen for hatching, and* $\mu_{table}$ *represents the population mean number of eggs produced by each hen for table eggs.*
 
 The observed test statistic $\delta^{*}$ = $\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}$
 
-*The estimate* $\delta^{*}$ *is the difference of the observed mean number of eggs for hatching and the observed mean number of eggs for table eggs coming from our egg production data set.*
+*The estimate* $\delta^{*}$ *is the difference of the observed mean number of eggs produced by each hen for hatching and the observed mean number of eggs produced by each hen for table eggs coming from our egg production data set.*
 
 ### Hypothesis Test Using the Permutation Method
 
-```{r}
+```{r Read Data}
 # read in data
 egg_prod <- read_csv("../data/egg-production.csv")
 egg_prod
 ```
 
-```{r warning=FALSE, message=FALSE, tags=c()}
-# manipulate the data to calculate the test statistic
-n_eggs_set <- egg_prod |>
-  group_by(prod_type) |>
-  summarise(n = n(),mean_n_eggs = mean(n_eggs))
-test_stat <- diff(n_eggs_set$mean_n_eggs)
-n_eggs_set
-test_stat
+```{r Data Wrangling}
+# create a new column to calculate the mean number of eggs produced by each hen
+# Since cage-free is only available for table eggs, we filter the prod_process is equal to all 
+egg_prod <- egg_prod |>
+  filter(prod_process == "all") |>
+  mutate(n_egg_by_hen = n_eggs / n_hens)
+egg_prod
+```
 
+```{r Calculate the Test Statistic}
+# manipulate the data to calculate the test statistic
+n_eggs_by_hen_set <- egg_prod |>
+  group_by(prod_type) |>
+  summarise(n = n(),mean_n_eggs_by_hen = mean(n_egg_by_hen, na.rm = TRUE))
+test_stat <- diff(n_eggs_by_hen_set$mean_n_eggs_by_hen)
+n_eggs_by_hen_set
+test_stat
+```
+
+```{r Hyhothesis Test, message=FALSE, warning=FALSE}
 # set prod_type as factor
 egg_prod <- egg_prod |>
   mutate( prod_type = factor(prod_type))
@@ -74,7 +86,7 @@ egg_prod <- egg_prod |>
 # implement Hypothesis test using the permutation
 set.seed(522)
 null_distribution <- egg_prod |>
-  specify(formula = n_eggs ~ prod_type) |>
+  specify(formula = n_egg_by_hen ~ prod_type) |>
   hypothesize(null = "independence") |>
   generate(reps = 1000, type = "permute") |>
   calculate(stat = "diff in means", order = c("table eggs", "hatching eggs"))
