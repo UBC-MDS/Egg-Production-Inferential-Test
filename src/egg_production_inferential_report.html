@@ -88,12 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
   </ul></li>
-  <li><a href="#result-discussion" id="toc-result-discussion" class="nav-link" data-scroll-target="#result-discussion">Result &amp; Discussion</a>
-  <ul class="collapse">
-  <li><a href="#define-the-question" id="toc-define-the-question" class="nav-link" data-scroll-target="#define-the-question">Define the Question</a></li>
-  <li><a href="#specify-the-hypotheses-and-observed-test-statistic" id="toc-specify-the-hypotheses-and-observed-test-statistic" class="nav-link" data-scroll-target="#specify-the-hypotheses-and-observed-test-statistic">Specify the Hypotheses and Observed Test Statistic</a></li>
-  <li><a href="#hypothesis-test-using-the-permutation-method" id="toc-hypothesis-test-using-the-permutation-method" class="nav-link" data-scroll-target="#hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</a></li>
-  </ul></li>
+  <li><a href="#result-discussion" id="toc-result-discussion" class="nav-link" data-scroll-target="#result-discussion">Result &amp; Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -144,20 +139,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="result-discussion" class="level1">
 <h1>Result &amp; Discussion</h1>
-<section id="define-the-question" class="level3">
-<h3 class="anchored" data-anchor-id="define-the-question">Define the Question</h3>
-<p>Is there a difference in the average number of eggs produced by each hen between hatching and table eggs?</p>
-</section>
-<section id="specify-the-hypotheses-and-observed-test-statistic" class="level3">
-<h3 class="anchored" data-anchor-id="specify-the-hypotheses-and-observed-test-statistic">Specify the Hypotheses and Observed Test Statistic</h3>
+<section id="research-question-and-hypotheses" class="level4">
+<h4 class="anchored" data-anchor-id="research-question-and-hypotheses">Research Question and Hypotheses</h4>
+<p>We aimed to investigate whether there is a difference in the average number of eggs produced by each hen between hatching eggs and table eggs. To address this question, we formulated the following hypotheses:</p>
 <p><span class="math inline">\(H_{0}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} = \mu_{table}\)</span>.</p>
 <p><span class="math inline">\(H_{A}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is NOT equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} \ne \mu_{table}\)</span>.</p>
 <p><em>where</em> <span class="math inline">\(\mu_{hatching}\)</span> <em>represents the population mean number of eggs produced by each hen for hatching, and</em> <span class="math inline">\(\mu_{table}\)</span> <em>represents the population mean number of eggs produced by each hen for table eggs.</em></p>
-<p>The observed test statistic <span class="math inline">\(\delta^{*}\)</span> = <span class="math inline">\(\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}\)</span></p>
-<p><em>The estimate</em> <span class="math inline">\(\delta^{*}\)</span> <em>is the difference of the observed mean number of eggs produced by each hen for hatching and the observed mean number of eggs produced by each hen for table eggs coming from our egg production data set.</em></p>
+<p>These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.</p>
 </section>
-<section id="hypothesis-test-using-the-permutation-method" class="level3">
-<h3 class="anchored" data-anchor-id="hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</h3>
+<section id="observed-test-statistic" class="level4">
+<h4 class="anchored" data-anchor-id="observed-test-statistic">Observed Test Statistic</h4>
+<p>To test these hypotheses, we calculated the observed test statistic <span class="math inline">\(\delta^{*}\)</span>, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.</p>
+<p>The observed test statistic <span class="math inline">\(\delta^{*}\)</span> = <span class="math inline">\(\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}\)</span></p>
+</section>
+<section id="hypothesis-test-using-the-permutation-method" class="level4">
+<h4 class="anchored" data-anchor-id="hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</h4>
+<p>With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/egg-production.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -190,6 +187,8 @@ date (1): observed_month
 # ℹ 310 more rows</code></pre>
 </div>
 </div>
+<p>In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.</p>
+<p>Additionally, it is important to note that the “cage-free” production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the “prod_process” variable was labeled as “all”.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new column to calculate the mean number of eggs produced by each hen</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Since cage-free is only available for table eggs, we filter the prod_process is equal to all </span></span>
@@ -214,6 +213,7 @@ date (1): observed_month
 # ℹ 150 more rows</code></pre>
 </div>
 </div>
+<p>Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values(NA).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manipulate the data to calculate the test statistic</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n_eggs_by_hen_set <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
@@ -233,6 +233,7 @@ date (1): observed_month
 <pre><code>[1] 5.526568</code></pre>
 </div>
 </div>
+<p>With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set prod_type as factor</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
@@ -258,6 +259,8 @@ date (1): observed_month
 1       0</code></pre>
 </div>
 </div>
+<p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
+<p>In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen.</p>
 </section>
 </section>
 <section id="references" class="level1">

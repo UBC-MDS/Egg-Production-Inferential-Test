@@ -35,11 +35,9 @@ Type here.
 
 # Result & Discussion
 
-### Define the Question
+#### Research Question and Hypotheses
 
-Is there a difference in the average number of eggs produced by each hen between hatching and table eggs?
-
-### Specify the Hypotheses and Observed Test Statistic
+We aimed to investigate whether there is a difference in the average number of eggs produced by each hen between hatching eggs and table eggs. To address this question, we formulated the following hypotheses:
 
 $H_{0}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} = \mu_{table}$.
 
@@ -47,17 +45,27 @@ $H_{A}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatchi
 
 *where* $\mu_{hatching}$ *represents the population mean number of eggs produced by each hen for hatching, and* $\mu_{table}$ *represents the population mean number of eggs produced by each hen for table eggs.*
 
+These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.
+
+#### Observed Test Statistic
+
+To test these hypotheses, we calculated the observed test statistic $\delta^{*}$, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.
+
 The observed test statistic $\delta^{*}$ = $\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}$
 
-*The estimate* $\delta^{*}$ *is the difference of the observed mean number of eggs produced by each hen for hatching and the observed mean number of eggs produced by each hen for table eggs coming from our egg production data set.*
+#### Hypothesis Test Using the Permutation Method
 
-### Hypothesis Test Using the Permutation Method
+With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.
 
 ```{r Read Data}
 # read in data
 egg_prod <- read_csv("../data/egg-production.csv")
 egg_prod
 ```
+
+In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.
+
+Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
 
 ```{r Data Wrangling}
 # create a new column to calculate the mean number of eggs produced by each hen
@@ -68,6 +76,8 @@ egg_prod <- egg_prod |>
 egg_prod
 ```
 
+Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values(NA).
+
 ```{r Calculate the Test Statistic}
 # manipulate the data to calculate the test statistic
 n_eggs_by_hen_set <- egg_prod |>
@@ -77,6 +87,8 @@ test_stat <- diff(n_eggs_by_hen_set$mean_n_eggs_by_hen)
 n_eggs_by_hen_set
 test_stat
 ```
+
+With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
 
 ```{r Hyhothesis Test, message=FALSE, warning=FALSE}
 # set prod_type as factor
@@ -97,6 +109,10 @@ p_value <- null_distribution |>
 
 p_value
 ```
+
+The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis $H_{A}$.
+
+In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen.
 
 # References
 
