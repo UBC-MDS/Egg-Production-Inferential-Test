@@ -27,11 +27,11 @@ Type Introduction here.
 
 ## Data
 
-The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from the Open Science Framework project by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
+The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from Open Science Framework by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
 
 ## Analysis
 
-Type here.
+The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives us a more accurate representation of how many eggs are produced for each group since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language (R Development Core Team, 2023) and the following packages were used to conduct the analysis: dplyr(dplyr, n.d.), readr(readr, n.d.), infer(Bray et al., n.d.) and ggplot(ggplot2, n.d.).
 
 # Result & Discussion
 
@@ -118,6 +118,16 @@ In practical terms, this means that hatching eggs and table eggs do indeed exhib
 
 # References
 
+Bray, A., Ismay, C., Chasnovski, E., Couch, S., Baumer, B., & Cetinkaya-Rundel, M. (n.d.). *infer R Package*. infer. https://infer.netlify.app/
+
+dplyr. (n.d.). *Tidyverse*. https://dplyr.tidyverse.org/
+
+ggplot2 (n.d.). *Tidyverse*. https://ggplot2.tidyverse.org/
+
 Mendez, S. (2023, April 9). *US Egg Production Data Set*. Open Science Framework. https://osf.io/z2gxn/
+
+R Development Core Team. (2023, November). *The R Manuals*. CRAN. https://cran.r-project.org/manuals.html
+
+readr. (n.d.). *Tidyverse*. https://readr.tidyverse.org/
 
 TidyTuesday. (2023, April). *US Egg Production*. rfordatascience/tidytuesday. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-11/readme.md
