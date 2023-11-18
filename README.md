@@ -8,9 +8,10 @@
 
 ## About
 
-Here we attempt to build a classification model using the k-nearest neighbours algorithm which can use breast cancer tumour image measurements to predict whether a newly discovered breast cancer tumour is benign (i.e., is not harmful and does not require treatment) or malignant (i.e., is harmful and requires treatment intervention). Our final classifier performed fairly well on an unseen test data set, with Cohen’s Kappa score of 0.9 and an overall accuracy calculated to be 0.97. On the 142 test data cases, it correctly predicted 138. However, it incorrectly predicted 4 cases, and importantly these cases were false negatives; predicting that a tumour is benign when in fact it is malignant. These kinds of incorrect predictions could have a severely negative impact on a patient's health outcome, thus we recommend continuing study to improve this prediction model before it is put into production in the clinic.
+Here we attempt to use inference to determine if there is a difference in the number of eggs produced by each hen between hatching and table eggs (fertilized vs unfertilized). We did this using a permutation method on our sample to compare the observed statistics. We got a p-value of 0 which is very rare and is below our chosen 0.05 alpha so we reject the null hypothesis that the number of eggs produced by each hen between hatching and table eggs are the same.
 
-The data set that was used in this project is of digitized breast cancer image features created by Dr. William H. Wolberg, W. Nick Street, and Olvi L. Mangasarian at the University of Wisconsin, Madison (Street, Wolberg, and Mangasarian 1993). It was sourced from the UCI Machine Learning Repository (Dua and Graff 2017) and can be found [here](http://archive.ics.uci.edu/ml), specifically [this file](http://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/). Each row in the data set represents summary statistics from measurements of an image of a tumour sample, including the diagnosis (benign or malignant) and several other measurements (e.g., nucleus texture, perimeter, area, etc.). Diagnosis for each image was conducted by physicians.
+The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from the Open Science Framework project by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
+
 
 ## Report
 
@@ -152,8 +153,8 @@ express Statement of Purpose.
     
 ## References
 
-- Dua, Dheeru, and Casey Graff. 2017. “UCI Machine Learning Repository.” University of California, Irvine, School of Information & Computer Sciences. [http://archive.ics.uci.edu/ml](http://archive.ics.uci.edu/ml).
+- Mendez, S. (2023, April 9). *US Egg Production Data Set*. Open Science Framework. https://osf.io/z2gxn/
 
-- Street, W. Nick, W. H. Wolberg, and O. L. Mangasarian. 1993. “Nuclear feature extraction for breast tumor diagnosis.” In *Biomedical Image Processing and Biomedical Visualization*, edited by Raj S. Acharya and Dmitry B. Goldgof, 1905:861–70. International Society for Optics & Photonics; SPIE. [https://doi.org/10.1117/12.148698](https://doi.org/10.1117/12.148698).
+- TidyTuesday. (2023, April). *US Egg Production*. rfordatascience/tidytuesday. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-11/readme.md
 
 
