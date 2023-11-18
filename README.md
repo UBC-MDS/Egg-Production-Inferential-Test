@@ -2,7 +2,8 @@
 
 # Comparative Analysis of Egg Production: Hatching vs. Table Eggs 
 
-**Author:** Kun Ya, Kiersten Gilber, Paolo De Lagrave-Codina, Yin Huang
+**Author:** Kun Ya, Kiersten Gilber, Paolo De Lagrave-Codina, Yin Huang  
+
 **Contrions:** We welcome all contributions, input, feedback or bug fixes to this project! For reporting a bug or feature requests, please open up an issue here. If you'd like to contribute a bug fix, you can fork our repository and submit a pull request. We will review all pull requests as soon as possible. All contributors must abide by our code of conduct.
 
 ## About
@@ -24,8 +25,6 @@ The final report can be found [here](#).
   - caret=6.0-85
   - ggridges=0.5.2
   - ggthemes=4.2.0
-
-- **GNU make 4.2.1**
 
 ## License
 
