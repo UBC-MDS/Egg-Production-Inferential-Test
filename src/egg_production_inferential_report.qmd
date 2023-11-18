@@ -17,7 +17,7 @@ library(infer)
 
 # Summary
 
-Type Summary here.
+This analysis aims to determine whether there is a difference in the mean number of eggs produced per hen between table eggs (i.e. unfertilized eggs for consumption) and hatching eggs (i.e. fertilized and will produce a chicken). The data used in this analysis was reported monthly from July 2016 to February of 2023 and was limited to the product type "all" as this includes both organic and non-organic cage-free eggs produced in the United States of America. We conducted a 1000 sample permutation to test our null-hypothesis with an observed test statistic of 5.527 and a p-value of 0. Using a significance level of 0.05 we rejected the null hypothesis in favour of the alternative and concluded that there is a significant difference in the mean number of eggs produced per hen between table and hatching eggs.
 
 # Introduction
 
@@ -61,6 +61,7 @@ With these hypotheses and observed test statistic in place, we could conduct our
 # read in data
 egg_prod <- read_csv("../data/egg-production.csv")
 egg_prod
+
 ```
 
 In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.
@@ -108,6 +109,7 @@ p_value <- null_distribution |>
   get_pvalue(obs_stat = test_stat, direction = "both")
 
 p_value
+
 ```
 
 The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis $H_{A}$.
