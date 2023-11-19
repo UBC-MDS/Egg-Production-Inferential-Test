@@ -32,7 +32,8 @@ The final report can be found in the analysis file of this repo
   - cowplot=1.1.1
   - datateachr=0.2.1
   
-Note We have many more dependencies in the environment but these are the main ones for our analysis  
+Note We have many more dependencies in the environment but these are the main ones for our analysis.
+Here is a link to the full env https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock
 ## License
 
 For all project code please refer to the following license:
