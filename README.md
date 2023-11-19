@@ -15,25 +15,31 @@ The data used in this analysis was taken from the tidytuesday repository (TidyTu
 
 ## Report
 
-The final report can be found in the analysis file of this repo
+The final report can be found in the scr folder of this repo   
+
+## Usage  
+
+First time running the project, run the following from the R console in the root of this repository:
+
+```R
+renv::init()
+
+renv::restore()
+```
+To run the analysis you need to open the R project in R studio  
 
 ## Dependencies
 
 - **R version 4.3.1** and R packages:
   - infer=1.0.5
-  - digest=0.6.33
-  - ottr=1.4.0
   - tidyr=1.3.0
   - dplyr=1.1.2
-  - forcats=1.0.0
-  - purrr=1.0.2
   - readr=2.1.4
-  - knitr=1.43
-  - cowplot=1.1.1
-  - datateachr=0.2.1
+  - ggplot2=3.4.3
   
 Note We have many more dependencies in the environment but these are the main ones for our analysis.
-Here is a link to the full env https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock
+Here is a link to the full env https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock  
+
 ## License
 
 For all project code please refer to the [MIT license](https://opensource.org/license/mit/). Please refer to the LICENSE.md file for more details.
