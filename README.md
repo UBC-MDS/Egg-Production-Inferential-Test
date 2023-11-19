@@ -15,7 +15,7 @@ The data used in this analysis was taken from the tidytuesday repository (TidyTu
 
 ## Report
 
-The final report can be found in the analysis file of this repo  
+The final report can be found in the scr folder of this repo   
 
 ## Usage  
 
@@ -38,7 +38,8 @@ To run the analysis you need to open the R project in R studio
   - ggplot2=3.4.3
   
 Note We have many more dependencies in the environment but these are the main ones for our analysis.
-Here is a link to the full env https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock
+Here is a link to the full env https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock  
+
 ## License
 
 For all project code please refer to the [MIT license](https://opensource.org/license/mit/). Please refer to the LICENSE.md file for more details.
