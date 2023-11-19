@@ -31,6 +31,54 @@ In this analysis we specifically look at the difference in table eggs and hatchi
 
 The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from Open Science Framework by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
 
+## EDA
+
+Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
+
+```{r}
+summary(egg_production)
+str(egg_production)
+head(egg_production)
+tail(egg_production)
+nrow(egg_production)
+
+```
+
+Comment: The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.
+
+Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
+
+```{r}
+ggplot(egg_production,aes(x = n_eggs)) + geom_histogram() + labs(title = "Histogram of number of eggs in a month",
+       x = "number of eggs in that month",
+       y = "Count of particular bucket")
+
+ggplot(egg_production,aes(x = n_hens)) + geom_histogram() + labs(title = "Histogram of number of hens",
+       x = "number of hens in that month",
+       y = "Count of particular bucket")
+
+df <- na.omit(egg_production)
+
+cor(df$n_hens, df$n_eggs)
+
+```
+
+Comment: We can see it is hard to determine a specific shape of the distributions but this is expected because we have a relatively small sample size. We also see that both distributions are somewhat similar. The correlation between the 2 variables is high at 0.9979883 meaning there is likely some strong relation between n_hens and n_eggs.
+
+Step 3: Visualize the distribution of both prod_type and prod_process.
+
+```{r}
+ggplot(egg_production,aes(x = prod_type)) + geom_bar() + labs(title = "Histogram of production type",
+       x = "different types of products",
+       y = "Count")
+
+ggplot(egg_production,aes(x = prod_process)) + geom_bar() + labs(title = "Histogram of production process",
+       x = "different types of process",
+       y = "Count")
+```
+
+Comment: In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.
+
 ## Analysis
 
 The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language (R Development Core Team, 2023) and the following packages were used to conduct the analysis: dplyr(dplyr, n.d.), readr(readr, n.d.), infer(Bray et al., n.d.) and ggplot(ggplot2, n.d.).
