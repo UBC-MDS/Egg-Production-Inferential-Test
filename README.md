@@ -15,7 +15,18 @@ The data used in this analysis was taken from the tidytuesday repository (TidyTu
 
 ## Report
 
-The final report can be found in the analysis file of this repo
+The final report can be found in the analysis file of this repo  
+
+## Usage  
+
+First time running the project, run the following from the R console in the root of this repository:
+
+```R
+renv::init()
+
+renv::restore()
+```
+To run the analysis you need to open the R project in R studio  
 
 ## Dependencies
 
