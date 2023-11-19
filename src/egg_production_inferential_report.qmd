@@ -63,12 +63,12 @@ Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as 
 
 ```{r, message=FALSE, warning=FALSE}
 ggplot(egg_prod,aes(x = n_eggs)) + geom_histogram() + labs(title = "Histogram of number of eggs in a month",
-       x = "number of eggs in that month",
-       y = "Count of particular bucket")
+       x = "Number of eggs per month",
+       y = "Count")
 
 ggplot(egg_prod,aes(x = n_hens)) + geom_histogram() + labs(title = "Histogram of number of hens",
-       x = "number of hens in that month",
-       y = "Count of particular bucket")
+       x = "Number of hens per month",
+       y = "Count")
 
 df <- na.omit(egg_prod)
 
@@ -82,11 +82,11 @@ Step 3: Visualize the distribution of both prod_type and prod_process.
 
 ```{r, message=FALSE, warning=FALSE}
 ggplot(egg_prod,aes(x = prod_type)) + geom_bar() + labs(title = "Distribution of production type",
-       x = "different types of products",
+       x = "Production type",
        y = "Count")
 
 ggplot(egg_prod,aes(x = prod_process)) + geom_bar() + labs(title = "Distribution of production process",
-       x = "different types of process",
+       x = "Production process",
        y = "Count")
 ```
 
