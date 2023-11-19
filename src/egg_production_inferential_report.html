@@ -90,6 +90,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#result-discussion" id="toc-result-discussion" class="nav-link" data-scroll-target="#result-discussion">Result &amp; Discussion</a>
   <ul class="collapse">
+  <li><a href="#eda" id="toc-eda" class="nav-link" data-scroll-target="#eda">EDA</a></li>
   <li><a href="#research-question-and-hypotheses" id="toc-research-question-and-hypotheses" class="nav-link" data-scroll-target="#research-question-and-hypotheses">Research Question and Hypotheses</a></li>
   <li><a href="#observed-test-statistic" id="toc-observed-test-statistic" class="nav-link" data-scroll-target="#observed-test-statistic">Observed Test Statistic</a></li>
   <li><a href="#hypothesis-test-using-the-permutation-method" id="toc-hypothesis-test-using-the-permutation-method" class="nav-link" data-scroll-target="#hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</a></li>
@@ -148,22 +149,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="result-discussion" class="level1">
 <h1>Result &amp; Discussion</h1>
-<section id="research-question-and-hypotheses" class="level2">
-<h2 class="anchored" data-anchor-id="research-question-and-hypotheses">Research Question and Hypotheses</h2>
-<p>We aimed to investigate whether there is a difference in the average number of eggs produced by each hen between hatching eggs and table eggs. To address this question, we formulated the following hypotheses:</p>
-<p><span class="math inline">\(H_{0}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} = \mu_{table}\)</span>.</p>
-<p><span class="math inline">\(H_{A}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is NOT equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} \ne \mu_{table}\)</span>.</p>
-<p><em>where</em> <span class="math inline">\(\mu_{hatching}\)</span> <em>represents the population mean number of eggs produced by each hen for hatching, and</em> <span class="math inline">\(\mu_{table}\)</span> <em>represents the population mean number of eggs produced by each hen for table eggs.</em></p>
-<p>These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.</p>
-</section>
-<section id="observed-test-statistic" class="level2">
-<h2 class="anchored" data-anchor-id="observed-test-statistic">Observed Test Statistic</h2>
-<p>To test these hypotheses, we calculated the observed test statistic <span class="math inline">\(\delta^{*}\)</span>, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.</p>
-<p>The observed test statistic <span class="math inline">\(\delta^{*}\)</span> = <span class="math inline">\(\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}\)</span></p>
-</section>
-<section id="hypothesis-test-using-the-permutation-method" class="level2">
-<h2 class="anchored" data-anchor-id="hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</h2>
-<p>With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.</p>
+<section id="eda" class="level2">
+<h2 class="anchored" data-anchor-id="eda">EDA</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/egg-production.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -196,15 +183,141 @@ date (1): observed_month
 # ℹ 310 more rows</code></pre>
 </div>
 </div>
+<p>Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> observed_month        prod_type         prod_process           n_hens         
+ Min.   :2016-07-31   Length:320         Length:320         Min.   : 13500000  
+ 1st Qu.:2018-03-31   Class :character   Class :character   1st Qu.: 18174767  
+ Median :2019-11-30   Mode  :character   Mode  :character   Median : 62135000  
+ Mean   :2019-11-30                                         Mean   :114593880  
+ 3rd Qu.:2021-07-31                                         3rd Qu.:299541500  
+ Max.   :2023-03-31                                         Max.   :341166000  
+                                                            NA's   :9          
+     n_eggs             source         
+ Min.   :2.981e+08   Length:320        
+ 1st Qu.:4.739e+08   Class :character  
+ Median :1.206e+09   Mode  :character  
+ Mean   :2.701e+09                     
+ 3rd Qu.:3.677e+09                     
+ Max.   :8.601e+09                     
+                                       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [320 × 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ observed_month: Date[1:320], format: "2016-07-31" "2016-08-31" ...
+ $ prod_type     : chr [1:320] "hatching eggs" "hatching eggs" "hatching eggs" "hatching eggs" ...
+ $ prod_process  : chr [1:320] "all" "all" "all" "all" ...
+ $ n_hens        : num [1:320] 57975000 57595000 57161000 56857000 57116000 ...
+ $ n_eggs        : num [1:320] 1.15e+09 1.14e+09 1.09e+09 1.13e+09 1.10e+09 ...
+ $ source        : chr [1:320] "ChicEggs-09-23-2016.pdf" "ChicEggs-10-21-2016.pdf" "ChicEggs-11-22-2016.pdf" "ChicEggs-12-23-2016.pdf" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   observed_month = col_date(format = ""),
+  ..   prod_type = col_character(),
+  ..   prod_process = col_character(),
+  ..   n_hens = col_double(),
+  ..   n_eggs = col_double(),
+  ..   source = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  observed_month prod_type     prod_process   n_hens     n_eggs source          
+  &lt;date&gt;         &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;           
+1 2016-07-31     hatching eggs all          57975000 1147000000 ChicEggs-09-23-…
+2 2016-08-31     hatching eggs all          57595000 1142700000 ChicEggs-10-21-…
+3 2016-09-30     hatching eggs all          57161000 1093300000 ChicEggs-11-22-…
+4 2016-10-31     hatching eggs all          56857000 1126700000 ChicEggs-12-23-…
+5 2016-11-30     hatching eggs all          57116000 1096600000 ChicEggs-01-24-…
+6 2016-12-31     hatching eggs all          57750000 1132900000 ChicEggs-02-28-…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  observed_month prod_type  prod_process          n_hens     n_eggs source      
+  &lt;date&gt;         &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;       
+1 2022-10-31     table eggs cage-free (organic) 17984833 462870566. PY20221101M…
+2 2022-11-30     table eggs cage-free (organic) 17984833 449033143. PY20221201M…
+3 2022-12-31     table eggs cage-free (organic) 18034386 467549794. PY20230103M…
+4 2023-01-31     table eggs cage-free (organic) 17464318 448923754. PY20230201M…
+5 2023-02-28     table eggs cage-free (organic) 16748968 384588000  PY20230301M…
+6 2023-03-31     table eggs cage-free (organic) 17558594 445822869. PY20230403M…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 320</code></pre>
+</div>
+</div>
+<p>The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.</p>
+<p>Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> n_eggs)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of number of eggs in a month"</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of eggs per month"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> n_hens)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of number of hens"</span>,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of hens per month"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(egg_prod)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df<span class="sc">$</span>n_hens, df<span class="sc">$</span>n_eggs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9979883</code></pre>
+</div>
+</div>
+<p>We can see it is hard to determine a specific shape of the distributions but this is expected because we have a relatively small sample size. We also see that both distributions are somewhat similar. The correlation between the 2 variables is high at 0.9979883 meaning there is likely some strong relation between n_hens and n_eggs.</p>
+<p>Step 3: Visualize the distribution of both prod_type and prod_process.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> prod_type)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of production type"</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Production type"</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> prod_process)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of production process"</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Production process"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.</p>
+</section>
+<section id="research-question-and-hypotheses" class="level2">
+<h2 class="anchored" data-anchor-id="research-question-and-hypotheses">Research Question and Hypotheses</h2>
+<p>We aimed to investigate whether there is a difference in the average number of eggs produced by each hen between hatching eggs and table eggs. To address this question, we formulated the following hypotheses:</p>
+<p><span class="math inline">\(H_{0}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} = \mu_{table}\)</span>.</p>
+<p><span class="math inline">\(H_{A}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is NOT equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} \ne \mu_{table}\)</span>.</p>
+<p><em>where</em> <span class="math inline">\(\mu_{hatching}\)</span> <em>represents the population mean number of eggs produced by each hen for hatching, and</em> <span class="math inline">\(\mu_{table}\)</span> <em>represents the population mean number of eggs produced by each hen for table eggs.</em></p>
+<p>These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.</p>
+</section>
+<section id="observed-test-statistic" class="level2">
+<h2 class="anchored" data-anchor-id="observed-test-statistic">Observed Test Statistic</h2>
+<p>To test these hypotheses, we calculated the observed test statistic <span class="math inline">\(\delta^{*}\)</span>, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.</p>
+<p>The observed test statistic <span class="math inline">\(\delta^{*}\)</span> = <span class="math inline">\(\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}\)</span></p>
+</section>
+<section id="hypothesis-test-using-the-permutation-method" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</h2>
+<p>With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.</p>
 <p>In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.</p>
 <p>Additionally, it is important to note that the “cage-free” production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the “prod_process” variable was labeled as “all”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new column to calculate the mean number of eggs produced by each hen</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Since cage-free is only available for table eggs, we filter the prod_process is equal to all </span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prod_process <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_egg_by_hen =</span> n_eggs <span class="sc">/</span> n_hens)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>egg_prod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new column to calculate the mean number of eggs produced by each hen</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Since cage-free is only available for table eggs, we filter the prod_process is equal to all </span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prod_process <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_egg_by_hen =</span> n_eggs <span class="sc">/</span> n_hens)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>egg_prod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 160 × 7
    observed_month prod_type     prod_process   n_hens n_eggs source n_egg_by_hen
@@ -224,12 +337,12 @@ date (1): observed_month
 </div>
 <p>Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values(NA).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manipulate the data to calculate the test statistic</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n_eggs_by_hen_set <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(prod_type) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),<span class="at">mean_n_eggs_by_hen =</span> <span class="fu">mean</span>(n_egg_by_hen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>test_stat <span class="ot">&lt;-</span> <span class="fu">diff</span>(n_eggs_by_hen_set<span class="sc">$</span>mean_n_eggs_by_hen)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>n_eggs_by_hen_set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manipulate the data to calculate the test statistic</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>n_eggs_by_hen_set <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(prod_type) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),<span class="at">mean_n_eggs_by_hen =</span> <span class="fu">mean</span>(n_egg_by_hen, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>test_stat <span class="ot">&lt;-</span> <span class="fu">diff</span>(n_eggs_by_hen_set<span class="sc">$</span>mean_n_eggs_by_hen)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>n_eggs_by_hen_set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   prod_type         n mean_n_eggs_by_hen
@@ -237,30 +350,30 @@ date (1): observed_month
 1 hatching eggs    80               19.1
 2 table eggs       80               24.6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.526568</code></pre>
 </div>
 </div>
 <p>With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set prod_type as factor</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">prod_type =</span> <span class="fu">factor</span>(prod_type))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># implement Hypothesis test using the permutation</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">522</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> n_egg_by_hen <span class="sc">~</span> prod_type) <span class="sc">|&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"table eggs"</span>, <span class="st">"hatching eggs"</span>))</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p-value</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> null_distribution <span class="sc">|&gt;</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> test_stat, <span class="at">direction =</span> <span class="st">"both"</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set prod_type as factor</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">prod_type =</span> <span class="fu">factor</span>(prod_type))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># implement Hypothesis test using the permutation</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">522</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> n_egg_by_hen <span class="sc">~</span> prod_type) <span class="sc">|&gt;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"table eggs"</span>, <span class="st">"hatching eggs"</span>))</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p-value</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> null_distribution <span class="sc">|&gt;</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> test_stat, <span class="at">direction =</span> <span class="st">"both"</span>)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   p_value
@@ -268,33 +381,33 @@ date (1): observed_month
 1       0</code></pre>
 </div>
 </div>
-<p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
+<p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
 </section>
 <section id="results-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="results-visualization">Results Visualization</h2>
 <div class="cell" data-tags="{}">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>alpha_threshold_lower <span class="ot">&lt;-</span> <span class="fu">quantile</span>(null_distribution<span class="sc">$</span>stat, <span class="fl">0.025</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>alpha_threshold_upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(null_distribution<span class="sc">$</span>stat, <span class="fl">0.975</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>null_dist_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(null_distribution, <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">30</span>,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(alpha_threshold_lower, alpha_threshold_upper), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Null Distribution of Test Statistic"</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Test Statistic Values"</span>,</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>null_dist_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>alpha_threshold_lower <span class="ot">&lt;-</span> <span class="fu">quantile</span>(null_distribution<span class="sc">$</span>stat, <span class="fl">0.025</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>alpha_threshold_upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(null_distribution<span class="sc">$</span>stat, <span class="fl">0.975</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>null_dist_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(null_distribution, <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(alpha_threshold_lower, alpha_threshold_upper), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Null Distribution of the difference in means with n=1000 permutations"</span>,</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Difference of the means"</span>,</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>null_dist_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We’ve created a visualization to further strengthen our earlier conclusion. In particular, the red vertical line on the plot represents our observed test statistic obtained from our data, which lies significantly far away from the 95% confidence interval marked by the blue dashed lines. It provides substantial evidence once again to reject the null hypothesis and support the alternative hypothesis.</p>
+<p>We’ve created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.</p>
 </section>
 <section id="implications-and-future-research-directions" class="level2">
 <h2 class="anchored" data-anchor-id="implications-and-future-research-directions">Implications and Future Research Directions</h2>
