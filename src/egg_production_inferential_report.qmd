@@ -13,6 +13,7 @@ editor_options:
 library(readr)
 library(dplyr)
 library(infer)
+library(ggplot2)
 ```
 
 # Summary
@@ -33,14 +34,21 @@ The data used in this analysis was taken from the tidytuesday repository (TidyTu
 
 ## EDA
 
+```{r Read Data}
+# read in data
+egg_prod <- read_csv("../data/egg-production.csv")
+egg_prod
+
+```
+
 Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
 
 ```{r}
-summary(egg_production)
-str(egg_production)
-head(egg_production)
-tail(egg_production)
-nrow(egg_production)
+summary(egg_prod)
+str(egg_prod)
+head(egg_prod)
+tail(egg_prod)
+nrow(egg_prod)
 
 ```
 
@@ -49,15 +57,15 @@ Comment: The source column should not be in the data frame for the analysis. n_h
 Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
 
 ```{r}
-ggplot(egg_production,aes(x = n_eggs)) + geom_histogram() + labs(title = "Histogram of number of eggs in a month",
+ggplot(egg_prod,aes(x = n_eggs)) + geom_histogram() + labs(title = "Histogram of number of eggs in a month",
        x = "number of eggs in that month",
        y = "Count of particular bucket")
 
-ggplot(egg_production,aes(x = n_hens)) + geom_histogram() + labs(title = "Histogram of number of hens",
+ggplot(egg_prod,aes(x = n_hens)) + geom_histogram() + labs(title = "Histogram of number of hens",
        x = "number of hens in that month",
        y = "Count of particular bucket")
 
-df <- na.omit(egg_production)
+df <- na.omit(egg_prod)
 
 cor(df$n_hens, df$n_eggs)
 
@@ -68,11 +76,11 @@ Comment: We can see it is hard to determine a specific shape of the distribution
 Step 3: Visualize the distribution of both prod_type and prod_process.
 
 ```{r}
-ggplot(egg_production,aes(x = prod_type)) + geom_bar() + labs(title = "Histogram of production type",
+ggplot(egg_prod,aes(x = prod_type)) + geom_bar() + labs(title = "Histogram of production type",
        x = "different types of products",
        y = "Count")
 
-ggplot(egg_production,aes(x = prod_process)) + geom_bar() + labs(title = "Histogram of production process",
+ggplot(egg_prod,aes(x = prod_process)) + geom_bar() + labs(title = "Histogram of production process",
        x = "different types of process",
        y = "Count")
 ```
@@ -107,16 +115,9 @@ The observed test statistic $\delta^{*}$ = $\hat{\mu}_\text{hatching} - \hat{\mu
 
 With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.
 
-```{r Read Data}
-# read in data
-egg_prod <- read_csv("../data/egg-production.csv")
-egg_prod
-
-```
-
 In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.
 
-Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
+Additionally, it is important to note that the "cage-free" production process is only applicable to table ndefinedeggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
 
 ```{r Data Wrangling}
 # create a new column to calculate the mean number of eggs produced by each hen
