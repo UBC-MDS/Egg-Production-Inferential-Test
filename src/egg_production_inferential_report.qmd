@@ -117,7 +117,7 @@ p_value
 
 The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis $H_{A}$.
 
-## Results Visualization 
+## Results Visualization
 
 ```{r fig.width=7, fig.height=4, tags=c()}
 alpha_threshold_lower <- quantile(null_distribution$stat, 0.025)
@@ -142,7 +142,11 @@ null_dist_plot
 
 We've created a visualization to further strengthen our earlier conclusion. In particular, the red vertical line on the plot represents our observed test statistic obtained from our data, which lies significantly far away from the 95% confidence interval marked by the blue dashed lines. It provides substantial evidence once again to reject the null hypothesis and support the alternative hypothesis.
 
-In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen.
+## Implications and Future Research Directions
+
+In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen. It suggests that tailoring production strategies for these two egg types may be necessary to optimize yields and meet consumer demands efficiently.
+
+Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs. Understanding how variations in processing methods have influence on table egg production could offer valuable insights for both the egg industry and consumers.
 
 # References
 
