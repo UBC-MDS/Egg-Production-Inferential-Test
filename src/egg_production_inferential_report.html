@@ -88,7 +88,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
   </ul></li>
-  <li><a href="#result-discussion" id="toc-result-discussion" class="nav-link" data-scroll-target="#result-discussion">Result &amp; Discussion</a></li>
+  <li><a href="#result-discussion" id="toc-result-discussion" class="nav-link" data-scroll-target="#result-discussion">Result &amp; Discussion</a>
+  <ul class="collapse">
+  <li><a href="#research-question-and-hypotheses" id="toc-research-question-and-hypotheses" class="nav-link" data-scroll-target="#research-question-and-hypotheses">Research Question and Hypotheses</a></li>
+  <li><a href="#observed-test-statistic" id="toc-observed-test-statistic" class="nav-link" data-scroll-target="#observed-test-statistic">Observed Test Statistic</a></li>
+  <li><a href="#hypothesis-test-using-the-permutation-method" id="toc-hypothesis-test-using-the-permutation-method" class="nav-link" data-scroll-target="#hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</a></li>
+  <li><a href="#results-visualization" id="toc-results-visualization" class="nav-link" data-scroll-target="#results-visualization">Results Visualization</a></li>
+  </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -116,44 +122,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>Type Summary here.</p>
+<p>This analysis aims to determine whether there is a difference in the mean number of eggs produced per hen between table eggs (i.e.&nbsp;unfertilized eggs for consumption) and hatching eggs (i.e.&nbsp;fertilized and will produce a chicken). The data used in this analysis was reported monthly from July 2016 to February of 2023 and was limited to the product type “all” as this includes both conventionally housed and cage-free eggs produced in the United States of America. We conducted a 1000 sample permutation to test our null-hypothesis with an observed test statistic of 5.527 and a p-value of 0. Using a significance level of 0.05 we rejected the null hypothesis in favour of the alternative and concluded that there is a significant difference in the mean number of eggs produced per hen between table and hatching eggs.</p>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Type Introduction here.</p>
+<p>Eggs and poultry products continue to be a staple in the modern diet (Conrad et al., 2017). Although the proportion of U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers (Conrad et al., 2017). Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.</p>
+<p>In this analysis we specifically look at the difference in table eggs and hatching eggs. Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how best to approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices (Stemberger, 1958).</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>Type here.</p>
+<p>The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from Open Science Framework by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.</p>
 </section>
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
-<p>Type here.</p>
+<p>The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language (R Development Core Team, 2023) and the following packages were used to conduct the analysis: dplyr(dplyr, n.d.), readr(readr, n.d.), infer(Bray et al., n.d.) and ggplot(ggplot2, n.d.).</p>
 </section>
 </section>
 <section id="result-discussion" class="level1">
 <h1>Result &amp; Discussion</h1>
-<section id="research-question-and-hypotheses" class="level4">
-<h4 class="anchored" data-anchor-id="research-question-and-hypotheses">Research Question and Hypotheses</h4>
+<section id="research-question-and-hypotheses" class="level2">
+<h2 class="anchored" data-anchor-id="research-question-and-hypotheses">Research Question and Hypotheses</h2>
 <p>We aimed to investigate whether there is a difference in the average number of eggs produced by each hen between hatching eggs and table eggs. To address this question, we formulated the following hypotheses:</p>
 <p><span class="math inline">\(H_{0}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} = \mu_{table}\)</span>.</p>
 <p><span class="math inline">\(H_{A}\)</span>: The mean number of eggs produced by each hen for hatching, <span class="math inline">\(\mu_{hatching}\)</span>, is NOT equal to the mean number of eggs produced by each hen for table eggs, <span class="math inline">\(\mu_{table}\)</span>. Mathematically, <span class="math inline">\(\mu_{hatching} \ne \mu_{table}\)</span>.</p>
 <p><em>where</em> <span class="math inline">\(\mu_{hatching}\)</span> <em>represents the population mean number of eggs produced by each hen for hatching, and</em> <span class="math inline">\(\mu_{table}\)</span> <em>represents the population mean number of eggs produced by each hen for table eggs.</em></p>
 <p>These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.</p>
 </section>
-<section id="observed-test-statistic" class="level4">
-<h4 class="anchored" data-anchor-id="observed-test-statistic">Observed Test Statistic</h4>
+<section id="observed-test-statistic" class="level2">
+<h2 class="anchored" data-anchor-id="observed-test-statistic">Observed Test Statistic</h2>
 <p>To test these hypotheses, we calculated the observed test statistic <span class="math inline">\(\delta^{*}\)</span>, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.</p>
 <p>The observed test statistic <span class="math inline">\(\delta^{*}\)</span> = <span class="math inline">\(\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}\)</span></p>
 </section>
-<section id="hypothesis-test-using-the-permutation-method" class="level4">
-<h4 class="anchored" data-anchor-id="hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</h4>
+<section id="hypothesis-test-using-the-permutation-method" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</h2>
 <p>With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in data</span></span>
@@ -260,12 +268,46 @@ date (1): observed_month
 </div>
 </div>
 <p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
+</section>
+<section id="results-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="results-visualization">Results Visualization</h2>
+<div class="cell" data-tags="{}">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>alpha_threshold_lower <span class="ot">&lt;-</span> <span class="fu">quantile</span>(null_distribution<span class="sc">$</span>stat, <span class="fl">0.025</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>alpha_threshold_upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(null_distribution<span class="sc">$</span>stat, <span class="fl">0.975</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>null_dist_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(null_distribution, <span class="fu">aes</span>(<span class="at">x =</span> stat)) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> test_stat, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(alpha_threshold_lower, alpha_threshold_upper), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Null Distribution of Test Statistic"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Test Statistic Values"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>null_dist_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We’ve created a visualization to further strengthen our earlier conclusion. In particular, the red vertical line on the plot represents our observed test statistic obtained from our data, which lies significantly far away from the 95% confidence interval marked by the blue dashed lines. It provides substantial evidence once again to reject the null hypothesis and support the alternative hypothesis.</p>
 <p>In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen.</p>
 </section>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
-<p>Type here.</p>
+<p>Bray, A., Ismay, C., Chasnovski, E., Couch, S., Baumer, B., &amp; Cetinkaya-Rundel, M. (n.d.). <em>infer R Package</em>. infer. https://infer.netlify.app/</p>
+<p>Conrad, Z., Johnson, L.K., Roemmich, J.N., Juan, W., &amp; Jahns, L. (2017). Time Trends and Patterns of Reported Egg Consumption in the U.S. by Sociodemographic Characteristics. <em>Nutrients, 9</em>(4), 333. doi: https://doi.org/10.3390/nu9040333</p>
+<p>dplyr. (n.d.). <em>Tidyverse</em>. https://dplyr.tidyverse.org/</p>
+<p>ggplot2 (n.d.). <em>Tidyverse</em>. https://ggplot2.tidyverse.org/</p>
+<p>Mendez, S. (2023, April 9). <em>US Egg Production Data Set</em>. Open Science Framework. https://osf.io/z2gxn/</p>
+<p>R Development Core Team. (2023, November). <em>The R Manuals</em>. CRAN. https://cran.r-project.org/manuals.html</p>
+<p>readr. (n.d.). <em>Tidyverse</em>. https://readr.tidyverse.org/</p>
+<p>Stemberger, A.P. (1958). Economic Factors to Consider in Choosing Hatching Versus Table Eggs. <em>Poultry Science, 38</em>, 799 - 803. doi: https://doi.org/10.3382/PS.0380799</p>
+<p>TidyTuesday. (2023, April). <em>US Egg Production</em>. rfordatascience/tidytuesday. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-11/readme.md</p>
 </section>
 
 </main>
