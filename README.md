@@ -15,18 +15,24 @@ The data used in this analysis was taken from the tidytuesday repository (TidyTu
 
 ## Report
 
-The final report can be found [here](#).
+The final report can be found in the analysis file of this repo
 
 ## Dependencies
 
-- **R version 3.6.1** and R packages:
-  - knitr=1.26
-  - feather=0.3.5
-  - tidyverse=1.3.0
-  - caret=6.0-85
-  - ggridges=0.5.2
-  - ggthemes=4.2.0
-
+- **R version 4.3.1** and R packages:
+  - infer=1.0.5
+  - digest=0.6.33
+  - ottr=1.4.0
+  - tidyr=1.3.0
+  - dplyr=1.1.2
+  - forcats=1.0.0
+  - purrr=1.0.2
+  - readr=2.1.4
+  - knitr=1.43
+  - cowplot=1.1.1
+  - datateachr=0.2.1
+  
+Note We have many more dependencies in the environment but these are the main ones for our analysis  
 ## License
 
 Creative Commons Legal Code
