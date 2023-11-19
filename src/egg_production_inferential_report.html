@@ -310,7 +310,7 @@ date (1): observed_month
 <h2 class="anchored" data-anchor-id="hypothesis-test-using-the-permutation-method">Hypothesis Test Using the Permutation Method</h2>
 <p>With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.</p>
 <p>In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.</p>
-<p>Additionally, it is important to note that the “cage-free” production process is only applicable to table ndefinedeggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the “prod_process” variable was labeled as “all”.</p>
+<p>Additionally, it is important to note that the “cage-free” production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the “prod_process” variable was labeled as “all”.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new column to calculate the mean number of eggs produced by each hen</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Since cage-free is only available for table eggs, we filter the prod_process is equal to all </span></span>
@@ -381,7 +381,7 @@ date (1): observed_month
 1       0</code></pre>
 </div>
 </div>
-<p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
+<p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
 </section>
 <section id="results-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="results-visualization">Results Visualization</h2>

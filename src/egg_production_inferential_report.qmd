@@ -116,7 +116,7 @@ With these hypotheses and observed test statistic in place, we could conduct our
 
 In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.
 
-Additionally, it is important to note that the "cage-free" production process is only applicable to table ndefinedeggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
+Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
 
 ```{r Data Wrangling}
 # create a new column to calculate the mean number of eggs produced by each hen
@@ -162,7 +162,7 @@ p_value
 
 ```
 
-The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favour of the alternative hypothesis $H_{A}$.
+The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
 
 ## Results Visualization
 
