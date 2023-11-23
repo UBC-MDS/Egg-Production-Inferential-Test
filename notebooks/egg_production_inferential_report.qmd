@@ -1,0 +1,216 @@
+---
+title: "DSCI 522 Milestone 1"
+subtitle: Inferential Analysis for Egg Production
+format:
+  html:
+    toc: true
+editor_options:
+  markdown:
+    wrap: none
+---
+
+```{r load libraries, message=FALSE, warning=FALSE}
+library(readr)
+library(dplyr)
+library(infer)
+library(ggplot2)
+```
+
+# Summary
+
+This analysis aims to determine whether there is a difference in the mean number of eggs produced per hen between table eggs (i.e. unfertilized eggs for consumption) and hatching eggs (i.e. fertilized and will produce a chicken). The data used in this analysis was reported monthly from July 2016 to February of 2023 and was limited to the product type "all" as this includes both conventionally housed and cage-free eggs produced in the United States of America. We conducted a 1000 sample permutation to test our null-hypothesis with an observed test statistic of 5.527 and a p-value of 0. Using a significance level of 0.05 we rejected the null hypothesis in favour of the alternative and concluded that there is a significant difference in the mean number of eggs produced per hen between table and hatching eggs.
+
+# Introduction
+
+Eggs and poultry products continue to be a staple in the modern diet (Conrad et al., 2017). Although the proportion of U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers (Conrad et al., 2017). Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.
+
+In this analysis we specifically look at the difference in table eggs and hatching eggs. Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how best to approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices (Stemberger, 1958).
+
+# Methods
+
+## Data
+
+The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from Open Science Framework by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
+
+## Analysis
+
+The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language (R Development Core Team, 2023) and the following packages were used to conduct the analysis: dplyr(dplyr, n.d.), readr(readr, n.d.), infer(Bray et al., n.d.) and ggplot(ggplot2, n.d.).
+
+# Result & Discussion
+
+## EDA
+
+```{r Read Data}
+# read in data
+egg_prod <- read_csv("../data/egg-production.csv")
+egg_prod
+
+```
+
+Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
+
+```{r, message=FALSE, warning=FALSE}
+summary(egg_prod)
+str(egg_prod)
+head(egg_prod)
+tail(egg_prod)
+nrow(egg_prod)
+```
+
+The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.
+
+Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
+
+```{r, message=FALSE, warning=FALSE}
+ggplot(egg_prod,aes(x = n_eggs)) + geom_histogram() + labs(title = "Histogram of number of eggs in a month",
+       x = "Number of eggs per month",
+       y = "Count")
+
+ggplot(egg_prod,aes(x = n_hens)) + geom_histogram() + labs(title = "Histogram of number of hens",
+       x = "Number of hens per month",
+       y = "Count")
+
+df <- na.omit(egg_prod)
+
+cor(df$n_hens, df$n_eggs)
+
+```
+
+We can see it is hard to determine a specific shape of the distributions but this is expected because we have a relatively small sample size. We also see that both distributions are somewhat similar. The correlation between the 2 variables is high at 0.9979883 meaning there is likely some strong relation between n_hens and n_eggs.
+
+Step 3: Visualize the distribution of both prod_type and prod_process.
+
+```{r, message=FALSE, warning=FALSE}
+ggplot(egg_prod,aes(x = prod_type)) + geom_bar() + labs(title = "Distribution of production type",
+       x = "Production type",
+       y = "Count")
+
+ggplot(egg_prod,aes(x = prod_process)) + geom_bar() + labs(title = "Distribution of production process",
+       x = "Production process",
+       y = "Count")
+```
+
+In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.
+
+## Research Question and Hypotheses
+
+We aimed to investigate whether there is a difference in the average number of eggs produced by each hen between hatching eggs and table eggs. To address this question, we formulated the following hypotheses:
+
+$H_{0}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} = \mu_{table}$.
+
+$H_{A}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is NOT equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} \ne \mu_{table}$.
+
+*where* $\mu_{hatching}$ *represents the population mean number of eggs produced by each hen for hatching, and* $\mu_{table}$ *represents the population mean number of eggs produced by each hen for table eggs.*
+
+These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.
+
+## Observed Test Statistic
+
+To test these hypotheses, we calculated the observed test statistic $\delta^{*}$, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.
+
+The observed test statistic $\delta^{*}$ = $\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}$
+
+## Hypothesis Test Using the Permutation Method
+
+With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.
+
+In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.
+
+Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
+
+```{r Data Wrangling}
+# create a new column to calculate the mean number of eggs produced by each hen
+# Since cage-free is only available for table eggs, we filter the prod_process is equal to all 
+egg_prod <- egg_prod |>
+  filter(prod_process == "all") |>
+  mutate(n_egg_by_hen = n_eggs / n_hens)
+egg_prod
+```
+
+Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values(NA).
+
+```{r Calculate the Test Statistic}
+# manipulate the data to calculate the test statistic
+n_eggs_by_hen_set <- egg_prod |>
+  group_by(prod_type) |>
+  summarise(n = n(),mean_n_eggs_by_hen = mean(n_egg_by_hen, na.rm = TRUE))
+test_stat <- diff(n_eggs_by_hen_set$mean_n_eggs_by_hen)
+n_eggs_by_hen_set
+test_stat
+```
+
+With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
+
+```{r Hyhothesis Test, message=FALSE, warning=FALSE}
+# set prod_type as factor
+egg_prod <- egg_prod |>
+  mutate( prod_type = factor(prod_type))
+
+# implement Hypothesis test using the permutation
+set.seed(522)
+null_distribution <- egg_prod |>
+  specify(formula = n_egg_by_hen ~ prod_type) |>
+  hypothesize(null = "independence") |>
+  generate(reps = 1000, type = "permute") |>
+  calculate(stat = "diff in means", order = c("table eggs", "hatching eggs"))
+
+# calculate the p-value
+p_value <- null_distribution |>
+  get_pvalue(obs_stat = test_stat, direction = "both")
+
+p_value
+
+```
+
+The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
+
+## Results Visualization
+
+```{r fig.width=7, fig.height=4, tags=c()}
+alpha_threshold_lower <- quantile(null_distribution$stat, 0.025)
+alpha_threshold_upper <- quantile(null_distribution$stat, 0.975)
+
+null_dist_plot <- ggplot(null_distribution, aes(x = stat)) +
+  geom_histogram(aes(y = after_stat(density)),
+                 bins = 30,
+                 colour = 1, fill = "lightblue") +
+  geom_density() +
+  geom_vline(xintercept = test_stat, color = "red", linewidth = 1) +
+  geom_vline(xintercept = c(alpha_threshold_lower, alpha_threshold_upper), linetype = "dashed", color = "blue") +
+  labs(
+    title = "Null Distribution of the difference in means with n=1000 permutations",
+    x = "Difference of the means",
+    y = "Count"
+  ) 
+
+null_dist_plot
+
+```
+
+We've created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
+
+## Implications and Future Research Directions
+
+In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen. It suggests that tailoring production strategies for these two egg types may be necessary to optimize yields and meet consumer demands efficiently.
+
+Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs. Understanding how variations in processing methods have influence on table egg production could offer valuable insights for both the egg industry and consumers.
+
+# References
+
+Bray, A., Ismay, C., Chasnovski, E., Couch, S., Baumer, B., & Cetinkaya-Rundel, M. (n.d.). *infer R Package*. infer. https://infer.netlify.app/
+
+Conrad, Z., Johnson, L.K., Roemmich, J.N., Juan, W., & Jahns, L. (2017). Time Trends and Patterns of Reported Egg Consumption in the U.S. by Sociodemographic Characteristics. *Nutrients, 9*(4), 333. doi: https://doi.org/10.3390/nu9040333
+
+dplyr. (n.d.). *Tidyverse*. https://dplyr.tidyverse.org/
+
+ggplot2 (n.d.). *Tidyverse*. https://ggplot2.tidyverse.org/
+
+Mendez, S. (2023, April 9). *US Egg Production Data Set*. Open Science Framework. https://osf.io/z2gxn/
+
+R Development Core Team. (2023, November). *The R Manuals*. CRAN. https://cran.r-project.org/manuals.html
+
+readr. (n.d.). *Tidyverse*. https://readr.tidyverse.org/
+
+Stemberger, A.P. (1958). Economic Factors to Consider in Choosing Hatching Versus Table Eggs. *Poultry Science, 38*, 799 - 803. doi: https://doi.org/10.3382/PS.0380799
+
+TidyTuesday. (2023, April). *US Egg Production*. rfordatascience/tidytuesday. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-11/readme.md
