@@ -127,7 +127,7 @@ egg_prod <- egg_prod |>
 egg_prod
 ```
 
-Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values(NA).
+Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
 ```{r Calculate the Test Statistic}
 # manipulate the data to calculate the test statistic
