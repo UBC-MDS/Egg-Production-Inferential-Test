@@ -1,0 +1,12 @@
+services:
+  breast_cancer_predictor:
+    image: paolode/Egg-Production-Inferential-Test:2fae3cd
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan/work
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+    platform: linux/amd64
