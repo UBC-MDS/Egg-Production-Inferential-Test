@@ -1,6 +1,6 @@
 services:
   breast_cancer_predictor:
-    image: paolode/Egg-Production-Inferential-Test:2fae3cd
+    image: paolode/egg-production-inferential-test:2fae3cd
     ports:
       - "8888:8888"
     volumes:
