@@ -15,7 +15,7 @@ The data used in this analysis was taken from the tidytuesday repository (TidyTu
 
 ## Report
 
-The final report can be found in the scr folder of this repo   
+The final report can be found [here](https://ubc-mds.github.io/Egg-Production-Inferential-Test/egg_production_inferential_report.html).
 
 ## Usage  
 
