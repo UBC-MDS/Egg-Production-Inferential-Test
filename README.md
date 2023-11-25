@@ -2,7 +2,7 @@
 
 # Comparative Analysis of Egg Production: Hatching vs. Table Eggs 
 
-**Author:** Kun Ya, Kiersten Gilberg, Paolo De Lagrave-Codina, Yin Huang  
+**Author:** Kun Ya, Kiersten Gilberg, Paolo De Lagrave-Codina  
 
 **Contributions:** We welcome all contributions, input, feedback or bug fixes to this project! For reporting a bug or feature requests, please open up an issue here. If you'd like to contribute a bug fix, you can fork our repository and submit a pull request. We will review all pull requests as soon as possible. All contributors must abide by our code of conduct.
 
@@ -49,7 +49,7 @@ and under the "Run" menu click "Restart R and Run All Chunks".
 #### Clean up
 
 1. To shut down the container and clean up the resources, 
-type `Cntrl` + `C` in the terminal
+type `Ctrl` + `C` in the terminal
 where you launched the container, and then type `docker compose rm`
 
 ## Dependencies
