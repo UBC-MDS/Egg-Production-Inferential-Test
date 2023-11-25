@@ -2,28 +2,23 @@
 library(testthat)
 source("../../R/count_classes.R")
 
-test_that("`count_classes` should return a tibble", {
-  expect_s3_class(count_classes(two_classes_3_obs, class_lables), "data.frame")
+
+test_that("data_wrangling should return a data frame", {
+  expect_s3_class(data_wrangling(two_group_df_input, filter, "Z", numerator, denominator, group), "data.frame")
 })
 
-test_that("`count_classes` should return a data frame, or data frame extension, 
-with the number of rows that corresponds to the number of unique classes 
-in the column passed to `class_col`", {
-  expect_equivalent(count_classes(five_classes_3_obs, class_lables), five_classes_3_obs_output)
-  expect_equivalent(count_classes(two_classes_3_obs, class_lables), two_classes_3_obs_output)
-  expect_equivalent(count_classes(one_class_3_obs, class_lables), one_class_3_obs_output)
-  expect_equivalent(count_classes(empty_df, class_lables), empty_df_output)
+test_that("data_wrangling values are not correct", {
+  expect_equivalent(data_wrangling(two_group_df_input, filter, "Z", numerator,
+                                   denominator, group), two_group_output)
+  expect_equivalent(data_wrangling(three_group_df_input, filter, "Z", numerator,
+                                   denominator, group), three_group_output)
+  expect_equivalent(data_wrangling(one_group_df_input, filter, "Z", numerator,
+                                   denominator, group), one_group_output)
+  expect_equivalent(data_wrangling(empty_df_input, filter, "Z", numerator,
+                                   denominator, group), empty_output)
 })
 
-test_that("`count_classes` should return a data frame, or data frame extension, 
-whose values in the `count` column correspond to the number of observations 
-for the group in the `class` column from the original data frame", {
-  expect_equivalent(count_classes(two_classes_3_and_2_obs, class_lables), two_classes_3_and_2_obs_output)
-  expect_equivalent(count_classes(two_classes_3_and_1_obs, class_lables), two_classes_3_and_1_obs_output)
-})
-
-test_that("`count_classes` should throw an error when incorrect types 
-are passed to `data_frame` and `class_col` arguments", {
-  expect_error(count_classes(two_classes_3_obs, vector_class_labels))
-  expect_error(count_classes(two_classes_3_obs_as_list, class_lables))
+test_that("data_wrangling should throw an error when incorrect types are passed in numerator_col and denominator_col ", {
+  expect_error(data_wrangling(numerator_error, filter, "Z", numerator, denominator, group))
+  expect_error(data_wrangling(denominator_error, filter, "Z", numerator, denominator, group))
 })

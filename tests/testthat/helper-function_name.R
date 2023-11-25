@@ -1,25 +1,46 @@
-# The sample from demo to take place
+# function inputs
+two_group_input <- data.frame(filter = c("Z", "Z"),
+                               numerator = c(1, 2),
+                               denominator = c(1, 2),
+                               group = c("A", "B"))
 
-# function input for tests for count_classes
-five_classes_3_obs <- data.frame(class_lables = rep(c("class1", "class2", "class3", "class4", "class5"), 3))
-two_classes_3_obs <- data.frame(class_lables = rep(c("class1", "class2"), 3))
-two_classes_3_and_2_obs <- data.frame(class_lables = c(rep(c("class1", "class2"), 2), "class1"))
-two_classes_3_and_1_obs <- data.frame(class_lables = c(rep("class1", 3), "class2"))
-one_class_3_obs <- data.frame(class_lables = rep("class1", 3))
-empty_df  <- data.frame(class_lables = character(0))
-vector_class_labels <- rep(c("class1", "class2"), 3)
-two_classes_3_obs_as_list <- list(class_lables = rep(c("class1", "class2"), 3))
+three_group_input <- data.frame(filter = c("Z", "Z", "Z"),
+                               numerator = c(1, 2, 3),
+                               denominator = c(1, 1, 1),
+                               group = c("A", "B", "C"))
 
-# expected function output from count_classes
-five_classes_3_obs_output <- data.frame(class = c("class1", "class2", "class3", "class4", "class5"),
-                                        count = rep(3, 5))
-two_classes_3_obs_output <- data.frame(class = c("class1", "class2"),
-                                count = c(3, 3))
-two_classes_3_and_2_obs_output <- data.frame(class = c("class1", "class2"),
-                                      count = c(3, 2))
-two_classes_3_and_1_obs_output <- data.frame(class = c("class1", "class2"),
-                                      count = c(3, 1))
-one_class_3_obs_output <- data.frame(class = "class1",
-                              count = 3)
-empty_df_output <- data.frame(class = character(0),
-                              count = numeric(0))
+one_group_input <- data.frame(filter = c("Z"),
+                               numerator = c(1),
+                               denominator = c(1),
+                               group = c("A"))
+
+empty_input <- data.frame(filter = character(0),
+                               numerator = numeric(0),
+                               denominator = numeric(0),
+                               group = character(0))
+
+#function outputs from data_wrangling
+two_group_output <- data.frame(group = c("A", "B"),
+                         n = c(1, 1),
+                         mean = c(1, 1))
+three_group_output <- data.frame(group = c("A", "B", "C"),
+                           n = c(1, 2, 3),
+                           mean = c(1, 2, 3))
+one_group_output <- data.frame(group = c("A"),
+                           n = c(1),
+                           mean = 1)
+empty_output <- data.frame(group = character(0),
+                       n = numeric(0),
+                       mean = numeric(0))
+
+#error outputs
+numerator_error <- data.frame(filter = c("Z", "Z"),
+                              numerator = c("a", "a"),
+                              denominator = c(1, 2),
+                              group = c("A", "B"))
+
+denominator_error <- data.frame(filter = c("Z", "Z"),
+                                numerator = c(1, 2),
+                                denominator = c("a", "b"),
+                                group = c("A", "B"))
+

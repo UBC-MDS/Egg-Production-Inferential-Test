@@ -21,8 +21,13 @@
 #' @examples
 #' data_wrangling(egg_prod, prod_process, "all", n_eggs, n_hens, prod_type)
 
-data_wrangling <- function(data_frame, filter_col, filter_value, numerator_col,
-                           denominator_col, grouping_col){
+data_wrangling <- function(data_frame, filter_col, filter_value, numerator_col, denominator_col, grouping_col){
+  if(!is.numeric(numerator_col)) {    
+    stop("`numerator_col` expects a vector of numeric values")
+  }
+  if(!is.numeric(denominator_col)) {    
+    stop("`denominator_col` expects a vector of numeric values")
+  }
   data_frame |>
     dplyr::filter(filter_col == filter_value) |>
     dplyr::mutate(value = {{ numerator_col }} / {{ denominator_col }}) |>
@@ -30,3 +35,4 @@ data_wrangling <- function(data_frame, filter_col, filter_value, numerator_col,
     dplyr::summarise(n = n(),
                      mean_of_group = mean(value, na.rm = TRUE))
 }
+
