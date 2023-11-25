@@ -5,6 +5,8 @@ source("../../R/generate_null_dist_plot.R")
 
 # generate a helper test data
 sample_null_distribution <- data.frame(stat = rnorm(100))
+# generate an incorrect null distribution
+incorrect_null_distribution <- c("value1", "value2", "value3")
 
 # Test Case 1: Confirm that `generate_null_dist_plot` returns a valid plot
 test_that("generate_null_dist_plot should return a valid plot", {
@@ -65,7 +67,6 @@ test_that("A title and axis labels should be included", {
 # Test Case 8: generate_null_dist_plot` should throw an error when incorrect types 
 # are passed to `null_distribution` arguments
 test_that("generate_null_dist_plot should throw an error for incorrect null_distribution types", {
-  incorrect_null_distribution <- c("value1", "value2", "value3")
   expect_error(generate_null_dist_plot(incorrect_null_distribution, 0.023, alpha = 0.1), 
                "Input data frame must contain a 'stat' column.")
 })
