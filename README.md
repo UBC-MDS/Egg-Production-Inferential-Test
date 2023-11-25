@@ -35,12 +35,12 @@ and launch Docker on your computer.
 docker compose up
 ```
 
-2. Then visit a web browser on your computer and type: [http://localhost:8787] (http://localhost:8787)
+2. Then visit a web browser on your computer and type: http://localhost:8787
 If it worked, then you should be at an RStudio Sign In page. To sign in, use the following credentials:
 
-username: rstudio
+- *username: rstudio*
 
-password: apassword
+- *password: apassword*
 
 3. To run the analysis,
 open `notebooks/egg_production_inferential_report.qmd` in RStudio you just launched
