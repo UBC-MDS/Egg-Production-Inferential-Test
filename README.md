@@ -60,8 +60,8 @@ where you launched the container, and then type `docker compose rm`
   - dplyr=1.1.2
   - readr=2.1.4
   - ggplot2=3.4.3
-  
-Note We have many more dependencies in the environment but these are the main ones for our analysis.
+  - testthat=3.2.0
+    
 Here is a link to the full env https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock  
 
 ## License
