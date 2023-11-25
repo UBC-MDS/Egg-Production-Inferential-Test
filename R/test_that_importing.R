@@ -1,5 +1,5 @@
 library(testthat)
-source("../R/function_importing.R")
+source("../R/importing.R")
 
 test_that("importing() returns a data frame", {
   file_path <- "../data/egg-production.csv"
@@ -20,4 +20,19 @@ test_that("importing() returns data frame with correct column names", {
 
   expect_equal(actual_col_names, expected_col_names)
 })
+
+
+test_that("importing() returns correct number of rows", {
+  file_path <- "../data/egg-production.csv"
+  imported_data <- importing(file_path)
+  expect_true(nrow(imported_data) == 320)
+})
+
+test_that("importing() returns NULL if the file does not exist", {
+  file_path <- "fake path"
+  imported_data <- importing(file_path)
+  expect_true(is.null(imported_data))
+})
+
+
 
