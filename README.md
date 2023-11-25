@@ -19,14 +19,38 @@ The final report can be found in the scr folder of this repo
 
 ## Usage  
 
-First time running the project, run the following from the R console in the root of this repository:
+#### Setup
 
-```R
-renv::init()
+1. [Install](https://www.docker.com/get-started/) 
+and launch Docker on your computer.
 
-renv::restore()
+2. Clone this GitHub repository.
+
+#### Running the analysis
+
+1. Navigate to the root of this project on your computer using the
+   command line and enter the following command:
+
+``` 
+docker compose up
 ```
-To run the analysis you need to open the R project in R studio  
+
+2. Then visit a web browser on your computer and type: [http://localhost:8787] (http://localhost:8787)
+If it worked, then you should be at an RStudio Sign In page. To sign in, use the following credentials:
+
+username: rstudio
+
+password: apassword
+
+3. To run the analysis,
+open `notebooks/egg_production_inferential_report.qmd` in RStudio you just launched
+and under the "Run" menu click "Restart R and Run All Chunks".
+
+#### Clean up
+
+1. To shut down the container and clean up the resources, 
+type `Cntrl` + `C` in the terminal
+where you launched the container, and then type `docker compose rm`
 
 ## Dependencies
 
