@@ -14,6 +14,7 @@ library(readr)
 library(dplyr)
 library(infer)
 library(ggplot2)
+source("../R/generate_null_dist_plot.R")
 ```
 
 # Summary
@@ -167,24 +168,7 @@ The p-value obtained from our hypothesis test is 0, which is an extremely rare o
 ## Results Visualization
 
 ```{r fig.width=7, fig.height=4, tags=c()}
-alpha_threshold_lower <- quantile(null_distribution$stat, 0.025)
-alpha_threshold_upper <- quantile(null_distribution$stat, 0.975)
-
-null_dist_plot <- ggplot(null_distribution, aes(x = stat)) +
-  geom_histogram(aes(y = after_stat(density)),
-                 bins = 30,
-                 colour = 1, fill = "lightblue") +
-  geom_density() +
-  geom_vline(xintercept = test_stat, color = "red", linewidth = 1) +
-  geom_vline(xintercept = c(alpha_threshold_lower, alpha_threshold_upper), linetype = "dashed", color = "blue") +
-  labs(
-    title = "Null Distribution of the difference in means with n=1000 permutations",
-    x = "Difference of the means",
-    y = "Count"
-  ) 
-
-null_dist_plot
-
+generate_null_dist_plot(null_distribution, test_stat)
 ```
 
 We've created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
