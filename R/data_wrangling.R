@@ -22,12 +22,12 @@
 #' data_wrangling(egg_prod, prod_process, "all", n_eggs, n_hens, prod_type)
 # 
 data_wrangling <- function(data_frame, filter_col, filter_value, numerator_col, denominator_col, grouping_col){
-  # if(!is.numeric(numerator_col)) {
-  #   stop("`numerator_col` expects a vector of numeric values")
-  # }
-  # if(!is.numeric(denominator_col)) {
-  #   stop("`denominator_col` expects a vector of numeric values")
-  # }
+  if (!is.numeric(data_frame |> dplyr::pull({{ numerator_col }}))) {
+    stop('numerator_col must be numeric')
+  }
+  if (!is.numeric(data_frame |> dplyr::pull({{ denominator_col }}))) {
+    stop('denominator_col must be numeric')
+  }
   data_frame |>
     dplyr::filter({{ filter_col }} == filter_value) |>
     dplyr::mutate(value := {{ numerator_col }} / {{ denominator_col }}) |>
