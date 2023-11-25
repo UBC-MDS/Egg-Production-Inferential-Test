@@ -15,6 +15,8 @@ library(dplyr)
 library(infer)
 library(ggplot2)
 source("../R/generate_null_dist_plot.R")
+source("../R/importing.R")
+source("../R/data_wrangling.R")
 ```
 
 # Summary
@@ -43,7 +45,7 @@ The number of eggs per hen was calculated from the given data by dividing the to
 
 ```{r Read Data}
 # read in data
-egg_prod <- read_csv("../data/egg-production.csv")
+egg_prod <- importing("../data/egg-production.csv")
 egg_prod
 
 ```
@@ -132,12 +134,14 @@ Subsequently, we proceeded to analyze the data by computing a test statistic, th
 
 ```{r Calculate the Test Statistic}
 # manipulate the data to calculate the test statistic
-n_eggs_by_hen_set <- egg_prod |>
-  group_by(prod_type) |>
-  summarise(n = n(),mean_n_eggs_by_hen = mean(n_egg_by_hen, na.rm = TRUE))
-test_stat <- diff(n_eggs_by_hen_set$mean_n_eggs_by_hen)
-n_eggs_by_hen_set
+# n_eggs_by_hen_set <- egg_prod |>
+#   group_by(prod_type) |>
+#   summarise(n = n(),mean_n_eggs_by_hen = mean(n_egg_by_hen, na.rm = TRUE))
+test_stat <- diff(egg_prod_set$mean_of_group)
 test_stat
+
+egg_prod_set <- data_wrangling(egg_prod, prod_process, "all", n_eggs, n_hens, prod_type)
+egg_prod_set
 ```
 
 With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
