@@ -19,19 +19,24 @@ empty_input <- data.frame(filter = character(0),
                                denominator = numeric(0),
                                group = character(0))
 
+
+
 #function outputs from data_wrangling
 two_group_output <- data.frame(group = c("A", "B"),
                          n = c(1, 1),
-                         mean = c(1, 1))
+                         mean_of_group = c(1, 1))
+
 three_group_output <- data.frame(group = c("A", "B", "C"),
-                           n = c(1, 2, 3),
-                           mean = c(1, 2, 3))
+                           n = c(1, 1, 1),
+                           mean_of_group = c(1, 2, 3))
+
 one_group_output <- data.frame(group = c("A"),
                            n = c(1),
-                           mean = 1)
+                           mean_of_group = 1)
+
 empty_output <- data.frame(group = character(0),
                        n = numeric(0),
-                       mean = numeric(0))
+                       mean_of_group = numeric(0))
 
 #error outputs
 numerator_error <- data.frame(filter = c("Z", "Z"),
