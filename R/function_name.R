@@ -1,27 +1,32 @@
 # The sample from demo to take place
 
-#' Count class observations
+#' Calculates mean of grouped columns
 #'
-#' Creates a new data frame with two columns, 
-#' listing the classes present in the input data frame,
-#' and the number of observations for each class.
+#' Adds two new columns to the dataframe, adding the number of observations per 
+#' group and calculates the mean of a specified value_col for each group.
 #'
-#' @param data_frame A data frame or data frame extension (e.g. a tibble).
-#' @param class_col unquoted column name of column containing class labels
+#' @param data_frame A data frame or a tibble.
+#' @param filter_col the column to filter by
+#' @param filter_value string value to filter for
+#' @param numerator_col unquoted column name of the column to be divided by the 
+#'        denominaotor column
+#' @param denominator_col unquoted column name that the numerator_col will be 
+#'        divided by
+#' @param grouping_col unquoted column name of the column to be grouped by
 #'
-#' @return A data frame with two columns. 
-#'   The first column (named class) lists the classes from the input data frame.
-#'   The second column (named count) lists the number of observations for each class from the input data frame.
-#'   It will have one row for each class present in input data frame.
-#'
-#' @export
+#' @return A dataframe with two columns
+#'  The first is the number of observations in each group
+#'  The second is the summarized value of the groups
 #'
 #' @examples
-#' count_classes(mtcars, am)
-count_classes <- function(data_frame, class_col) {
-  # returns a data frame with two columns: class and count
+#' data_wrangling(egg_prod, prod_process, "all", n_eggs, n_hens, prod_type)
+
+data_wrangling <- function(data_frame, filter_col, filter_value, numerator_col,
+                           denominator_col, grouping_col){
   data_frame |>
-    dplyr::group_by({{ class_col }}) |>
-    dplyr::summarize(count = dplyr::n()) |>
-    dplyr::rename_at(1, ~ "class")
+    dplyr::filter(filter_col == filter_value) |>
+    dplyr::mutate(value = {{ numerator_col }} / {{ denominator_col }}) |>
+    dplyr::group_by({{ grouping_col }}) |>
+    dplyr::summarise(n = n(),
+                     mean_of_group = mean(value, na.rm = TRUE))
 }
