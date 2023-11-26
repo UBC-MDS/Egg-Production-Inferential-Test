@@ -2,7 +2,7 @@
 
 # Comparative Analysis of Egg Production: Hatching vs. Table Eggs 
 
-**Author:** Kun Ya, Kiersten Gilberg, Paolo De Lagrave-Codina, Yin Huang  
+**Author:** Kun Ya, Kiersten Gilberg, Paolo De Lagrave-Codina  
 
 **Contributions:** We welcome all contributions, input, feedback or bug fixes to this project! For reporting a bug or feature requests, please open up an issue here. If you'd like to contribute a bug fix, you can fork our repository and submit a pull request. We will review all pull requests as soon as possible. All contributors must abide by our code of conduct.
 
@@ -15,18 +15,42 @@ The data used in this analysis was taken from the tidytuesday repository (TidyTu
 
 ## Report
 
-The final report can be found in the scr folder of this repo   
+The final report can be found [here](https://ubc-mds.github.io/Egg-Production-Inferential-Test/egg_production_inferential_report.html).
 
 ## Usage  
 
-First time running the project, run the following from the R console in the root of this repository:
+#### Setup
 
-```R
-renv::init()
+1. [Install](https://www.docker.com/get-started/) 
+and launch Docker on your computer.
 
-renv::restore()
+2. Clone this GitHub repository.
+
+#### Running the analysis
+
+1. Navigate to the root of this project on your computer using the
+   command line and enter the following command:
+
+``` 
+docker compose up
 ```
-To run the analysis you need to open the R project in R studio  
+
+2. Then visit a web browser on your computer and type: http://localhost:8787
+If it worked, then you should be at an RStudio Sign In page. To sign in, use the following credentials:
+
+- *username: rstudio*
+
+- *password: password*
+
+3. To run the analysis,
+open `notebooks/egg_production_inferential_report.qmd` in RStudio you just launched
+and under the "Run" menu click "Restart R and Run All Chunks".
+
+#### Clean up
+
+1. To shut down the container and clean up the resources, 
+type `Ctrl` + `C` in the terminal
+where you launched the container, and then type `docker compose rm`
 
 ## Dependencies
 
@@ -36,8 +60,8 @@ To run the analysis you need to open the R project in R studio
   - dplyr=1.1.2
   - readr=2.1.4
   - ggplot2=3.4.3
-  
-Note We have many more dependencies in the environment but these are the main ones for our analysis.
+  - testthat=3.2.0
+    
 Here is a link to the full env https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock  
 
 ## License
