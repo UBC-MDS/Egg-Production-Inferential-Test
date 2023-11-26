@@ -40,7 +40,7 @@ If it worked, then you should be at an RStudio Sign In page. To sign in, use the
 
 - *username: rstudio*
 
-- *password: apassword*
+- *password: password*
 
 3. To run the analysis,
 open `notebooks/egg_production_inferential_report.qmd` in RStudio you just launched
