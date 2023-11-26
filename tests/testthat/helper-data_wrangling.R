@@ -34,3 +34,4 @@ empty_output <- data.frame(group = character(0),
 #error testing
 error_input <- data.frame(group = c("A"),
                           value = c("1"))
+
