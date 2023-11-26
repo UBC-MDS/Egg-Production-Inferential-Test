@@ -134,14 +134,11 @@ Subsequently, we proceeded to analyze the data by computing a test statistic, th
 
 ```{r Calculate the Test Statistic}
 # manipulate the data to calculate the test statistic
-# n_eggs_by_hen_set <- egg_prod |>
-#   group_by(prod_type) |>
-#   summarise(n = n(),mean_n_eggs_by_hen = mean(n_egg_by_hen, na.rm = TRUE))
-test_stat <- diff(egg_prod_set$mean_of_group)
-test_stat
+n_eggs_by_hen_set<- data_wrangling(egg_prod, prod_type, n_egg_by_hen)
+n_eggs_by_hen_set
 
-egg_prod_set <- data_wrangling(egg_prod, prod_process, "all", n_eggs, n_hens, prod_type)
-egg_prod_set
+test_stat <- diff(n_eggs_by_hen_set$n_egg_by_hen)
+test_stat
 ```
 
 With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
