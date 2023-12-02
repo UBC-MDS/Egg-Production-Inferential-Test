@@ -10,6 +10,8 @@ RUN R -e "install.packages('infer', version = '1.0.5', dependencies=TRUE)"
 #install the infer package
 RUN R -e "install.packages('testthat', version = '3.2.0', dependencies=TRUE)"
 
+RUN R -e "install.packages('docopt', version = '0.7.1', dependencies=TRUE)"
+
 ENV CTAN_REPO=https://mirror.ctan.org/systems/texlive/tlnet
 ENV PATH=$PATH:/usr/local/texlive/bin/linux
 
