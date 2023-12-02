@@ -36,8 +36,11 @@ main <- function(data_path, response, category_compare, order_values, test_stat_
   
   # calculate p-value
   p_value <- null_distribution |>
-    get_pvalue(obs_stat = as.numeric(test_stat_path), direction = "both")
+    get_pvalue(obs_stat = as.numeric(test_stat), direction = "both")
   saveRDS(p_value, 'results/p_value.rds')
+  
+  print(paste("p-value is:", p_value))
+  print("null_distribution and p_value were successfully created, which can be found in results folder.")
 }
 
 main(opt$data_path, opt$response, opt$category_compare, opt$order_values, opt$test_stat_path, opt$seed)
