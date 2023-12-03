@@ -16,13 +16,17 @@ general_EDA <- function(data_path) {
   data <- read_csv(data_path)
   
   
-  # str
+  # summary
   summary_data <- summarise(data)
   saveRDS(summary_data, 'results/summary.rds')
   
-  # check head
+  # check str
   str_data <- str(data)
   saveRDS(str_data, 'results/str.rds')
+  
+  # check head
+  head_data <- head(data)
+  saveRDS(head_data, 'results/head.rds')
 
   # check tail
   tail_data <- tail(data)
