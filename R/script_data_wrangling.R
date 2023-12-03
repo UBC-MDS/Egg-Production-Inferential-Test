@@ -4,6 +4,7 @@ Usage: filter_mutate.R <data_csv>
 " -> doc
 
 library(dplyr)
+library(readr)
 library(docopt)
 
 opt <- docopt(doc)
@@ -12,7 +13,7 @@ filter_mutate <- function(data_csv){
   result <- read.csv(data_csv) |>
     dplyr::filter(prod_process == 'all') |>
     dplyr::mutate(n_egg_by_hen = n_eggs / n_hens)
-  return(result)
+  write_csv(result, 'results/data_wrangling.csv')
 }
 filter_mutate(opt$data_csv)
 
