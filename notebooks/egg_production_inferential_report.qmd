@@ -8,7 +8,6 @@ editor_options:
   markdown:
     wrap: none
 bibliography: ../references.bib
-
 ---
 
 ```{r load libraries,include=FALSE, message=FALSE, warning=FALSE}
@@ -58,25 +57,20 @@ summary <- readRDS("../results/summary.rds")
 print(summary)
 ```
 
-```{r, eda-str, echo=FALSE, fig.cap="Table 2. EDA - Data Structure",message=FALSE, warning=FALSE}
-str <- readRDS("../results/str.rds")
-print(str)
+```{r, eda-head, echo=FALSE, fig.cap="Table 2. EDA - First Few Rows",message=FALSE, warning=FALSE}
+head <- readRDS("../results/head.rds")
+knitr::kable(head, caption = "EDA - First Few Rows") %>%
+ kable_styling(full_width = FALSE)
 ```
 
-```{r, eda-head, echo=FALSE, fig.cap="Table 3. EDA - First Few Rows",message=FALSE, warning=FALSE}
-# # head <- readRDS("../results/head.rds")
-# # knitr::kable(head, caption = "EDA - First Few Rows") %>%
-# #  kable_styling(full_width = FALSE)
-```
-
-```{r, eda-tail, echo=FALSE, fig.cap="Table 4. EDA - Last Few Rows", message=FALSE, warning=FALSE}
+```{r, eda-tail, echo=FALSE, fig.cap="Table 3. EDA - Last Few Rows", message=FALSE, warning=FALSE}
 
 tail <- readRDS("../results/tail.rds")
 knitr::kable(tail, caption = "EDA - Last Few Rows") %>%
   kable_styling(full_width = FALSE) 
 ```
 
-```{r, eda-nrow, echo=FALSE, fig.cap="Table 5. EDA - Number of Rows", message=FALSE, warning=FALSE}
+```{r, eda-nrow, echo=FALSE, fig.cap="Table 4. EDA - Number of Rows", message=FALSE, warning=FALSE}
 nrow <- readRDS("../results/nrow.rds")
 knitr::kable(nrow, caption = "EDA - Number of Rows") %>%
   kable_styling(full_width = FALSE) 
@@ -152,12 +146,12 @@ knitr::kable(head(read_csv("../results/egg_prod.csv")), caption = "Data after Wr
 
 Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
-```{r data wrangling 2, echo=FALSE, fig.cap="Table 6.Summary of Number of Egg produced per hen by production", message=FALSE, warning=FALSE}
+```{r data wrangling 2, echo=FALSE, fig.cap="Table 5.Summary of Number of Egg produced per hen by production", message=FALSE, warning=FALSE}
 knitr::kable(head(read_csv("../results/data_wrangling.csv")), caption = "Summary of Number of Egg produced per hen by production") |>
   kable_styling(full_width = FALSE) 
 ```
 
-```{r test stat, echo=FALSE, fig.cap="Table 7.Test Statistics for the two sample means", message=FALSE, warning=FALSE}
+```{r test stat, echo=FALSE, fig.cap="Table 6.Test Statistics for the two sample means", message=FALSE, warning=FALSE}
 t_test <- readRDS("../results/test_stat.rds")
 knitr::kable(t_test, caption = "Test Statistics for the two sample means") %>%
   kable_styling(full_width = FALSE) 
@@ -170,7 +164,7 @@ knitr::kable(head(read_csv("../results/null_distribution.csv")), caption = "Tabl
   kable_styling(full_width = FALSE) 
 ```
 
-```{r p-value, echo=FALSE, fig.cap="Table 8.P-value for Hypotheses Test", message=FALSE, warning=FALSE}
+```{r p-value, echo=FALSE, fig.cap="Table 7.P-value for Hypotheses Test", message=FALSE, warning=FALSE}
 p_value <- readRDS("../results/p_value.rds")
 knitr::kable(p_value, caption = "P-value for the permutation") %>%
   kable_styling(full_width = FALSE) 
