@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>DSCI 522 Milestone 1</title>
+<title>DSCI 522 Milestone 3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="egg_production_inferential_report_files/libs/clipboard/clipboard.min.js"></script>
@@ -67,6 +52,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="egg_production_inferential_report_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="egg_production_inferential_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="egg_production_inferential_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="egg_production_inferential_report_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="egg_production_inferential_report_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -105,7 +93,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">DSCI 522 Milestone 1</h1>
+<h1 class="title">DSCI 522 Milestone 3</h1>
 <p class="subtitle lead">Inferential Analysis for Egg Production</p>
 </div>
 
@@ -121,74 +109,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../R/generate_null_dist_plot.R"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../R/importing.R"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../R/data_wrangling.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <section id="summary" class="level1">
 <h1>Summary</h1>
 <p>This analysis aims to determine whether there is a difference in the mean number of eggs produced per hen between table eggs (i.e.&nbsp;unfertilized eggs for consumption) and hatching eggs (i.e.&nbsp;fertilized and will produce a chicken). The data used in this analysis was reported monthly from July 2016 to February of 2023 and was limited to the product type “all” as this includes both conventionally housed and cage-free eggs produced in the United States of America. We conducted a 1000 sample permutation to test our null-hypothesis with an observed test statistic of 5.527 and a p-value of 0. Using a significance level of 0.05 we rejected the null hypothesis in favour of the alternative and concluded that there is a significant difference in the mean number of eggs produced per hen between table and hatching eggs.</p>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Eggs and poultry products continue to be a staple in the modern diet (Conrad et al., 2017). Although the proportion of U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers (Conrad et al., 2017). Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.</p>
-<p>In this analysis we specifically look at the difference in table eggs and hatching eggs. Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how best to approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices (Stemberger, 1958).</p>
+<p>Eggs and poultry products continue to be a staple in the modern diet <span class="citation" data-cites="conrad2017time">(<a href="#ref-conrad2017time" role="doc-biblioref">Conrad et al. 2017</a>)</span>. Although the proportion of U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers <span class="citation" data-cites="conrad2017time">(<a href="#ref-conrad2017time" role="doc-biblioref">Conrad et al. 2017</a>)</span>. Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.</p>
+<p>In this analysis we specifically look at the difference in table eggs and hatching eggs. Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how best to approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices <span class="citation" data-cites="stemberger1959economic">(<a href="#ref-stemberger1959economic" role="doc-biblioref">Stemberger 1959</a>)</span>.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from Open Science Framework by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.</p>
+<p>The data used in this analysis was taken from the tidytuesday repository <span class="citation" data-cites="tidytuesday">(<a href="#ref-tidytuesday" role="doc-biblioref">Community 2023</a>)</span> and was originally sourced from Open Science Framework by Samara Mendez <span class="citation" data-cites="mendez">(<a href="#ref-mendez" role="doc-biblioref">Mendez 2023</a>)</span>. Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.</p>
 </section>
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
-<p>The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language (R Development Core Team, 2023) and the following packages were used to conduct the analysis: dplyr(dplyr, n.d.), readr(readr, n.d.), infer(Bray et al., n.d.) and ggplot(ggplot2, n.d.).</p>
+<p>The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language <span class="citation" data-cites="R">(<a href="#ref-R" role="doc-biblioref">R Core Team 2023</a>)</span>] and the following packages were used to conduct the analysis: dplyr <span class="citation" data-cites="dplyr">(<a href="#ref-dplyr" role="doc-biblioref">Wickham et al. 2023</a>)</span>, readr <span class="citation" data-cites="readr">(<a href="#ref-readr" role="doc-biblioref">Wickham, Hester, and Bryan 2023</a>)</span>, infer <span class="citation" data-cites="infer">(<a href="#ref-infer" role="doc-biblioref">Couch et al. 2021</a>)</span> and ggplot2 <span class="citation" data-cites="ggplot2">(<a href="#ref-ggplot2" role="doc-biblioref">Wickham 2016</a>)</span>.</p>
 </section>
 </section>
 <section id="result-discussion" class="level1">
 <h1>Result &amp; Discussion</h1>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">EDA</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> <span class="fu">importing</span>(<span class="st">"../data/egg-production.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 320 Columns: 6
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (3): prod_type, prod_process, source
-dbl  (2): n_hens, n_eggs
-date (1): observed_month
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>egg_prod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 320 × 6
-   observed_month prod_type     prod_process   n_hens     n_eggs source         
-   &lt;date&gt;         &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;          
- 1 2016-07-31     hatching eggs all          57975000 1147000000 ChicEggs-09-23…
- 2 2016-08-31     hatching eggs all          57595000 1142700000 ChicEggs-10-21…
- 3 2016-09-30     hatching eggs all          57161000 1093300000 ChicEggs-11-22…
- 4 2016-10-31     hatching eggs all          56857000 1126700000 ChicEggs-12-23…
- 5 2016-11-30     hatching eggs all          57116000 1096600000 ChicEggs-01-24…
- 6 2016-12-31     hatching eggs all          57750000 1132900000 ChicEggs-02-28…
- 7 2017-01-31     hatching eggs all          57991000 1123400000 ChicEggs-03-21…
- 8 2017-02-28     hatching eggs all          58286000 1014500000 ChicEggs-04-21…
- 9 2017-03-31     hatching eggs all          58735000 1128500000 ChicEggs-05-22…
-10 2017-04-30     hatching eggs all          59072000 1097200000 ChicEggs-06-23…
-# ℹ 310 more rows</code></pre>
-</div>
-</div>
 <p>Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> observed_month        prod_type         prod_process           n_hens         
  Min.   :2016-07-31   Length:320         Length:320         Min.   : 13500000  
@@ -207,91 +153,387 @@ date (1): observed_month
  Max.   :8.601e+09                     
                                        </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>spc_tbl_ [320 × 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ observed_month: Date[1:320], format: "2016-07-31" "2016-08-31" ...
- $ prod_type     : chr [1:320] "hatching eggs" "hatching eggs" "hatching eggs" "hatching eggs" ...
- $ prod_process  : chr [1:320] "all" "all" "all" "all" ...
- $ n_hens        : num [1:320] 57975000 57595000 57161000 56857000 57116000 ...
- $ n_eggs        : num [1:320] 1.15e+09 1.14e+09 1.09e+09 1.13e+09 1.10e+09 ...
- $ source        : chr [1:320] "ChicEggs-09-23-2016.pdf" "ChicEggs-10-21-2016.pdf" "ChicEggs-11-22-2016.pdf" "ChicEggs-12-23-2016.pdf" ...
- - attr(*, "spec")=
-  .. cols(
-  ..   observed_month = col_date(format = ""),
-  ..   prod_type = col_character(),
-  ..   prod_process = col_character(),
-  ..   n_hens = col_double(),
-  ..   n_eggs = col_double(),
-  ..   source = col_character()
-  .. )
- - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 6
-  observed_month prod_type     prod_process   n_hens     n_eggs source          
-  &lt;date&gt;         &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;           
-1 2016-07-31     hatching eggs all          57975000 1147000000 ChicEggs-09-23-…
-2 2016-08-31     hatching eggs all          57595000 1142700000 ChicEggs-10-21-…
-3 2016-09-30     hatching eggs all          57161000 1093300000 ChicEggs-11-22-…
-4 2016-10-31     hatching eggs all          56857000 1126700000 ChicEggs-12-23-…
-5 2016-11-30     hatching eggs all          57116000 1096600000 ChicEggs-01-24-…
-6 2016-12-31     hatching eggs all          57750000 1132900000 ChicEggs-02-28-…</code></pre>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+EDA - First Few Rows
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+observed_month
+</th>
+<th style="text-align:left;">
+prod_type
+</th>
+<th style="text-align:left;">
+prod_process
+</th>
+<th style="text-align:right;">
+n_hens
+</th>
+<th style="text-align:right;">
+n_eggs
+</th>
+<th style="text-align:left;">
+source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2016-07-31
+</td>
+<td style="text-align:left;">
+hatching eggs
+</td>
+<td style="text-align:left;">
+all
+</td>
+<td style="text-align:right;">
+57975000
+</td>
+<td style="text-align:right;">
+1147000000
+</td>
+<td style="text-align:left;">
+ChicEggs-09-23-2016.pdf
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-08-31
+</td>
+<td style="text-align:left;">
+hatching eggs
+</td>
+<td style="text-align:left;">
+all
+</td>
+<td style="text-align:right;">
+57595000
+</td>
+<td style="text-align:right;">
+1142700000
+</td>
+<td style="text-align:left;">
+ChicEggs-10-21-2016.pdf
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-09-30
+</td>
+<td style="text-align:left;">
+hatching eggs
+</td>
+<td style="text-align:left;">
+all
+</td>
+<td style="text-align:right;">
+57161000
+</td>
+<td style="text-align:right;">
+1093300000
+</td>
+<td style="text-align:left;">
+ChicEggs-11-22-2016.pdf
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-10-31
+</td>
+<td style="text-align:left;">
+hatching eggs
+</td>
+<td style="text-align:left;">
+all
+</td>
+<td style="text-align:right;">
+56857000
+</td>
+<td style="text-align:right;">
+1126700000
+</td>
+<td style="text-align:left;">
+ChicEggs-12-23-2016.pdf
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-11-30
+</td>
+<td style="text-align:left;">
+hatching eggs
+</td>
+<td style="text-align:left;">
+all
+</td>
+<td style="text-align:right;">
+57116000
+</td>
+<td style="text-align:right;">
+1096600000
+</td>
+<td style="text-align:left;">
+ChicEggs-01-24-2017.pdf
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016-12-31
+</td>
+<td style="text-align:left;">
+hatching eggs
+</td>
+<td style="text-align:left;">
+all
+</td>
+<td style="text-align:right;">
+57750000
+</td>
+<td style="text-align:right;">
+1132900000
+</td>
+<td style="text-align:left;">
+ChicEggs-02-28-2017.pdf
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Table 2. EDA - First Few Rows</p>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 6
-  observed_month prod_type  prod_process          n_hens     n_eggs source      
-  &lt;date&gt;         &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;       
-1 2022-10-31     table eggs cage-free (organic) 17984833 462870566. PY20221101M…
-2 2022-11-30     table eggs cage-free (organic) 17984833 449033143. PY20221201M…
-3 2022-12-31     table eggs cage-free (organic) 18034386 467549794. PY20230103M…
-4 2023-01-31     table eggs cage-free (organic) 17464318 448923754. PY20230201M…
-5 2023-02-28     table eggs cage-free (organic) 16748968 384588000  PY20230301M…
-6 2023-03-31     table eggs cage-free (organic) 17558594 445822869. PY20230403M…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(egg_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 320</code></pre>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+EDA - Last Few Rows
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+observed_month
+</th>
+<th style="text-align:left;">
+prod_type
+</th>
+<th style="text-align:left;">
+prod_process
+</th>
+<th style="text-align:right;">
+n_hens
+</th>
+<th style="text-align:right;">
+n_eggs
+</th>
+<th style="text-align:left;">
+source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2022-10-31
+</td>
+<td style="text-align:left;">
+table eggs
+</td>
+<td style="text-align:left;">
+cage-free (organic)
+</td>
+<td style="text-align:right;">
+17984833
+</td>
+<td style="text-align:right;">
+462870566
+</td>
+<td style="text-align:left;">
+PY20221101MCAGEFREE.PDF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-11-30
+</td>
+<td style="text-align:left;">
+table eggs
+</td>
+<td style="text-align:left;">
+cage-free (organic)
+</td>
+<td style="text-align:right;">
+17984833
+</td>
+<td style="text-align:right;">
+449033143
+</td>
+<td style="text-align:left;">
+PY20221201MCAGEFREE.PDF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2022-12-31
+</td>
+<td style="text-align:left;">
+table eggs
+</td>
+<td style="text-align:left;">
+cage-free (organic)
+</td>
+<td style="text-align:right;">
+18034386
+</td>
+<td style="text-align:right;">
+467549794
+</td>
+<td style="text-align:left;">
+PY20230103MCAGEFREE.PDF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-01-31
+</td>
+<td style="text-align:left;">
+table eggs
+</td>
+<td style="text-align:left;">
+cage-free (organic)
+</td>
+<td style="text-align:right;">
+17464318
+</td>
+<td style="text-align:right;">
+448923754
+</td>
+<td style="text-align:left;">
+PY20230201MCAGEFREE.PDF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-02-28
+</td>
+<td style="text-align:left;">
+table eggs
+</td>
+<td style="text-align:left;">
+cage-free (organic)
+</td>
+<td style="text-align:right;">
+16748968
+</td>
+<td style="text-align:right;">
+384588000
+</td>
+<td style="text-align:left;">
+PY20230301MCAGEFREE.PDF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2023-03-31
+</td>
+<td style="text-align:left;">
+table eggs
+</td>
+<td style="text-align:left;">
+cage-free (organic)
+</td>
+<td style="text-align:right;">
+17558594
+</td>
+<td style="text-align:right;">
+445822869
+</td>
+<td style="text-align:left;">
+PY20230403MCAGEFREE.PDF
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Table 3. EDA - Last Few Rows</p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+EDA - Number of Rows
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+320
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Table 4. EDA - Number of Rows</p>
 </div>
 </div>
 <p>The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.</p>
 <p>Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> n_eggs)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of number of eggs in a month"</span>,</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of eggs per month"</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../results/hist_n_eggs.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 1. EDA - Histogram of number of eggs</figcaption>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> n_hens)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of number of hens"</span>,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of hens per month"</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../results/hist_n_hens.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 2. EDA - Histogram of number of hens</figcaption>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(egg_prod)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df<span class="sc">$</span>n_hens, df<span class="sc">$</span>n_eggs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9979883</code></pre>
 </div>
 </div>
 <p>We can see it is hard to determine a specific shape of the distributions but this is expected because we have a relatively small sample size. We also see that both distributions are somewhat similar. The correlation between the 2 variables is high at 0.9979883 meaning there is likely some strong relation between n_hens and n_eggs.</p>
 <p>Step 3: Visualize the distribution of both prod_type and prod_process.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> prod_type)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of production type"</span>,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Production type"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../results/bar_prod.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 3. EDA - Distribution of the production</figcaption>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(egg_prod,<span class="fu">aes</span>(<span class="at">x =</span> prod_process)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of production process"</span>,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Production process"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../results/bar_prod_process.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 4. EDA - Distribution of the production process</figcaption>
+</figure>
+</div>
 </div>
 </div>
 <p>In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.</p>
@@ -314,82 +556,121 @@ date (1): observed_month
 <p>With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.</p>
 <p>In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.</p>
 <p>Additionally, it is important to note that the “cage-free” production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the “prod_process” variable was labeled as “all”.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new column to calculate the mean number of eggs produced by each hen</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Since cage-free is only available for table eggs, we filter the prod_process is equal to all </span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prod_process <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_egg_by_hen =</span> n_eggs <span class="sc">/</span> n_hens)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>egg_prod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 160 × 7
-   observed_month prod_type     prod_process   n_hens n_eggs source n_egg_by_hen
-   &lt;date&gt;         &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
- 1 2016-07-31     hatching eggs all          57975000 1.15e9 ChicE…         19.8
- 2 2016-08-31     hatching eggs all          57595000 1.14e9 ChicE…         19.8
- 3 2016-09-30     hatching eggs all          57161000 1.09e9 ChicE…         19.1
- 4 2016-10-31     hatching eggs all          56857000 1.13e9 ChicE…         19.8
- 5 2016-11-30     hatching eggs all          57116000 1.10e9 ChicE…         19.2
- 6 2016-12-31     hatching eggs all          57750000 1.13e9 ChicE…         19.6
- 7 2017-01-31     hatching eggs all          57991000 1.12e9 ChicE…         19.4
- 8 2017-02-28     hatching eggs all          58286000 1.01e9 ChicE…         17.4
- 9 2017-03-31     hatching eggs all          58735000 1.13e9 ChicE…         19.2
-10 2017-04-30     hatching eggs all          59072000 1.10e9 ChicE…         18.6
-# ℹ 150 more rows</code></pre>
-</div>
-</div>
 <p>Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manipulate the data to calculate the test statistic</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>n_eggs_by_hen_set<span class="ot">&lt;-</span> <span class="fu">data_wrangling</span>(egg_prod, prod_type, n_egg_by_hen)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>n_eggs_by_hen_set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-  prod_type         n n_egg_by_hen
-  &lt;chr&gt;         &lt;int&gt;        &lt;dbl&gt;
-1 hatching eggs    80         19.1
-2 table eggs       80         24.6</code></pre>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Summary of Number of Egg produced per hen by production
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+prod_type
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+n_egg_by_hen
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+hatching eggs
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+19.05066
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+table eggs
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+24.57723
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Table 5.Summary of Number of Egg produced per hen by production</p>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>test_stat <span class="ot">&lt;-</span> <span class="fu">diff</span>(n_eggs_by_hen_set<span class="sc">$</span>n_egg_by_hen)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>test_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.526568</code></pre>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Test Statistics for the two sample means
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+5.526568
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Table 6.Test Statistics for the two sample means</p>
 </div>
 </div>
 <p>With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set prod_type as factor</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>egg_prod <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">prod_type =</span> <span class="fu">factor</span>(prod_type))</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># implement Hypothesis test using the permutation</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">522</span>)</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> egg_prod <span class="sc">|&gt;</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> n_egg_by_hen <span class="sc">~</span> prod_type) <span class="sc">|&gt;</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"table eggs"</span>, <span class="st">"hatching eggs"</span>))</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p-value</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> null_distribution <span class="sc">|&gt;</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> test_stat, <span class="at">direction =</span> <span class="st">"both"</span>)</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  p_value
-    &lt;dbl&gt;
-1       0</code></pre>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+P-value for the permutation
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+p_value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Table 7.P-value for Hypotheses Test</p>
 </div>
 </div>
 <p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
 </section>
 <section id="results-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="results-visualization">Results Visualization</h2>
-<div class="cell" data-tags="{}">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">generate_null_dist_plot</span>(null_distribution, test_stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="egg_production_inferential_report_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../results/results_viz.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 5. Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic</figcaption>
+</figure>
+</div>
 </div>
 </div>
 <p>We’ve created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.</p>
@@ -400,20 +681,40 @@ date (1): observed_month
 <p>Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs. Understanding how variations in processing methods have influence on table egg production could offer valuable insights for both the egg industry and consumers.</p>
 </section>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
-<p>Bray, A., Ismay, C., Chasnovski, E., Couch, S., Baumer, B., &amp; Cetinkaya-Rundel, M. (n.d.). <em>infer R Package</em>. infer. https://infer.netlify.app/</p>
-<p>Conrad, Z., Johnson, L.K., Roemmich, J.N., Juan, W., &amp; Jahns, L. (2017). Time Trends and Patterns of Reported Egg Consumption in the U.S. by Sociodemographic Characteristics. <em>Nutrients, 9</em>(4), 333. doi: https://doi.org/10.3390/nu9040333</p>
-<p>dplyr. (n.d.). <em>Tidyverse</em>. https://dplyr.tidyverse.org/</p>
-<p>ggplot2 (n.d.). <em>Tidyverse</em>. https://ggplot2.tidyverse.org/</p>
-<p>Mendez, S. (2023, April 9). <em>US Egg Production Data Set</em>. Open Science Framework. https://osf.io/z2gxn/</p>
-<p>R Development Core Team. (2023, November). <em>The R Manuals</em>. CRAN. https://cran.r-project.org/manuals.html</p>
-<p>readr. (n.d.). <em>Tidyverse</em>. https://readr.tidyverse.org/</p>
-<p>Stemberger, A.P. (1958). Economic Factors to Consider in Choosing Hatching Versus Table Eggs. <em>Poultry Science, 38</em>, 799 - 803. doi: https://doi.org/10.3382/PS.0380799</p>
-<p>TidyTuesday. (2023, April). <em>US Egg Production</em>. rfordatascience/tidytuesday. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-11/readme.md</p>
+<section id="references" class="level1 unnumbered">
+
+
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-tidytuesday" class="csl-entry" role="listitem">
+Community, R4DS Online Learning. 2023. <span>“Tidy Tuesday: A Weekly Social Data Project.”</span> <a href="https://github.com/rfordatascience/tidytuesday">https://github.com/rfordatascience/tidytuesday</a>.
+</div>
+<div id="ref-conrad2017time" class="csl-entry" role="listitem">
+Conrad, Zach, LuAnn K Johnson, James N Roemmich, WenYen Juan, and Lisa Jahns. 2017. <span>“Time Trends and Patterns of Reported Egg Consumption in the US by Sociodemographic Characteristics.”</span> <em>Nutrients</em> 9 (4): 333.
+</div>
+<div id="ref-infer" class="csl-entry" role="listitem">
+Couch, Simon P., Andrew P. Bray, Chester Ismay, Evgeni Chasnovski, Benjamin S. Baumer, and Mine Çetinkaya-Rundel. 2021. <span>“<span class="nocase">infer</span>: An <span>R</span> Package for Tidyverse-Friendly Statistical Inference.”</span> <em>Journal of Open Source Software</em> 6 (65): 3661. <a href="https://doi.org/10.21105/joss.03661">https://doi.org/10.21105/joss.03661</a>.
+</div>
+<div id="ref-mendez" class="csl-entry" role="listitem">
+Mendez, S. 2023. <span>“US Egg Production Data Set.”</span> <em>Open Science Framework</em>. <a href="https://osf.io/z2gxn/">https://osf.io/z2gxn/</a>.
+</div>
+<div id="ref-R" class="csl-entry" role="listitem">
+R Core Team. 2023. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-stemberger1959economic" class="csl-entry" role="listitem">
+Stemberger, AP. 1959. <span>“Economic Factors to Consider in Choosing Hatching Versus Table Eggs.”</span> <em>Poultry Science</em> 38 (4): 799–803.
+</div>
+<div id="ref-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div id="ref-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis Vaughan. 2023. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2023. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
