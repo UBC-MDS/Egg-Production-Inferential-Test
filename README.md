@@ -88,6 +88,9 @@ Rscript R/scr_generate_null_dist_plot.R results/null_distribution.csv results/te
     -   readr=2.1.4
     -   ggplot2=3.4.3
     -   testthat=3.2.0
+    -   knitr=1.43
+    -   docopt=0.7.1
+    -   kableExtra=1.3.4
 
 Here is a link to the full env <https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock>
 
