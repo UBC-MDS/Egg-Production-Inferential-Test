@@ -16,7 +16,7 @@ group_summarise <- function(data_csv){
     dplyr::group_by(prod_type) |>
     dplyr::summarise(n = dplyr::n(),
                      n_egg_by_hen := mean(n_egg_by_hen))
-  write_csv(result2, 'results/data_wrangling_t_test.csv')
+  write_csv(result2, 'results/data_wrangling.csv')
 }
 
 group_summarise(opt$data_csv)
