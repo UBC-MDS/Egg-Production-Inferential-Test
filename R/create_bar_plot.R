@@ -17,7 +17,7 @@ opt = docopt(doc)
 #' create_bar_plot(mpg, 'class', 'Distribution of car classes')
 create_bar_plot <- function(data, column_name, title_description, filenames) {
   # Construct the bar plot using ggplot
-  p <- ggplot(data, aes_string(x = column_name)) +
+  p <- ggplot(read.csv(data), aes_string(x = column_name)) +
     geom_bar() +
     labs(title = paste("Distribution of", title_description),
          x = title_description,
@@ -26,4 +26,4 @@ create_bar_plot <- function(data, column_name, title_description, filenames) {
   ggsave(p, filename = filenames, width=8, height=5)
 }
 
-create_histogram(opt$data, opt$column_name, opt$title_description, opt$filenames)
+create_bar_plot(opt$data, opt$column_name, opt$title_description, opt$filenames)
