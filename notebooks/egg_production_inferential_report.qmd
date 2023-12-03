@@ -7,9 +7,6 @@ format:
 editor_options:
   markdown:
     wrap: none
-
-output: 
-  bookdown::html_document2: default
 ---
 
 ```{r load libraries,include=FALSE, message=FALSE, warning=FALSE}
@@ -18,9 +15,6 @@ library(readr)
 library(dplyr)
 library(infer)
 library(ggplot2)
-source("../R/generate_null_dist_plot.R")
-source("../R/importing.R")
-source("../R/data_wrangling.R")
 library(knitr)
 library(kableExtra)
 ```
@@ -49,39 +43,57 @@ The number of eggs per hen was calculated from the given data by dividing the to
 
 ## EDA
 
-```{r Read Data}
+```{r Read Data, include=FALSE}
 # read in data
-egg_prod <- importing("../data/egg-production.csv")
+egg_prod <- read_csv("../data/egg-production.csv")
 egg_prod
-
 ```
 
 Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
 
-```{r, message=FALSE, warning=FALSE}
-summary(egg_prod)
-str(egg_prod)
-head(egg_prod)
-tail(egg_prod)
-nrow(egg_prod)
+```{r, eda-summary, echo=FALSE, fig.cap="Table 1. EDA - Data Summary",message=FALSE, warning=FALSE}
+summary <- readRDS("../results/summary.rds")
+print(summary)
+```
+
+```{r, eda-str, echo=FALSE, fig.cap="Table 2. EDA - Data Structure",message=FALSE, warning=FALSE}
+str <- readRDS("../results/str.rds")
+print(str)
+```
+
+```{r, eda-head, echo=FALSE, fig.cap="Table 3. EDA - First Few Rows",message=FALSE, warning=FALSE}
+# # head <- readRDS("../results/head.rds")
+# # knitr::kable(head, caption = "EDA - First Few Rows") %>%
+# #  kable_styling(full_width = FALSE)
+```
+
+```{r, eda-tail, echo=FALSE, fig.cap="Table 4. EDA - Last Few Rows", message=FALSE, warning=FALSE}
+
+tail <- readRDS("../results/tail.rds")
+knitr::kable(tail, caption = "EDA - Last Few Rows") %>%
+  kable_styling(full_width = FALSE) 
+```
+
+```{r, eda-nrow, echo=FALSE, fig.cap="Table 5. EDA - Number of Rows", message=FALSE, warning=FALSE}
+nrow <- readRDS("../results/nrow.rds")
+knitr::kable(nrow, caption = "EDA - Number of Rows") %>%
+  kable_styling(full_width = FALSE) 
+
 ```
 
 The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.
 
 Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
 
-```{r, message=FALSE, warning=FALSE}
-ggplot(egg_prod,aes(x = n_eggs)) + geom_histogram() + labs(title = "Histogram of number of eggs in a month",
-       x = "Number of eggs per month",
-       y = "Count")
+```{r hist-n-eggs, fig.cap="Figure 1. EDA - Histogram of number of eggs", echo=FALSE}
 
-ggplot(egg_prod,aes(x = n_hens)) + geom_histogram() + labs(title = "Histogram of number of hens",
-       x = "Number of hens per month",
-       y = "Count")
+knitr::include_graphics("../results/hist_n_eggs.png")
 
-df <- na.omit(egg_prod)
+```
 
-cor(df$n_hens, df$n_eggs)
+```{r hist-n-hens, fig.cap="Figure 2. EDA - Histogram of number of hens", echo=FALSE}
+
+knitr::include_graphics("../results/hist_n_hens.png")
 
 ```
 
@@ -89,14 +101,16 @@ We can see it is hard to determine a specific shape of the distributions but thi
 
 Step 3: Visualize the distribution of both prod_type and prod_process.
 
-```{r, message=FALSE, warning=FALSE}
-ggplot(egg_prod,aes(x = prod_type)) + geom_bar() + labs(title = "Distribution of production type",
-       x = "Production type",
-       y = "Count")
+```{r bar-prod, fig.cap="Figure 3. EDA - Distribution of the production", echo=FALSE}
 
-ggplot(egg_prod,aes(x = prod_process)) + geom_bar() + labs(title = "Distribution of production process",
-       x = "Production process",
-       y = "Count")
+knitr::include_graphics("../results/bar_prod.png")
+
+```
+
+```{r bar-prod-process, fig.cap="Figure 4. EDA - Distribution of the production process", echo=FALSE}
+
+knitr::include_graphics("../results/bar_prod_process.png")
+
 ```
 
 In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.
@@ -136,12 +150,12 @@ knitr::kable(head(read_csv("../results/egg_prod.csv")), caption = "Data after Wr
 
 Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
-```{r data wrangling 2, echo=FALSE, message=FALSE, warning=FALSE}
+```{r data wrangling 2, echo=FALSE, fig.cap="Table 6.Summary of Number of Egg produced per hen by production", message=FALSE, warning=FALSE}
 knitr::kable(head(read_csv("../results/data_wrangling.csv")), caption = "Summary of Number of Egg produced per hen by production") |>
   kable_styling(full_width = FALSE) 
 ```
 
-```{r test stat, echo=FALSE, message=FALSE, warning=FALSE}
+```{r test stat, echo=FALSE, fig.cap="Table 7.Test Statistics for the two sample means", message=FALSE, warning=FALSE}
 t_test <- readRDS("../results/test_stat.rds")
 knitr::kable(t_test, caption = "Test Statistics for the two sample means") %>%
   kable_styling(full_width = FALSE) 
@@ -154,7 +168,7 @@ knitr::kable(head(read_csv("../results/null_distribution.csv")), caption = "Tabl
   kable_styling(full_width = FALSE) 
 ```
 
-```{r p-value, echo=FALSE, message=FALSE, warning=FALSE}
+```{r p-value, echo=FALSE, fig.cap="Table 8.P-value for Hypotheses Test", message=FALSE, warning=FALSE}
 p_value <- readRDS("../results/p_value.rds")
 knitr::kable(p_value, caption = "P-value for the permutation") %>%
   kable_styling(full_width = FALSE) 
@@ -164,7 +178,7 @@ The p-value obtained from our hypothesis test is 0, which is an extremely rare o
 
 ## Results Visualization
 
-```{r results-visualization, fig.cap="Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic", echo=FALSE}
+```{r results-visualization, fig.cap="Figure 5. Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic", echo=FALSE}
 
 knitr::include_graphics("../results/results_viz.png")
 ```
