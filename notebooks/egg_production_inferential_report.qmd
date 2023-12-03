@@ -7,9 +7,8 @@ format:
 editor_options:
   markdown:
     wrap: none
+bibliography: ../references.bib
 
-output: 
-  bookdown::html_document2: default
 ---
 
 ```{r load libraries,include=FALSE, message=FALSE, warning=FALSE}
@@ -31,19 +30,19 @@ This analysis aims to determine whether there is a difference in the mean number
 
 # Introduction
 
-Eggs and poultry products continue to be a staple in the modern diet (Conrad et al., 2017). Although the proportion of U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers (Conrad et al., 2017). Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.
+Eggs and poultry products continue to be a staple in the modern diet [@conrad2017time]. Although the proportion of U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers [@conrad2017time]. Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.
 
-In this analysis we specifically look at the difference in table eggs and hatching eggs. Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how best to approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices (Stemberger, 1958).
+In this analysis we specifically look at the difference in table eggs and hatching eggs. Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how best to approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices [@stemberger1959economic].
 
 # Methods
 
 ## Data
 
-The data used in this analysis was taken from the tidytuesday repository (TidyTuesday, 2023) and was originally sourced from Open Science Framework by Samara Mendez (Mendez, 2023). Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
+The data used in this analysis was taken from the tidytuesday repository [@tidytuesday] and was originally sourced from Open Science Framework by Samara Mendez [@mendez]. Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
 
 ## Analysis
 
-The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language (R Development Core Team, 2023) and the following packages were used to conduct the analysis: dplyr(dplyr, n.d.), readr(readr, n.d.), infer(Bray et al., n.d.) and ggplot(ggplot2, n.d.).
+The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language [@R]\] and the following packages were used to conduct the analysis: dplyr [@dplyr], readr [@readr], infer [@infer] and ggplot2 [@ggplot2].
 
 # Result & Discussion
 
@@ -178,21 +177,3 @@ In practical terms, this means that hatching eggs and table eggs do indeed exhib
 Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs. Understanding how variations in processing methods have influence on table egg production could offer valuable insights for both the egg industry and consumers.
 
 # References
-
-Bray, A., Ismay, C., Chasnovski, E., Couch, S., Baumer, B., & Cetinkaya-Rundel, M. (n.d.). *infer R Package*. infer. https://infer.netlify.app/
-
-Conrad, Z., Johnson, L.K., Roemmich, J.N., Juan, W., & Jahns, L. (2017). Time Trends and Patterns of Reported Egg Consumption in the U.S. by Sociodemographic Characteristics. *Nutrients, 9*(4), 333. doi: https://doi.org/10.3390/nu9040333
-
-dplyr. (n.d.). *Tidyverse*. https://dplyr.tidyverse.org/
-
-ggplot2 (n.d.). *Tidyverse*. https://ggplot2.tidyverse.org/
-
-Mendez, S. (2023, April 9). *US Egg Production Data Set*. Open Science Framework. https://osf.io/z2gxn/
-
-R Development Core Team. (2023, November). *The R Manuals*. CRAN. https://cran.r-project.org/manuals.html
-
-readr. (n.d.). *Tidyverse*. https://readr.tidyverse.org/
-
-Stemberger, A.P. (1958). Economic Factors to Consider in Choosing Hatching Versus Table Eggs. *Poultry Science, 38*, 799 - 803. doi: https://doi.org/10.3382/PS.0380799
-
-TidyTuesday. (2023, April). *US Egg Production*. rfordatascience/tidytuesday. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-11/readme.md
