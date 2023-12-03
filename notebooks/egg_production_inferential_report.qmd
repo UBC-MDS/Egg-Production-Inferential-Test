@@ -1,5 +1,5 @@
 ---
-title: "DSCI 522 Milestone 1"
+title: "DSCI 522 Milestone 3"
 subtitle: Inferential Analysis for Egg Production
 format:
   html:
@@ -8,9 +8,11 @@ editor_options:
   markdown:
     wrap: none
 bibliography: ../references.bib
+
 ---
 
-```{r load libraries, message=FALSE, warning=FALSE}
+```{r load libraries,include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 library(readr)
 library(dplyr)
 library(infer)
@@ -18,6 +20,8 @@ library(ggplot2)
 source("../R/generate_null_dist_plot.R")
 source("../R/importing.R")
 source("../R/data_wrangling.R")
+library(knitr)
+library(kableExtra)
 ```
 
 # Summary
@@ -122,55 +126,46 @@ In our data wrangling phase, we calculated the mean number of eggs produced per 
 
 Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
 
-```{r Data Wrangling}
+```{r Data Wrangling, include=FALSE, message=FALSE, warning=FALSE}
 # create a new column to calculate the mean number of eggs produced by each hen
 # Since cage-free is only available for table eggs, we filter the prod_process is equal to all 
-egg_prod <- egg_prod |>
-  filter(prod_process == "all") |>
-  mutate(n_egg_by_hen = n_eggs / n_hens)
-egg_prod
+knitr::kable(head(read_csv("../results/egg_prod.csv")), caption = "Data after Wrangling") |>
+  kable_styling(full_width = FALSE) 
 ```
 
 Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
-```{r Calculate the Test Statistic}
-# manipulate the data to calculate the test statistic
-n_eggs_by_hen_set<- data_wrangling(egg_prod, prod_type, n_egg_by_hen)
-n_eggs_by_hen_set
+```{r data wrangling 2, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(read_csv("../results/data_wrangling.csv")), caption = "Summary of Number of Egg produced per hen by production") |>
+  kable_styling(full_width = FALSE) 
+```
 
-test_stat <- diff(n_eggs_by_hen_set$n_egg_by_hen)
-test_stat
+```{r test stat, echo=FALSE, message=FALSE, warning=FALSE}
+t_test <- readRDS("../results/test_stat.rds")
+knitr::kable(t_test, caption = "Test Statistics for the two sample means") %>%
+  kable_styling(full_width = FALSE) 
 ```
 
 With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
 
-```{r Hyhothesis Test, message=FALSE, warning=FALSE}
-# set prod_type as factor
-egg_prod <- egg_prod |>
-  mutate( prod_type = factor(prod_type))
+```{r Hyhothesis Test, message=FALSE, warning=FALSE, include=FALSE}
+knitr::kable(head(read_csv("../results/null_distribution.csv")), caption = "Table 1. Null distribution generated from permutation") |>
+  kable_styling(full_width = FALSE) 
+```
 
-# implement Hypothesis test using the permutation
-set.seed(522)
-null_distribution <- egg_prod |>
-  specify(formula = n_egg_by_hen ~ prod_type) |>
-  hypothesize(null = "independence") |>
-  generate(reps = 1000, type = "permute") |>
-  calculate(stat = "diff in means", order = c("table eggs", "hatching eggs"))
-
-# calculate the p-value
-p_value <- null_distribution |>
-  get_pvalue(obs_stat = test_stat, direction = "both")
-
-p_value
-
+```{r p-value, echo=FALSE, message=FALSE, warning=FALSE}
+p_value <- readRDS("../results/p_value.rds")
+knitr::kable(p_value, caption = "P-value for the permutation") %>%
+  kable_styling(full_width = FALSE) 
 ```
 
 The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
 
 ## Results Visualization
 
-```{r fig.width=7, fig.height=4, tags=c()}
-generate_null_dist_plot(null_distribution, test_stat)
+```{r results-visualization, fig.cap="Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic", echo=FALSE}
+
+knitr::include_graphics("../results/results_viz.png")
 ```
 
 We've created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
