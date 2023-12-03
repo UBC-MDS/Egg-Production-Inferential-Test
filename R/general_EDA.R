@@ -17,7 +17,7 @@ general_EDA <- function(data_path) {
   
   
   # summary
-  summary_data <- summarise(data)
+  summary_data <- summary(data)
   saveRDS(summary_data, 'results/summary.rds')
   
   # check str
