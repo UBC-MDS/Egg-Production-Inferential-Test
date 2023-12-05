@@ -46,32 +46,32 @@ The number of eggs per hen was calculated from the given data by dividing the to
 
 ```{r Read Data, include=FALSE}
 # read in data
-egg_prod <- read_csv("../data/egg-production.csv")
+egg_prod <- read_csv(here::here("data/egg-production.csv"))
 egg_prod
 ```
 
 Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
 
 ```{r, eda-summary, echo=FALSE, fig.cap="Table 1. EDA - Data Summary",message=FALSE, warning=FALSE}
-summary <- readRDS("../results/summary.rds")
+summary <- readRDS(here::here("results/summary.rds"))
 print(summary)
 ```
 
 ```{r, eda-head, echo=FALSE, fig.cap="Table 2. EDA - First Few Rows",message=FALSE, warning=FALSE}
-head <- readRDS("../results/head.rds")
+head <- readRDS(here::here("results/head.rds"))
 knitr::kable(head, caption = "EDA - First Few Rows") %>%
  kable_styling(full_width = FALSE)
 ```
 
 ```{r, eda-tail, echo=FALSE, fig.cap="Table 3. EDA - Last Few Rows", message=FALSE, warning=FALSE}
-
-tail <- readRDS("../results/tail.rds")
+here::i_am("notebooks/egg_production_inferential_report.qmd")
+tail <- readRDS(here::here("results/tail.rds"))
 knitr::kable(tail, caption = "EDA - Last Few Rows") %>%
   kable_styling(full_width = FALSE) 
 ```
 
 ```{r, eda-nrow, echo=FALSE, fig.cap="Table 4. EDA - Number of Rows", message=FALSE, warning=FALSE}
-nrow <- readRDS("../results/nrow.rds")
+nrow <- readRDS(here::here("results/nrow.rds"))
 knitr::kable(nrow, caption = "EDA - Number of Rows") %>%
   kable_styling(full_width = FALSE) 
 
@@ -82,14 +82,13 @@ The source column should not be in the data frame for the analysis. n_hens and n
 Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
 
 ```{r hist-n-eggs, fig.cap="Figure 1. EDA - Histogram of number of eggs", echo=FALSE}
-
-knitr::include_graphics("../results/hist_n_eggs.png")
+knitr::include_graphics(here::here("results/hist_n_eggs.png"))
 
 ```
 
 ```{r hist-n-hens, fig.cap="Figure 2. EDA - Histogram of number of hens", echo=FALSE}
 
-knitr::include_graphics("../results/hist_n_hens.png")
+knitr::include_graphics(here::here("results/hist_n_hens.png"))
 
 ```
 
@@ -99,13 +98,13 @@ Step 3: Visualize the distribution of both prod_type and prod_process.
 
 ```{r bar-prod, fig.cap="Figure 3. EDA - Distribution of the production", echo=FALSE}
 
-knitr::include_graphics("../results/bar_prod.png")
+knitr::include_graphics(here::here("results/bar_prod.png"))
 
 ```
 
 ```{r bar-prod-process, fig.cap="Figure 4. EDA - Distribution of the production process", echo=FALSE}
 
-knitr::include_graphics("../results/bar_prod_process.png")
+knitr::include_graphics(here::here("results/bar_prod_process.png"))
 
 ```
 
@@ -140,19 +139,19 @@ Additionally, it is important to note that the "cage-free" production process is
 ```{r Data Wrangling, include=FALSE, message=FALSE, warning=FALSE}
 # create a new column to calculate the mean number of eggs produced by each hen
 # Since cage-free is only available for table eggs, we filter the prod_process is equal to all 
-knitr::kable(head(read_csv("../results/egg_prod.csv")), caption = "Data after Wrangling") |>
+knitr::kable(head(read_csv(here::here("results/egg_prod.csv"))), caption = "Data after Wrangling") |>
   kable_styling(full_width = FALSE) 
 ```
 
 Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
 ```{r data wrangling 2, echo=FALSE, fig.cap="Table 5.Summary of Number of Egg produced per hen by production", message=FALSE, warning=FALSE}
-knitr::kable(head(read_csv("../results/data_wrangling.csv")), caption = "Summary of Number of Egg produced per hen by production") |>
+knitr::kable(head(read_csv(here::here("results/data_wrangling.csv"))), caption = "Summary of Number of Egg produced per hen by production") |>
   kable_styling(full_width = FALSE) 
 ```
 
 ```{r test stat, echo=FALSE, fig.cap="Table 6.Test Statistics for the two sample means", message=FALSE, warning=FALSE}
-t_test <- readRDS("../results/test_stat.rds")
+t_test <- readRDS(here::here("results/test_stat.rds"))
 knitr::kable(t_test, caption = "Test Statistics for the two sample means") %>%
   kable_styling(full_width = FALSE) 
 ```
@@ -160,12 +159,12 @@ knitr::kable(t_test, caption = "Test Statistics for the two sample means") %>%
 With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
 
 ```{r Hyhothesis Test, message=FALSE, warning=FALSE, include=FALSE}
-knitr::kable(head(read_csv("../results/null_distribution.csv")), caption = "Table 1. Null distribution generated from permutation") |>
+knitr::kable(head(read_csv(here::here("results/null_distribution.csv"))), caption = "Table 1. Null distribution generated from permutation") |>
   kable_styling(full_width = FALSE) 
 ```
 
 ```{r p-value, echo=FALSE, fig.cap="Table 7.P-value for Hypotheses Test", message=FALSE, warning=FALSE}
-p_value <- readRDS("../results/p_value.rds")
+p_value <- readRDS(here::here("results/p_value.rds"))
 knitr::kable(p_value, caption = "P-value for the permutation") %>%
   kable_styling(full_width = FALSE) 
 ```
@@ -176,7 +175,7 @@ The p-value obtained from our hypothesis test is 0, which is an extremely rare o
 
 ```{r results-visualization, fig.cap="Figure 5. Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic", echo=FALSE}
 
-knitr::include_graphics("../results/results_viz.png")
+knitr::include_graphics(here::here("results/results_viz.png"))
 ```
 
 We've created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
