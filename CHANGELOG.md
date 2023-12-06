@@ -23,6 +23,8 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/11c5c6c0aa6a88
 #add more descriptions of the data to the EDA section rather than just displaying the data
 
 #add creative commons license to the LICENSE file
+We initially only had the MIT license listed in the LICENSE file, and both mentioned in the README file. It has now been updated to include both in the LICENSE file.
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5a0e7b875e44ad8d68fee0c03fd99760565c031a
 
 #add importance/limitations of findings to Introduction section
 
