@@ -85,11 +85,11 @@ The source column should not be in the data frame for the analysis. n_hens and n
 Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
 
 ```{r, echo=FALSE}
-#| label: hist
-#| fig-cap: "Figure 1. Distribution of Numeric variables"
+#| label: fig-hist
+#| fig-cap: "Distributions of numeric variables"
 #| fig-subcap:
-#|   - "a. EDA - Histogram of number of eggs"
-#|   - "b. EDA - Histogram of number of hens"
+#|   - "EDA - Histogram of number of eggs"
+#|   - "EDA - Histogram of number of hens"
 #| layout-ncol: 2
 knitr::include_graphics(here::here("results/hist_n_eggs.png"))
 knitr::include_graphics(here::here("results/hist_n_hens.png"))
@@ -100,11 +100,11 @@ We can see it is hard to determine a specific shape of the distributions but thi
 Step 3: Visualize the distribution of both prod_type and prod_process.
 
 ```{r, echo=FALSE}
-#| label: bars
-#| fig-cap: "Figure 2.Distribution of categorical variables"
+#| label: fig-bars
+#| fig-cap: "Distributions of categorical variables"
 #| fig-subcap: 
-#|   - "a. EDA - Distribution of the production"
-#|   - "b. EDA - Distribution of the production process"
+#|   - "EDA - Distribution of the production"
+#|   - "EDA - Distribution of the production process"
 #| layout-ncol: 2
 knitr::include_graphics(here::here("results/bar_prod.png"))
 
@@ -176,13 +176,13 @@ The p-value obtained from our hypothesis test is 0, which is an extremely rare o
 
 ## Results Visualization
 
-```{r results-viz,echo=FALSE}
-#| label: results-viz
-#| fig-cap: "Figure 3. Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic"
+```{r,echo=FALSE}
+#| label: fig-results-viz
+#| fig-cap: "Results visualization from null distribution of 1000 permutation with 5% significance level and test statistic"
 knitr::include_graphics(here::here("results/results_viz.png"))
 ```
 
-We've created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
+We've created a visualization @fig-results-viz to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
 
 ## Implications and Future Research Directions
 
