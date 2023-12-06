@@ -5,6 +5,7 @@ date: "`r format(Sys.Date(), '%Y/%m/%d')`"
 format:
   html:
     toc: true
+    embed-resources: true
 editor_options:
   markdown:
     wrap: none
@@ -47,6 +48,7 @@ The number of eggs per hen was calculated from the given data by dividing the to
 
 ```{r Read Data, include=FALSE}
 # read in data
+here::i_am("notebooks/egg_production_inferential_report.qmd")
 egg_prod <- read_csv(here::here("data/egg-production.csv"))
 egg_prod
 ```
@@ -54,6 +56,7 @@ egg_prod
 Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
 
 ```{r, eda-summary, echo=FALSE, fig.cap="Table 1. EDA - Data Summary",message=FALSE, warning=FALSE}
+
 summary <- readRDS(here::here("results/summary.rds"))
 print(summary)
 ```
@@ -65,7 +68,7 @@ knitr::kable(head, caption = "EDA - First Few Rows") %>%
 ```
 
 ```{r, eda-tail, echo=FALSE, fig.cap="Table 3. EDA - Last Few Rows", message=FALSE, warning=FALSE}
-here::i_am("notebooks/egg_production_inferential_report.qmd")
+
 tail <- readRDS(here::here("results/tail.rds"))
 knitr::kable(tail, caption = "EDA - Last Few Rows") %>%
   kable_styling(full_width = FALSE) 
@@ -75,38 +78,37 @@ knitr::kable(tail, caption = "EDA - Last Few Rows") %>%
 nrow <- readRDS(here::here("results/nrow.rds"))
 knitr::kable(nrow, caption = "EDA - Number of Rows") %>%
   kable_styling(full_width = FALSE) 
-
 ```
 
 The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.
 
 Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
 
-```{r hist-n-eggs, fig.cap="Figure 1. EDA - Histogram of number of eggs", echo=FALSE}
+```{r, echo=FALSE}
+#| label: hist
+#| fig-cap: "Figure 1. Distribution of Numeric variables"
+#| fig-subcap:
+#|   - "a. EDA - Histogram of number of eggs"
+#|   - "b. EDA - Histogram of number of hens"
+#| layout-ncol: 2
 knitr::include_graphics(here::here("results/hist_n_eggs.png"))
-
-```
-
-```{r hist-n-hens, fig.cap="Figure 2. EDA - Histogram of number of hens", echo=FALSE}
-
 knitr::include_graphics(here::here("results/hist_n_hens.png"))
-
 ```
 
 We can see it is hard to determine a specific shape of the distributions but this is expected because we have a relatively small sample size. We also see that both distributions are somewhat similar. The correlation between the 2 variables is high at 0.9979883 meaning there is likely some strong relation between n_hens and n_eggs.
 
 Step 3: Visualize the distribution of both prod_type and prod_process.
 
-```{r bar-prod, fig.cap="Figure 3. EDA - Distribution of the production", echo=FALSE}
-
+```{r, echo=FALSE}
+#| label: bars
+#| fig-cap: "Figure 2.Distribution of categorical variables"
+#| fig-subcap: 
+#|   - "a. EDA - Distribution of the production"
+#|   - "b. EDA - Distribution of the production process"
+#| layout-ncol: 2
 knitr::include_graphics(here::here("results/bar_prod.png"))
 
-```
-
-```{r bar-prod-process, fig.cap="Figure 4. EDA - Distribution of the production process", echo=FALSE}
-
 knitr::include_graphics(here::here("results/bar_prod_process.png"))
-
 ```
 
 In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.
@@ -174,8 +176,9 @@ The p-value obtained from our hypothesis test is 0, which is an extremely rare o
 
 ## Results Visualization
 
-```{r results-visualization, fig.cap="Figure 5. Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic", echo=FALSE}
-
+```{r results-viz,echo=FALSE}
+#| label: results-viz
+#| fig-cap: "Figure 3. Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic"
 knitr::include_graphics(here::here("results/results_viz.png"))
 ```
 
