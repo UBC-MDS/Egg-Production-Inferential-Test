@@ -17,6 +17,8 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/11c5c6c0aa6a88
 #Need to state assumptions and limitations in methods section
 
 #update references on Readme
+We updated the references to match the same style format as the Report.
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/44/commits/d3bbbbcd6261ae12e43a76b6b07841960b5b18b5 
 
 #change reporting of p-value from 0 to <0.001 and add explanation of why to the report
 
