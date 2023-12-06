@@ -1,6 +1,7 @@
 ---
-title: "DSCI 522 Milestone 3"
-subtitle: Inferential Analysis for Egg Production
+title: "Inferential Analysis for Egg Production"
+author: "Kiersten Gilberg, Kun Ya, Paolo De Lagrave-Codina"
+date: "`r format(Sys.Date(), '%Y/%m/%d')`"
 format:
   html:
     toc: true
