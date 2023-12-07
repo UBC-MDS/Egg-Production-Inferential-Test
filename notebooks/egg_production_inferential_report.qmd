@@ -179,7 +179,7 @@ knitr::kable(t_test_df, caption = "Test Statistics for the two sample means") |>
   kable_styling(full_width = FALSE) 
 ```
 
-With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
+With the test statistic in hand, as shown in @tbl-test-stat, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
 
 ```{r Hyhothesis Test, message=FALSE, warning=FALSE, include=FALSE}
 knitr::kable(head(read_csv(here::here("results/null_distribution.csv"))), caption = "Table 1. Null distribution generated from permutation") |>
@@ -197,7 +197,9 @@ knitr::kable(p_value_df, caption = "P-value for the permutation") |>
   kable_styling(full_width = FALSE)
 ```
 
-The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
+The p-value obtained from our hypothesis test, as shown in @tbl-p-value, is \<0.001, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
+
+*\*Though a true p-value of 0 is impossible, `get_p_value()` may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of `reps` chosen in the `generate()` step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of `reps` have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. In this case, the true p-value is a small value likely less than `3/reps` (based on a poisson approximation). [@infer]*
 
 ## Results Visualization
 

@@ -3721,7 +3721,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 
 </div>
 </div>
-<p>With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.</p>
+<p>With the test statistic in hand, as shown in <a href="#tbl-test-stat">Table 5</a>, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-p-value" class="anchored">
@@ -3739,7 +3739,8 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 
 </div>
 </div>
-<p>The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
+<p>The p-value obtained from our hypothesis test, as shown in <a href="#tbl-p-value">Table 6</a>, is &lt;0.001, which is an extremely rare occurrence. Given that our defined significance threshold <span class="math inline">\(\alpha\)</span> is 0.05, we can reject the null hypothesis <span class="math inline">\(H_{0}\)</span>(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis <span class="math inline">\(H_{A}\)</span>.</p>
+<p><em>*Though a true p-value of 0 is impossible, <code>get_p_value()</code> may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of <code>reps</code> chosen in the <code>generate()</code> step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of <code>reps</code> have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. In this case, the true p-value is a small value likely less than <code>3/reps</code> (based on a poisson approximation). <span class="citation" data-cites="infer">(<a href="#ref-infer" role="doc-biblioref">Couch et al. 2021</a>)</span></em></p>
 </section>
 <section id="results-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="results-visualization">Results Visualization</h2>
