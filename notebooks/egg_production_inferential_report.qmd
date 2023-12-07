@@ -55,28 +55,37 @@ egg_prod
 
 Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
 
-```{r, eda-summary, echo=FALSE, fig.cap="Table 1. EDA - Data Summary",message=FALSE, warning=FALSE}
+```{r, eda-summary, echo=FALSE, message=FALSE, warning=FALSE}
 
 summary <- readRDS(here::here("results/summary.rds"))
 print(summary)
 ```
 
-```{r, eda-head, echo=FALSE, fig.cap="Table 2. EDA - First Few Rows",message=FALSE, warning=FALSE}
+```{r,echo=FALSE,message=FALSE, warning=FALSE}
+#| label: tbl-eda-head
+#| tbl-cap: EDA - First Few Rows
 head <- readRDS(here::here("results/head.rds"))
-knitr::kable(head, caption = "EDA - First Few Rows") %>%
+knitr::kable(head, caption = "EDA - First Few Rows") |>
  kable_styling(full_width = FALSE)
 ```
 
-```{r, eda-tail, echo=FALSE, fig.cap="Table 3. EDA - Last Few Rows", message=FALSE, warning=FALSE}
-
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-eda-tail
+#| tbl-cap: EDA - Last Few Rows
 tail <- readRDS(here::here("results/tail.rds"))
-knitr::kable(tail, caption = "EDA - Last Few Rows") %>%
+knitr::kable(tail, caption = "EDA - Last Few Rows") |>
   kable_styling(full_width = FALSE) 
 ```
 
-```{r, eda-nrow, echo=FALSE, fig.cap="Table 4. EDA - Number of Rows", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-eda-nrow
+#| tbl-cap: EDA - Number of Rows
 nrow <- readRDS(here::here("results/nrow.rds"))
-knitr::kable(nrow, caption = "EDA - Number of Rows") %>%
+nrow_df <- data.frame(nrow)
+rownames(nrow_df) <- "Number of Rows"
+colnames(nrow_df) <- NULL
+knitr::kable(nrow_df, 
+             caption = "EDA - Number of Rows") |>
   kable_styling(full_width = FALSE) 
 ```
 
@@ -148,14 +157,21 @@ knitr::kable(head(read_csv(here::here("results/egg_prod.csv"))), caption = "Data
 
 Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
-```{r data wrangling 2, echo=FALSE, fig.cap="Table 5.Summary of Number of Egg produced per hen by production", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-data-wrangling2
+#| tbl-cap: Summary of Number of Egg produced per hen by productions
 knitr::kable(head(read_csv(here::here("results/data_wrangling.csv"))), caption = "Summary of Number of Egg produced per hen by production") |>
   kable_styling(full_width = FALSE) 
 ```
 
-```{r test stat, echo=FALSE, fig.cap="Table 6.Test Statistics for the two sample means", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-test-stat
+#| tbl-cap: Test Statistics for the two sample means
 t_test <- readRDS(here::here("results/test_stat.rds"))
-knitr::kable(t_test, caption = "Test Statistics for the two sample means") %>%
+t_test_df <- data.frame(t_test)
+rownames(t_test_df) <- "Test Statistic"
+colnames(t_test_df) <- NULL
+knitr::kable(t_test_df, caption = "Test Statistics for the two sample means") |>
   kable_styling(full_width = FALSE) 
 ```
 
@@ -166,10 +182,15 @@ knitr::kable(head(read_csv(here::here("results/null_distribution.csv"))), captio
   kable_styling(full_width = FALSE) 
 ```
 
-```{r p-value, echo=FALSE, fig.cap="Table 7.P-value for Hypotheses Test", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-p-value
+#| tbl-cap: P-value for Hypotheses Test
 p_value <- readRDS(here::here("results/p_value.rds"))
-knitr::kable(p_value, caption = "P-value for the permutation") %>%
-  kable_styling(full_width = FALSE) 
+p_value_df <- data.frame(p_value)
+rownames(p_value_df) <- "p-value"
+colnames(p_value_df) <- NULL
+knitr::kable(p_value_df, caption = "P-value for the permutation") |>
+  kable_styling(full_width = FALSE)
 ```
 
 The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
