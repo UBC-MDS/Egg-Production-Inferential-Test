@@ -3414,6 +3414,8 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
 <p>The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language <span class="citation" data-cites="R">(<a href="#ref-R" role="doc-biblioref">R Core Team 2023</a>)</span>] and the following packages were used to conduct the analysis: dplyr <span class="citation" data-cites="dplyr">(<a href="#ref-dplyr" role="doc-biblioref">Wickham et al. 2023</a>)</span>, readr <span class="citation" data-cites="readr">(<a href="#ref-readr" role="doc-biblioref">Wickham, Hester, and Bryan 2023</a>)</span>, infer <span class="citation" data-cites="infer">(<a href="#ref-infer" role="doc-biblioref">Couch et al. 2021</a>)</span> and ggplot2 <span class="citation" data-cites="ggplot2">(<a href="#ref-ggplot2" role="doc-biblioref">Wickham 2016</a>)</span>.</p>
+<p>In our research, we employed permutation tests to address our research questions. We chose permutation tests for several reasons. First, they offer a non-parametric alternative to traditional parametric tests such as t-tests. Unlike t-tests, permutation tests do not rely on specific distributional assumptions, making them suitable for various types of data. This flexibility is particularly advantageous when dealing with non-normally distributed or skewed datasets. Second, These permutation tests provide noteworthy advantages over their parametric counterparts for small samples and populations<span class="citation" data-cites="berry2011permutation">(<a href="#ref-berry2011permutation" role="doc-biblioref">Berry, Johnston, and Mielke Jr 2011</a>)</span>. They are highly adaptable and can be applied to a wide range of study designs.</p>
+<p>However, it is essential to acknowledge that permutation tests have their own set of limitations and assumptions. One key assumption is the exchangeability of observations<span class="citation" data-cites="hayes1996permutation">(<a href="#ref-hayes1996permutation" role="doc-biblioref">Hayes 1996</a>)</span>, meaning that any exchange of data points between groups is equally probable and independent. Additionally, the computational demands of permutation tests may increase significantly with large datasets or a high number of permutations. Despite these challenges, permutation tests offer a robust and versatile statistical approach that can yield meaningful insights while also addressing some of the drawbacks of traditional parametric methods.</p>
 </section>
 </section>
 <section id="result-discussion" class="level1">
@@ -3764,6 +3766,9 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-berry2011permutation" class="csl-entry" role="listitem">
+Berry, Kenneth J, Janis E Johnston, and Paul W Mielke Jr. 2011. <span>“Permutation Methods.”</span> <em>Wiley Interdisciplinary Reviews: Computational Statistics</em> 3 (6): 527–42. <a href="https://doi.org/10.1002/wics.177">https://doi.org/10.1002/wics.177</a>.
+</div>
 <div id="ref-tidytuesday" class="csl-entry" role="listitem">
 Community, R4DS Online Learning. 2023. <span>“Tidy Tuesday: A Weekly Social Data Project.”</span> <a href="https://github.com/rfordatascience/tidytuesday">https://github.com/rfordatascience/tidytuesday</a>.
 </div>
@@ -3772,6 +3777,9 @@ Conrad, Zach, LuAnn K Johnson, James N Roemmich, WenYen Juan, and Lisa Jahns. 20
 </div>
 <div id="ref-infer" class="csl-entry" role="listitem">
 Couch, Simon P., Andrew P. Bray, Chester Ismay, Evgeni Chasnovski, Benjamin S. Baumer, and Mine Çetinkaya-Rundel. 2021. <span>“<span class="nocase">infer</span>: An <span>R</span> Package for Tidyverse-Friendly Statistical Inference.”</span> <em>Journal of Open Source Software</em> 6 (65): 3661. <a href="https://doi.org/10.21105/joss.03661">https://doi.org/10.21105/joss.03661</a>.
+</div>
+<div id="ref-hayes1996permutation" class="csl-entry" role="listitem">
+Hayes, Andrew F. 1996. <span>“Permutation Test Is Not Distribution-Free: Testing H₀: <span class="math inline">\(\rho\)</span>= 0.”</span> <em>Psychological Methods</em> 1 (2): 184. <a href="https://doi.org/10.1037/1082-989X.1.2.184">https://doi.org/10.1037/1082-989X.1.2.184</a>.
 </div>
 <div id="ref-mendez" class="csl-entry" role="listitem">
 Mendez, S. 2023. <span>“US Egg Production Data Set.”</span> <em>Open Science Framework</em>. <a href="https://osf.io/z2gxn/">https://osf.io/z2gxn/</a>.
