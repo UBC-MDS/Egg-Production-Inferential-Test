@@ -209,6 +209,12 @@ knitr::include_graphics(here::here("results/results_viz.png"))
 
 We've created a visualization @fig-results-viz to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
 
+## Limitations
+
+While our findings align with our initial expectations, it is essential to recognize certain limitations inherent in our study design. Firstly, our study focused on a specific geographic region, the United States, and the results may not be directly applicable to other regions or countries. Secondly, our data granularity was limited to monthly data points from 2023 to 2026. This temporal granularity, although suitable for our analysis, may not capture finer variations in the data. Furthermore, since the data is recorded on a monthly basis as a time series, there may be underlying temporal patterns among observations from consecutive months.
+
+Moving forward, it is important to consider more comprehensive analyses, such as time series modeling, to explore trends and patterns in the data over time. Additionally, expanding the study to include data from a broader range of geographic locations would enhance the generalizability of our findings.
+
 ## Implications and Future Research Directions
 
 In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen. It suggests that tailoring production strategies for these two egg types may be necessary to optimize yields and meet consumer demands efficiently.
