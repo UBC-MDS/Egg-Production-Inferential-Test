@@ -96,12 +96,14 @@ Here is a link to the full env <https://github.com/UBC-MDS/DSCI_522_group12/blob
 
 ## License
 
-For all project code please refer to the [MIT license](https://opensource.org/license/mit/). Please refer to the LICENSE.md file for more details.
+For all project code please refer to the [MIT license](https://opensource.org/license/mit/).
 
 For the project report please refer to the [Creative Commons license](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
+Please refer to the LICENSE.md file for more details.
+
 ## References
 
--   Mendez, S. (2023, April 9). *US Egg Production Data Set*. Open Science Framework. <https://osf.io/z2gxn/>
+-   Mendez, S. 2023. \"US Egg Production Data Set.\" *Open Science Framework*. <https://osf.io/z2gxn/>.
 
--   TidyTuesday. (2023, April). *US Egg Production*. rfordatascience/tidytuesday. <https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-04-11/readme.md>
+-   Community, R4DS Online Learning. 2023. \"Tidy Tuesday: A Weekly Social Data Project.\" <https://github.com/rfordatascience/tidytuesday>.
