@@ -4,6 +4,7 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/11c5c6c0aa6a88
 
 #need to fix the port number in the README or the docker-compose file (they do not match)
 
+
 #need to update README instructions for navigating RStudio
 
 #can add instructions back on how to run the renv
@@ -11,10 +12,13 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/11c5c6c0aa6a88
 #need to add documentation on how to run the tests
 
 #need to update link in CONTRIBUTING doc
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/41/commits/67d84e7cea050c6bace27329830d5bb7d8a6b814
 
 #Add author names to the report
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/41/commits/7e5002b9aa91ae5540d2cbd4b38954f84a869b9f
 
 #Need to state assumptions and limitations in methods section
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/41/commits/c554a7519f16ad9c3640ae875209485bc44c0a2e
 
 #update references on Readme
 We updated the references to match the same style format as the Report.
@@ -37,3 +41,4 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5a0e7b875e44ad
 #improve figures?
 
 #add discussion of assumptions and limitation in discussion section
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/41/commits/7ddf56d2a8307aecf8acad834a60fa4b8ac03394 
