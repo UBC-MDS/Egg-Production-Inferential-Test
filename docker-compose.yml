@@ -2,7 +2,7 @@ services:
   egg-production-inferential-test:
     image: paolode/egg-production-inferential-test:2fae3cd
     ports:
-      - "8888:8888"
+      - "8787:8787"
     volumes:
       - .:/home/jovyan/work
     environment:
