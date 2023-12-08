@@ -24,27 +24,27 @@ library(kableExtra)
 
 # Summary
 
-This analysis aims to determine whether there is a difference in the mean number of eggs produced per hen between table eggs (i.e. unfertilized eggs for consumption) and hatching eggs (i.e. fertilized and will produce a chicken). The data used in this analysis was reported monthly from July 2016 to February of 2023 and was limited to the product type "all" as this includes both conventionally housed and cage-free eggs produced in the United States of America. We conducted a 1000 sample permutation to test our null-hypothesis with an observed test statistic of 5.527 and a p-value of 0. Using a significance level of 0.05 we rejected the null hypothesis in favour of the alternative and concluded that there is a significant difference in the mean number of eggs produced per hen between table and hatching eggs.
+This analysis aims to determine whether there is a difference in the mean number of eggs produced per hen between table eggs (i.e. unfertilized eggs for consumption) and hatching eggs (i.e. fertilized and will produce a chicken). The data used in this analysis was reported monthly from July 2016 to February of 2023 and was limited to the product type "all" as this includes both conventionally housed and cage-free eggs produced in the United States of America. We conducted a 1000 sample permutation to test our null-hypothesis with an observed test statistic of 5.527 and a p-value of \<0.001. Using a significance level of 0.05 we rejected the null hypothesis in favour of the alternative and concluded that there is a significant difference in the mean number of eggs produced per hen between table and hatching eggs.
 
 # Introduction
 
-Eggs and poultry products continue to be a staple in the modern diet [@conrad2017time]. Although the proportion of U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers [@conrad2017time]. Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.
+Eggs and poultry products continue to be a staple in the modern diet [@conrad2017time]. Although the proportion of the U.S. population consuming eggs remains steady, as the population grows the increase in demand for egg products requires larger yields from farmers [@conrad2017time]. Therefore, it is important for members of the egg industry to remain up to date on current egg yields, so that they can make informed economic decisions and continue to supply the population with egg products.
 
-In this analysis we specifically look at the difference in table eggs and hatching eggs. Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how best to approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices [@stemberger1959economic].
+In this analysis we specifically look at the difference in table eggs and hatching eggs to answer the question: is there a difference in the mean number of eggs produced per hen between table and hatching eggs? Table eggs are unfertilized eggs that are used for consumption, whereas hatching eggs have been fertilized and will develop into chickens. Comparison of these two egg types can inform farmers on how to best approach their farming practices, as different egg types will require disparate processing strategies with individual costs and market prices [@stemberger1959economic].
 
 # Methods
 
 ## Data
 
-The data used in this analysis was taken from the tidytuesday repository [@tidytuesday] and was originally sourced from Open Science Framework by Samara Mendez [@mendez]. Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs and the source of the data.
+The data used in this analysis was taken from the tidytuesday repository [@tidytuesday] and was originally sourced from Open Science Framework by Samara Mendez [@mendez]. Each row in the dataset represents summary data for the month, reporting on the type of egg (table vs hatching), the production process (conventional, cage-free, organic), the number of hens, the number of eggs, and the source of the data.
 
 ## Analysis
 
 The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language [@R]\] and the following packages were used to conduct the analysis: dplyr [@dplyr], readr [@readr], infer [@infer] and ggplot2 [@ggplot2].
 
-In our research, we employed permutation tests to address our research questions. We chose permutation tests for several reasons. First, they offer a non-parametric alternative to traditional parametric tests such as t-tests. Unlike t-tests, permutation tests do not rely on specific distributional assumptions, making them suitable for various types of data. This flexibility is particularly advantageous when dealing with non-normally distributed or skewed datasets. Second, These permutation tests provide noteworthy advantages over their parametric counterparts for small samples and populations[@berry2011permutation]. They are highly adaptable and can be applied to a wide range of study designs.
+We chose to use a permutation to test our null hypothesis for several reasons. Firstly, permutation tests offer a non-parametric alternative to traditional parametric tests such as t-tests. Unlike t-tests, permutation tests do not rely on specific distributional assumptions, making them suitable for various types of data. This flexibility is particularly advantageous when dealing with non-normally distributed or skewed data sets. In our case, since we did not know the underlying distribution we chose to use a permutation test. Secondly, permutation tests provide advantages over their parametric counterparts for small samples and populations [@berry2011permutation]. They are highly adaptable and can be applied to a wide range of study designs. Our study had 80 examples for each condition (table vs. hatching eggs), but since we did not conduct a power analysis, the permutation test was the preferred method of analysis.
 
-However, it is essential to acknowledge that permutation tests have their own set of limitations and assumptions. One key assumption is the exchangeability of observations[@hayes1996permutation], meaning that any exchange of data points between groups is equally probable and independent. Additionally, the computational demands of permutation tests may increase significantly with large datasets or a high number of permutations. Despite these challenges, permutation tests offer a robust and versatile statistical approach that can yield meaningful insights while also addressing some of the drawbacks of traditional parametric methods.
+One assumption made in our analysis was the exchangeability of observations for the permutation test [@hayes1996permutation], meaning that any exchange of data points between groups is equally probable and independent. There were also several limitations of our analysis, our data was collected monthly but since we did include a time-series analysis we could not make any conclusions of how egg yields are changing. Additionally, the production processes for 'cage-free' were only available for table eggs and not hatching eggs, this limited our analysis to only the 'all' process.
 
 # Result & Discussion
 
@@ -56,8 +56,6 @@ here::i_am("notebooks/egg_production_inferential_report.qmd")
 egg_prod <- read_csv(here::here("data/egg-production.csv"))
 egg_prod
 ```
-
-Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
 
 ```{r, eda-summary, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -93,9 +91,7 @@ knitr::kable(nrow_df,
   kable_styling(full_width = FALSE) 
 ```
 
-The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.
-
-Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
+From the exploratory data analysis (EDA), we can see that the n_hens and n_eggs columns are encoded numerically whereas prod_type and prod_process are categorical. We can also determine that the n_hens column has 9 NA values that must be dealt with, and there are 320 rows in total, a relatively low number. The source column does not provide any useful information for our analysis and so it was not used.
 
 ```{r, echo=FALSE}
 #| label: fig-hist
@@ -108,9 +104,7 @@ knitr::include_graphics(here::here("results/hist_n_eggs.png"))
 knitr::include_graphics(here::here("results/hist_n_hens.png"))
 ```
 
-We can see it is hard to determine a specific shape of the distributions but this is expected because we have a relatively small sample size. We also see that both distributions are somewhat similar. The correlation between the 2 variables is high at 0.9979883 meaning there is likely some strong relation between n_hens and n_eggs.
-
-Step 3: Visualize the distribution of both prod_type and prod_process.
+We can see that the distributions for both the number of eggs per month and the number of hens per month do not follow any clear trends, which is likely due to the relatively small sample size. We also see that the two distributions are very similar. This was further supported, as the number of eggs and the number of hens had a correlation value of 0.9979883, meaning there is likely a strong relationship between the number of hens and the number of eggs.
 
 ```{r, echo=FALSE}
 #| label: fig-bars
@@ -124,33 +118,31 @@ knitr::include_graphics(here::here("results/bar_prod.png"))
 knitr::include_graphics(here::here("results/bar_prod_process.png"))
 ```
 
-In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.
+Finally, we can see that there are more examples of table eggs than hatching eggs and the most examples of the 'all' process type. Whereas the number of examples of 'cage-free (organic)' versus 'cage-free (non-organic)' product types were similar.
 
 ## Research Question and Hypotheses
 
 We aimed to investigate whether there is a difference in the average number of eggs produced by each hen between hatching eggs and table eggs. To address this question, we formulated the following hypotheses:
 
+*Let* $\mu_{hatching}$ *represent the population mean number of eggs produced by each hen for hatching, and* $\mu_{table}$ *represent the population mean number of eggs produced by each hen for table eggs.*
+
 $H_{0}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} = \mu_{table}$.
 
 $H_{A}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is NOT equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} \ne \mu_{table}$.
 
-*where* $\mu_{hatching}$ *represents the population mean number of eggs produced by each hen for hatching, and* $\mu_{table}$ *represents the population mean number of eggs produced by each hen for table eggs.*
-
-These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.
-
 ## Observed Test Statistic
 
-To test these hypotheses, we calculated the observed test statistic $\delta^{*}$, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.
+To test these hypotheses, we calculated the observed test statistic $\delta^{*}$, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production data set.
 
 The observed test statistic $\delta^{*}$ = $\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}$
 
 ## Hypothesis Test Using the Permutation Method
 
-With these hypotheses and observed test statistic in place, we could conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg production between the two types.
+With these hypotheses and observed test statistic in place, we can conduct our hypothesis test using the permutation method to draw conclusions about the potential differences in egg yield between the two types.
 
 In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.
 
-Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure an fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
+Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure a fair and accurate comparison between hatching and table eggs, we filtered the data set to include only entries where the "prod_process" variable was labeled as "all".
 
 ```{r Data Wrangling, include=FALSE, message=FALSE, warning=FALSE}
 # create a new column to calculate the mean number of eggs produced by each hen
@@ -159,7 +151,7 @@ knitr::kable(head(read_csv(here::here("results/egg_prod.csv"))), caption = "Data
   kable_styling(full_width = FALSE) 
 ```
 
-Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
+Subsequently, we calculated the observed test statistic, to assess the difference in egg yield between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #| label: tbl-data-wrangling2
@@ -179,7 +171,7 @@ knitr::kable(t_test_df, caption = "Test Statistics for the two sample means") |>
   kable_styling(full_width = FALSE) 
 ```
 
-With the test statistic in hand, as shown in @tbl-test-stat, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
+With the test statistic in hand, as shown in @tbl-test-stat, we conducted our hypothesis test using the permutation method. We generated a null distribution through 1,000 permutations, simulating the expected outcome assuming there was no difference in egg yield between the two types.
 
 ```{r Hyhothesis Test, message=FALSE, warning=FALSE, include=FALSE}
 knitr::kable(head(read_csv(here::here("results/null_distribution.csv"))), caption = "Table 1. Null distribution generated from permutation") |>
@@ -199,7 +191,9 @@ knitr::kable(p_value_df, caption = "P-value for the permutation") |>
 
 The p-value obtained from our hypothesis test, as shown in @tbl-p-value, is \<0.001, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
 
-*\*Though a true p-value of 0 is impossible, `get_p_value()` may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of `reps` chosen in the `generate()` step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of `reps` have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. In this case, the true p-value is a small value likely less than `3/reps` (based on a poisson approximation). [@infer]*
+*Please note the following from the infer documentation about p-values of zero:*
+
+> *Though a true p-value of 0 is impossible, `get_p_value()` may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of `reps` chosen in the `generate()` step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of `reps` have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. In this case, the true p-value is a small value likely less than `3/reps` (based on a poisson approximation). [@infer]*
 
 ## Results Visualization
 
@@ -221,6 +215,6 @@ Moving forward, it is important to consider more comprehensive analyses, such as
 
 In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen. It suggests that tailoring production strategies for these two egg types may be necessary to optimize yields and meet consumer demands efficiently.
 
-Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs. Understanding how variations in processing methods have influence on table egg production could offer valuable insights for both the egg industry and consumers.
+Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs through a regression analysis. Understanding how variations in processing methods are associated with table and hatching egg production could offer valuable insights for both the egg industry and consumers.
 
 # References
