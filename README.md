@@ -25,6 +25,15 @@ The final report can be found [here](https://ubc-mds.github.io/Egg-Production-In
 2.  Clone this GitHub repository.
 
 #### Running the analysis
+# Using  RStudio
+
+If you are using RStudio:
+1. Open the project by clicking on the `.Rproj` file (if one exists). This action will automatically activate the `renv` environment.
+2. Go into session (top middle left) and click on the option Restart R and Run all Chunks.
+3. Click Render (top middle) using the Quarto interface in RStudio.
+
+
+# Using docker
 
 1.  Navigate to the root of this project on your computer using the command line and enter the following command:
 
@@ -38,41 +47,14 @@ docker compose up
 
 -   *password: password*
 
-3.  To run the analysis, open `Egg_Production_Inferential_Report` in the terminal and copy/paste the following commands to run the RScripts.
+3.  To run the analysis, clone the repository and run the following command in the terminal.
 
 ```{r}
-#Reading in the data
-Rscript R/importing.R data/egg-production.csv
-
-#Basic data summaries
-Rscript R/general_EDA.R data/egg-production.csv
-
-#EDA for number of eggs
-Rscript R/create_histogram.R data/egg-production.csv n_eggs "number of eggs" result/hist_n_eggs.png
-
-#EDA for number of hens
-Rscript R/create_histogram.R data/egg-production.csv n_hens "number of hens" result/hist_n_hens.png
-
-#EDA for production type
-Rscript R/create_bar_plot.R data/egg-production.csv prod_type "Production type" results/bar_prod.png
-
-#EDA for production process
-Rscript R/create_bar_plot.R data/egg-production.csv prod_process "Production process" results/bar_prod_process.png
-
-#Filters and mutates the data to be used in the null hypothesis permutation
-Rscript R/script_data_wrangling.R data/egg-production.csv
-
-#Groups and summarises the data for the test statistic
-Rscript R/script_data_wrangling2.R data/egg-production.csv
-
-#Calculates the test statistic
-Rscript R/calc_test_stat.R results/data_wrangling.csv n_egg_by_hen
-
-#Generates the null distribution using permutation and calculates the p-value
-Rscript R/permutation.R results/egg_prod.csv n_egg_by_hen prod_type 'table eggs,hatching eggs' results/test_stat.rds 522
-
-#Generates the final visualization of the null distirbution
-Rscript R/scr_generate_null_dist_plot.R results/null_distribution.csv results/test_stat.rds 0.05
+make all
+```
+To reset run the following in the terminal.
+```{r}
+make clean
 ```
 
 #### Clean up
@@ -91,6 +73,7 @@ Rscript R/scr_generate_null_dist_plot.R results/null_distribution.csv results/te
     -   knitr=1.43
     -   docopt=0.7.1
     -   kableExtra=1.3.4
+    -   here=1.0.1
 
 Here is a link to the full env <https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock>
 
