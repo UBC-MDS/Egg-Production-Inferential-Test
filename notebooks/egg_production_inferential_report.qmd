@@ -42,9 +42,9 @@ The data used in this analysis was taken from the tidytuesday repository [@tidyt
 
 The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language [@R]\] and the following packages were used to conduct the analysis: dplyr [@dplyr], readr [@readr], infer [@infer] and ggplot2 [@ggplot2].
 
-We chose to use a permutation to test our null hypothesis for several reasons. Firstly, permutation tests offer a non-parametric alternative to traditional parametric tests such as t-tests. Unlike t-tests, permutation tests do not rely on specific distributional assumptions, making them suitable for various types of data. This flexibility is particularly advantageous when dealing with non-normally distributed or skewed datasets. In our case, since we did not know the underlying distribution we chose to use a permutation test. Secondly, permutation tests provide advantages over their parametric counterparts for small samples and populations [@berry2011permutation]. They are highly adaptable and can be applied to a wide range of study designs. Our study had 80 examples for each condition (table vs. hatching eggs), but since we did not conduct a power analysis, the permutation test was the preferred method of analysis.
+We chose to use a permutation to test our null hypothesis for several reasons. Firstly, permutation tests offer a non-parametric alternative to traditional parametric tests such as t-tests. Unlike t-tests, permutation tests do not rely on specific distributional assumptions, making them suitable for various types of data. This flexibility is particularly advantageous when dealing with non-normally distributed or skewed data sets. In our case, since we did not know the underlying distribution we chose to use a permutation test. Secondly, permutation tests provide advantages over their parametric counterparts for small samples and populations [@berry2011permutation]. They are highly adaptable and can be applied to a wide range of study designs. Our study had 80 examples for each condition (table vs. hatching eggs), but since we did not conduct a power analysis, the permutation test was the preferred method of analysis.
 
-One assumption made in our analysis was the exchangeability of observations for the permutation test [@hayes1996permutation], meaning that any exchange of data points between groups is equally probable and independent. There were also several limitations of our analysis, our data was collected monthly but since we did include a time-series analysis we could not make any conclusions of how egg yields were changing. Additionally, no regression analysis was conducted, which could have been useful in determining whether there are associations between the egg product or process type and the number of eggs produced.
+One assumption made in our analysis was the exchangeability of observations for the permutation test [@hayes1996permutation], meaning that any exchange of data points between groups is equally probable and independent. There were also several limitations of our analysis, our data was collected monthly but since we did include a time-series analysis we could not make any conclusions of how egg yields are changing. Additionally, the production processes for 'cage-free' were only available for table eggs and not hatching eggs, this limited our analysis to only the 'all' process.
 
 # Result & Discussion
 
@@ -91,7 +91,7 @@ knitr::kable(nrow_df,
   kable_styling(full_width = FALSE) 
 ```
 
-From the exploratory data analysis (EDA), we can see that the n_hens and n_eggs columns are encoded numerically whereas prod_type and prod_process are categorical. We can also determine that the n_hens column has 9 NA values that must be dealth with, and there are 320 rows in total, a relatively low number. The source column does not provide any useful information for our analysis and so it was not used.
+From the exploratory data analysis (EDA), we can see that the n_hens and n_eggs columns are encoded numerically whereas prod_type and prod_process are categorical. We can also determine that the n_hens column has 9 NA values that must be dealt with, and there are 320 rows in total, a relatively low number. The source column does not provide any useful information for our analysis and so it was not used.
 
 ```{r, echo=FALSE}
 #| label: fig-hist
@@ -130,11 +130,9 @@ $H_{0}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatchi
 
 $H_{A}$: The mean number of eggs produced by each hen for hatching, $\mu_{hatching}$, is NOT equal to the mean number of eggs produced by each hen for table eggs, $\mu_{table}$. Mathematically, $\mu_{hatching} \ne \mu_{table}$.
 
-These hypotheses guided our analysis to determine whether a statistically significant difference exists in egg production between hatching eggs and table eggs.
-
 ## Observed Test Statistic
 
-To test these hypotheses, we calculated the observed test statistic $\delta^{*}$, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production dataset.
+To test these hypotheses, we calculated the observed test statistic $\delta^{*}$, which represents the difference between the observed mean number of eggs produced by each hen for hatching eggs and the observed mean number of eggs produced by each hen for table eggs, as derived from our egg production data set.
 
 The observed test statistic $\delta^{*}$ = $\hat{\mu}_\text{hatching} - \hat{\mu}_\text{table}$
 
@@ -144,7 +142,7 @@ With these hypotheses and observed test statistic in place, we can conduct our h
 
 In our data wrangling phase, we calculated the mean number of eggs produced per hen, recognizing that the total number of eggs depends on the number of hens involved.
 
-Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure a fair and accurate comparison between hatching and table eggs, we filtered the dataset to include only entries where the "prod_process" variable was labeled as "all".
+Additionally, it is important to note that the "cage-free" production process is only applicable to table eggs, not hatching eggs. To ensure a fair and accurate comparison between hatching and table eggs, we filtered the data set to include only entries where the "prod_process" variable was labeled as "all".
 
 ```{r Data Wrangling, include=FALSE, message=FALSE, warning=FALSE}
 # create a new column to calculate the mean number of eggs produced by each hen
@@ -193,7 +191,9 @@ knitr::kable(p_value_df, caption = "P-value for the permutation") |>
 
 The p-value obtained from our hypothesis test, as shown in @tbl-p-value, is \<0.001, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
 
-*\*Though a true p-value of 0 is impossible, `get_p_value()` may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of `reps` chosen in the `generate()` step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of `reps` have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. In this case, the true p-value is a small value likely less than `3/reps` (based on a poisson approximation). [@infer]*
+*Please note the following from the infer documentation about p-values of zero:*
+
+> *Though a true p-value of 0 is impossible, `get_p_value()` may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of `reps` chosen in the `generate()` step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of `reps` have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. In this case, the true p-value is a small value likely less than `3/reps` (based on a poisson approximation). [@infer]*
 
 ## Results Visualization
 
@@ -215,6 +215,6 @@ Moving forward, it is important to consider more comprehensive analyses, such as
 
 In practical terms, this means that hatching eggs and table eggs do indeed exhibit distinct patterns of egg production by each hen. It suggests that tailoring production strategies for these two egg types may be necessary to optimize yields and meet consumer demands efficiently.
 
-Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs. Understanding how variations in processing methods have influence on table egg production could offer valuable insights for both the egg industry and consumers.
+Looking ahead, our research paves the way for future investigations. One promising direction is to explore the effects of different production processes on table eggs through a regression analysis. Understanding how variations in processing methods are associated with table and hatching egg production could offer valuable insights for both the egg industry and consumers.
 
 # References
