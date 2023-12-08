@@ -20,8 +20,8 @@ create_histogram <- function(data, column_name, title_prefix, filenames) {
   # Construct the histogram using ggplot
   p <- ggplot(read.csv(data), aes_string(x = column_name)) +
     geom_histogram(bins = 30) + # Use specified number of bins
-    labs(title = paste("Monthly distribution of the", title_prefix, "Produced"),
-         x = paste("Number of", title_prefix, "per month"),
+    labs(title = paste("Monthly distribution of the", title_prefix, "produced"),
+         x = paste(title_prefix, "per month"),
          y = "Count") +
     theme_minimal()
   ggsave(p, filename = filenames, width=8, height=5)

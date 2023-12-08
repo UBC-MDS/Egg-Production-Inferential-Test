@@ -91,7 +91,21 @@ knitr::kable(nrow_df,
   kable_styling(full_width = FALSE) 
 ```
 
-From the exploratory data analysis (EDA), we can see that the n_hens and n_eggs columns are encoded numerically whereas prod_type and prod_process are categorical. We can also determine that the n_hens column has 9 NA values that must be dealt with, and there are 320 rows in total, a relatively low number. The source column does not provide any useful information for our analysis and so it was not used.
+The data set provides insightful information across a range of variables, covering the period from July 2016 to March 2023. While this time frame offers a substantial amount of data, it's worth noting that the relatively short range could potentially limit the depth of long-term trend analysis. The data set comprises six key variables:
+
+**Observed_month**: As previously mentioned, this variable records the month and year of each data entry, offering a temporal context for the analysis.
+
+**Prod_type**: This categorical variable classifies the type of egg production. It differentiates between 'hatching eggs' and 'table eggs', indicating whether the eggs are fertilized (hatching eggs) or not (table eggs). This distinction is crucial for understanding the purpose and method of production.
+
+**Prod_process**: Another categorical variable, Prod_process, describes the method used in egg production. It categorizes production into specific types like 'cage-free', 'organic', and a comprehensive category labeled 'all', which presumably encompasses various production methods.
+
+**N_hens**: This numerical variable represents the number of hens, ranging significantly from 13,500,000 to 341,166,000. The presence of missing values in this variable should be noted, as they could impact the analysis.
+
+**N_eggs**: Similarly numerical, this variable quantifies egg production, with values spanning from approximately 298 million to 8.6 billion. This wide range indicates a substantial variability in production output.
+
+**Source**: This string variable identifies the data source for each row. It's unique to each entry and, given its nature, may not be directly relevant to the analysis of production trends but is crucial for data verification and traceability.
+
+Overall, this data set offers a comprehensive overview of egg production, encompassing various aspects from production types to the number of hens involved, thereby facilitating a multifaceted analysis of the industry within the specified timeframe. We can also see that we have a relatively low number of rows: 320 this is in part related to the low time frame of the analysis and can also limit the reliability.
 
 ```{r, echo=FALSE}
 #| label: fig-hist
@@ -104,13 +118,21 @@ knitr::include_graphics(here::here("results/hist_n_eggs.png"))
 knitr::include_graphics(here::here("results/hist_n_hens.png"))
 ```
 
-We can see that the distributions for both the number of eggs per month and the number of hens per month do not follow any clear trends, which is likely due to the relatively small sample size. We also see that the two distributions are very similar. This was further supported, as the number of eggs and the number of hens had a correlation value of 0.9979883, meaning there is likely a strong relationship between the number of hens and the number of eggs.
+**Histogram of the Number of Eggs per Month**:
+
+This histogram displays multiple peaks and a large gap between some peaks, indicating the data could be multimodal. There are distinct high-frequency counts at various intervals of egg production. These peaks suggest that there are several common levels of monthly egg production, which could reflect different production capacities, seasonal variations, or other factors that influence how many eggs are produced in a given month.
+
+**Histogram of the Number of Hens per Month**:
+
+Similarly, the number of hens per month also shows a possible multimodal distribution with several peaks. These counts might correspond to different sizes of farms that operate with different numbers of hens depending on their capacity.
+
+**Correlated Relationship**: The similar shapes of the distributions suggest that the number of hens and the number of eggs produced each month are related in a predictable manner. Investigating this further could involve feature engineering by taking the average number of eggs produced per hen instead of looking at aggregated features which would allow us to normalize the data.
 
 ```{r, echo=FALSE}
 #| label: fig-bars
 #| fig-cap: "Distributions of categorical variables"
 #| fig-subcap: 
-#|   - "EDA - Distribution of the production"
+#|   - "EDA - Distribution of the production type"
 #|   - "EDA - Distribution of the production process"
 #| layout-ncol: 2
 knitr::include_graphics(here::here("results/bar_prod.png"))
@@ -118,7 +140,13 @@ knitr::include_graphics(here::here("results/bar_prod.png"))
 knitr::include_graphics(here::here("results/bar_prod_process.png"))
 ```
 
-Finally, we can see that there are more examples of table eggs than hatching eggs and the most examples of the 'all' process type. Whereas the number of examples of 'cage-free (organic)' versus 'cage-free (non-organic)' product types were similar.
+**Distribution of Production Type:**
+
+The bar chart above shows a large difference in the count between the two categories of egg production type. Table eggs have a much higher count compared to hatching eggs in this data set. This can be seen as an unbalanced variable in our data, which could be problematic for analysis. It may be necessary to normalize this feature depending on the analysis.
+
+**Distribution of Production Process:**
+
+The 'all' category has the highest count compared to the two other cage-free processes. The 'all' category represents both cage-free and non-cage-free hens. The counts for 'cage-free (non-organic)' and 'cage-free (organic)' are relatively similar and notably less than the 'all' category. This suggests that both organic and non-organic cage-free productions are significant but still less than the 'all' category. This categorical variable, if used, should be approached with caution because the 'all' category includes data from the other categories, meaning the variables are interrelated.
 
 ## Research Question and Hypotheses
 

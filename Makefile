@@ -1,5 +1,5 @@
 # Define default target
-all: data/egg-production.csv data/summary_egg-production.csv results/hist_n_eggs.png \
+all: data/egg-production.csv results/summary_egg-production.csv results/hist_n_eggs.png \
      results/hist_n_hens.png results/bar_prod.png results/bar_prod_process.png \
      results/data_wrangling.csv results/data_wrangling2.csv results/test_stat.rds \
      results/null_distribution.csv results/null_dist_plot.png notebooks/egg_production_inferential_report.html
@@ -9,8 +9,8 @@ data/egg-production.csv: R/importing.R
 	Rscript R/importing.R data/egg-production.csv
 
 # Rule for basic data summaries
-data/summary_egg-production.csv: R/general_EDA.R data/egg-production.csv
-	Rscript R/general_EDA.R data/egg-production.csv
+results/summary_egg-production.csv: R/general_EDA.R data/egg-production.csv
+	Rscript R/general_EDA.R results/egg-production.csv
 
 # Rule for EDA - Number of Eggs Histogram
 results/hist_n_eggs.png: R/create_histogram.R data/egg-production.csv
@@ -53,7 +53,7 @@ notebooks/egg_production_inferential_report.html: notebooks/egg_production_infer
 
 # Clean-up rule
 clean:
-	rm -f data/summary_egg-production.csv
+	rm -f results/summary_egg-production.csv
 	rm -f results/hist_n_eggs.png
 	rm -f results/hist_n_hens.png
 	rm -f results/bar_prod.png
