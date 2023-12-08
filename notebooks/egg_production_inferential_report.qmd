@@ -1,9 +1,11 @@
 ---
-title: "DSCI 522 Milestone 3"
-subtitle: Inferential Analysis for Egg Production
+title: "Inferential Analysis for Egg Production"
+author: "Kiersten Gilberg, Kun Ya, Paolo De Lagrave-Codina"
+date: "`r format(Sys.Date(), '%Y/%m/%d')`"
 format:
   html:
     toc: true
+    embed-resources: true
 editor_options:
   markdown:
     wrap: none
@@ -40,72 +42,86 @@ The data used in this analysis was taken from the tidytuesday repository [@tidyt
 
 The number of eggs per hen was calculated from the given data by dividing the total number of eggs produced in each category for the month by the number of hens. This gives a more accurate representation of how many eggs are produced for each group, since the total number of eggs will depend on the number of hens. We then calculated the observed test statistic, difference of the means, and generated a null distribution through a 1000 repetition permutation simulation. From this simulated null distribution we calculated the p-value for our observed test statistic. The R programming language [@R]\] and the following packages were used to conduct the analysis: dplyr [@dplyr], readr [@readr], infer [@infer] and ggplot2 [@ggplot2].
 
+In our research, we employed permutation tests to address our research questions. We chose permutation tests for several reasons. First, they offer a non-parametric alternative to traditional parametric tests such as t-tests. Unlike t-tests, permutation tests do not rely on specific distributional assumptions, making them suitable for various types of data. This flexibility is particularly advantageous when dealing with non-normally distributed or skewed datasets. Second, These permutation tests provide noteworthy advantages over their parametric counterparts for small samples and populations[@berry2011permutation]. They are highly adaptable and can be applied to a wide range of study designs.
+
+However, it is essential to acknowledge that permutation tests have their own set of limitations and assumptions. One key assumption is the exchangeability of observations[@hayes1996permutation], meaning that any exchange of data points between groups is equally probable and independent. Additionally, the computational demands of permutation tests may increase significantly with large datasets or a high number of permutations. Despite these challenges, permutation tests offer a robust and versatile statistical approach that can yield meaningful insights while also addressing some of the drawbacks of traditional parametric methods.
+
 # Result & Discussion
 
 ## EDA
 
 ```{r Read Data, include=FALSE}
 # read in data
+here::i_am("notebooks/egg_production_inferential_report.qmd")
 egg_prod <- read_csv(here::here("data/egg-production.csv"))
 egg_prod
 ```
 
 Step 1: Looking at the first and last few rows of the data. Finding the column data types and the NA values if any.
 
-```{r, eda-summary, echo=FALSE, fig.cap="Table 1. EDA - Data Summary",message=FALSE, warning=FALSE}
+```{r, eda-summary, echo=FALSE, message=FALSE, warning=FALSE}
+
 summary <- readRDS(here::here("results/summary.rds"))
 print(summary)
 ```
 
-```{r, eda-head, echo=FALSE, fig.cap="Table 2. EDA - First Few Rows",message=FALSE, warning=FALSE}
+```{r,echo=FALSE,message=FALSE, warning=FALSE}
+#| label: tbl-eda-head
+#| tbl-cap: EDA - First Few Rows
 head <- readRDS(here::here("results/head.rds"))
-knitr::kable(head, caption = "EDA - First Few Rows") %>%
+knitr::kable(head, caption = "EDA - First Few Rows") |>
  kable_styling(full_width = FALSE)
 ```
 
-```{r, eda-tail, echo=FALSE, fig.cap="Table 3. EDA - Last Few Rows", message=FALSE, warning=FALSE}
-here::i_am("notebooks/egg_production_inferential_report.qmd")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-eda-tail
+#| tbl-cap: EDA - Last Few Rows
 tail <- readRDS(here::here("results/tail.rds"))
-knitr::kable(tail, caption = "EDA - Last Few Rows") %>%
+knitr::kable(tail, caption = "EDA - Last Few Rows") |>
   kable_styling(full_width = FALSE) 
 ```
 
-```{r, eda-nrow, echo=FALSE, fig.cap="Table 4. EDA - Number of Rows", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-eda-nrow
+#| tbl-cap: EDA - Number of Rows
 nrow <- readRDS(here::here("results/nrow.rds"))
-knitr::kable(nrow, caption = "EDA - Number of Rows") %>%
+nrow_df <- data.frame(nrow)
+rownames(nrow_df) <- "Number of Rows"
+colnames(nrow_df) <- NULL
+knitr::kable(nrow_df, 
+             caption = "EDA - Number of Rows") |>
   kable_styling(full_width = FALSE) 
-
 ```
 
 The source column should not be in the data frame for the analysis. n_hens and n_eggs are both numerical data types where as prod_type and prod_process are categorical data types. We can also take note that the n_hens has 9 NA values. The observed month gives us the time frame of when the data was recorded. We can also see that we have a relatively low number of rows: 320.
 
 Step 2: Visualize the distribution of both n_hens and n_eggs columns as well as the correlation between them.
 
-```{r hist-n-eggs, fig.cap="Figure 1. EDA - Histogram of number of eggs", echo=FALSE}
+```{r, echo=FALSE}
+#| label: fig-hist
+#| fig-cap: "Distributions of numeric variables"
+#| fig-subcap:
+#|   - "EDA - Histogram of number of eggs"
+#|   - "EDA - Histogram of number of hens"
+#| layout-ncol: 2
 knitr::include_graphics(here::here("results/hist_n_eggs.png"))
-
-```
-
-```{r hist-n-hens, fig.cap="Figure 2. EDA - Histogram of number of hens", echo=FALSE}
-
 knitr::include_graphics(here::here("results/hist_n_hens.png"))
-
 ```
 
 We can see it is hard to determine a specific shape of the distributions but this is expected because we have a relatively small sample size. We also see that both distributions are somewhat similar. The correlation between the 2 variables is high at 0.9979883 meaning there is likely some strong relation between n_hens and n_eggs.
 
 Step 3: Visualize the distribution of both prod_type and prod_process.
 
-```{r bar-prod, fig.cap="Figure 3. EDA - Distribution of the production", echo=FALSE}
-
+```{r, echo=FALSE}
+#| label: fig-bars
+#| fig-cap: "Distributions of categorical variables"
+#| fig-subcap: 
+#|   - "EDA - Distribution of the production"
+#|   - "EDA - Distribution of the production process"
+#| layout-ncol: 2
 knitr::include_graphics(here::here("results/bar_prod.png"))
 
-```
-
-```{r bar-prod-process, fig.cap="Figure 4. EDA - Distribution of the production process", echo=FALSE}
-
 knitr::include_graphics(here::here("results/bar_prod_process.png"))
-
 ```
 
 In our data we have a higher production of tables eggs than hatching eggs. Regarding the processes we have much more all process than other kinds of process and about the same count for the cage-free organic vs non organic.
@@ -145,40 +161,61 @@ knitr::kable(head(read_csv(here::here("results/egg_prod.csv"))), caption = "Data
 
 Subsequently, we proceeded to analyze the data by computing a test statistic, that would allow us to assess the difference in egg production between hatching and table eggs, with careful consideration of handling any missing values (NA).
 
-```{r data wrangling 2, echo=FALSE, fig.cap="Table 5.Summary of Number of Egg produced per hen by production", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-data-wrangling2
+#| tbl-cap: Summary of Number of Egg produced per hen by productions
 knitr::kable(head(read_csv(here::here("results/data_wrangling.csv"))), caption = "Summary of Number of Egg produced per hen by production") |>
   kable_styling(full_width = FALSE) 
 ```
 
-```{r test stat, echo=FALSE, fig.cap="Table 6.Test Statistics for the two sample means", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-test-stat
+#| tbl-cap: Test Statistics for the two sample means
 t_test <- readRDS(here::here("results/test_stat.rds"))
-knitr::kable(t_test, caption = "Test Statistics for the two sample means") %>%
+t_test_df <- data.frame(t_test)
+rownames(t_test_df) <- "Test Statistic"
+colnames(t_test_df) <- NULL
+knitr::kable(t_test_df, caption = "Test Statistics for the two sample means") |>
   kable_styling(full_width = FALSE) 
 ```
 
-With the test statistic in hand, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
+With the test statistic in hand, as shown in @tbl-test-stat, we can conduct our hypothesis test using the permutation method. Our approach involved generating a null distribution through 1,000 permutations, simulating the expected outcome assuming there were no difference in egg production between the two types.
 
 ```{r Hyhothesis Test, message=FALSE, warning=FALSE, include=FALSE}
 knitr::kable(head(read_csv(here::here("results/null_distribution.csv"))), caption = "Table 1. Null distribution generated from permutation") |>
   kable_styling(full_width = FALSE) 
 ```
 
-```{r p-value, echo=FALSE, fig.cap="Table 7.P-value for Hypotheses Test", message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-p-value
+#| tbl-cap: P-value for Hypotheses Test
 p_value <- readRDS(here::here("results/p_value.rds"))
-knitr::kable(p_value, caption = "P-value for the permutation") %>%
-  kable_styling(full_width = FALSE) 
+p_value_df <- data.frame(p_value)
+rownames(p_value_df) <- "p-value"
+colnames(p_value_df) <- NULL
+knitr::kable(p_value_df, caption = "P-value for the permutation") |>
+  kable_styling(full_width = FALSE)
 ```
 
-The p-value obtained from our hypothesis test is 0, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
+The p-value obtained from our hypothesis test, as shown in @tbl-p-value, is \<0.001, which is an extremely rare occurrence. Given that our defined significance threshold $\alpha$ is 0.05, we can reject the null hypothesis $H_{0}$(there is no difference in the average number of eggs produced by each hen between hatching eggs and table eggs) in favor of the alternative hypothesis $H_{A}$.
+
+*\*Though a true p-value of 0 is impossible, `get_p_value()` may return 0 in some cases. This is due to the simulation-based nature of the {infer} package; the output of this function is an approximation based on the number of `reps` chosen in the `generate()` step. When the observed statistic is very unlikely given the null hypothesis, and only a small number of `reps` have been generated to form a null distribution, it is possible that the observed statistic will be more extreme than every test statistic generated to form the null distribution, resulting in an approximate p-value of 0. In this case, the true p-value is a small value likely less than `3/reps` (based on a poisson approximation). [@infer]*
 
 ## Results Visualization
 
-```{r results-visualization, fig.cap="Figure 5. Results Visualization from null distribution of 1000 permutation with 5% significance level and test statistic", echo=FALSE}
-
+```{r,echo=FALSE}
+#| label: fig-results-viz
+#| fig-cap: "Results visualization from null distribution of 1000 permutation with 5% significance level and test statistic"
 knitr::include_graphics(here::here("results/results_viz.png"))
 ```
 
-We've created a visualization to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
+We've created a visualization @fig-results-viz to further illustrate our earlier conclusion. The red vertical line on the plot represents our observed test statistic obtained from our data, which lies within the rejection region as marked by the blue dashed lines. It demonstrates that our observed test statistic would be highly unlikely to occur under the null hypothesis.
+
+## Limitations
+
+While our findings align with our initial expectations, it is essential to recognize certain limitations inherent in our study design. Firstly, our study focused on a specific geographic region, the United States, and the results may not be directly applicable to other regions or countries. Secondly, our data granularity was limited to monthly data points from 2023 to 2026. This temporal granularity, although suitable for our analysis, may not capture finer variations in the data. Furthermore, since the data is recorded on a monthly basis as a time series, there may be underlying temporal patterns among observations from consecutive months.
+
+Moving forward, it is important to consider more comprehensive analyses, such as time series modeling, to explore trends and patterns in the data over time. Additionally, expanding the study to include data from a broader range of geographic locations would enhance the generalizability of our findings.
 
 ## Implications and Future Research Directions
 
