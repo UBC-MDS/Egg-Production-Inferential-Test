@@ -22,14 +22,17 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/41/commits/7e500
 
 #Need to state assumptions and limitations in methods section
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/41/commits/c554a7519f16ad9c3640ae875209485bc44c0a2e
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/49/commits/0c3ae1a9c58c791863380a9511dfc12e318a7f17
 
 #update references on Readme
 We updated the references to match the same style format as the Report.
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/44/commits/d3bbbbcd6261ae12e43a76b6b07841960b5b18b5 
 
 #change reporting of p-value from 0 to <0.001 and add explanation of why to the report
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/49/commits/0c3ae1a9c58c791863380a9511dfc12e318a7f17
 
 #add more descriptions of the data to the EDA section rather than just displaying the data
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/49/commits/0c3ae1a9c58c791863380a9511dfc12e318a7f17
 
 #add creative commons license to the LICENSE file
 We initially only had the MIT license listed in the LICENSE file, and both mentioned in the README file. It has now been updated to include both in the LICENSE file.
@@ -38,6 +41,7 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5a0e7b875e44ad
 #add importance/limitations of findings to Introduction section
 
 #clarify question in introduction section
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/pull/49/commits/0c3ae1a9c58c791863380a9511dfc12e318a7f17
 
 #explain why we are using permutation and other methods
 
