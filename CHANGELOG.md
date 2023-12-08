@@ -4,7 +4,8 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/11c5c6c0aa6a88
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/0d25c9fd45c7894efbff2bed8cd8140e0733320a
 
 #need to fix the port number in the README or the docker-compose file (they do not match)
-
+Fixed the docker-compose file to match the readme.
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/90037c7f088d8e6453f3ad061eb279c3031ce362
 
 #need to update README instructions for navigating RStudio
 
@@ -54,6 +55,8 @@ In methods part, we include the reason why we choose permutation
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/c554a7519f16ad9c3640ae875209485bc44c0a2e
 
 #improve figures?
+the functions now have been modified to give better titles
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/f7765686650f70547605f1ae6cf541f4eee2ae8b
 
 #add discussion of assumptions and limitation in discussion section
 We include limitations of our reasearch at the end of the report
