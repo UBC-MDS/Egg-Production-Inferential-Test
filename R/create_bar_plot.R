@@ -19,7 +19,7 @@ create_bar_plot <- function(data, column_name, title_description, filenames) {
   # Construct the bar plot using ggplot
   p <- ggplot(read.csv(data), aes_string(x = column_name)) +
     geom_bar() +
-    labs(title = paste("Distribution of", title_description),
+    labs(title = paste("Count Distribution by Egg", title_description),
          x = title_description,
          y = "Count") +
     theme_minimal()
