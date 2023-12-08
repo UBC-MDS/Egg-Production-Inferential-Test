@@ -5,8 +5,8 @@ all: data/egg-production.csv data/summary_egg-production.csv results/hist_n_eggs
      results/null_distribution.csv results/null_dist_plot.png notebooks/egg_production_inferential_report.html
 
 # Rule for reading in the data
-# data/egg-production.csv: R/importing.R
-# 	Rscript R/importing.R data/egg-production.csv
+data/egg-production.csv: R/importing.R
+	Rscript R/importing.R data/egg-production.csv
 
 # Rule for basic data summaries
 data/summary_egg-production.csv: R/general_EDA.R data/egg-production.csv
