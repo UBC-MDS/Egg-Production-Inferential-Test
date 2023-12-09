@@ -1,8 +1,8 @@
 library(testthat)
-source("../R/importing.R")
+source("../../R/importing_test.R")
 
 test_that("importing() returns a data frame", {
-  file_path <- "../data/egg-production.csv"
+  file_path <- "../../data/egg-production.csv"
   
   imported_data <- importing(file_path)
   
@@ -12,7 +12,7 @@ test_that("importing() returns a data frame", {
 
 
 test_that("importing() returns data frame with correct column names", {
-  file_path <- "../data/egg-production.csv" # adjust this to the path
+  file_path <- "../../data/egg-production.csv" # adjust this to the path
   expected_col_names <- c("observed_month", "prod_type", "prod_process", "n_hens", "n_eggs", "source")
 
   imported_data <- importing(file_path)
@@ -23,7 +23,7 @@ test_that("importing() returns data frame with correct column names", {
 
 
 test_that("importing() returns correct number of rows", {
-  file_path <- "../data/egg-production.csv"
+  file_path <- "../../data/egg-production.csv"
   imported_data <- importing(file_path)
   expect_true(nrow(imported_data) == 320)
 })
