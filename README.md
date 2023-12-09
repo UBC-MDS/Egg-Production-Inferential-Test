@@ -65,6 +65,11 @@ make clean
 
 Here is a link to the full env <https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock>
 
+## Running Tests
+Testing R Functions: Tests for R functions are implemented using the testthat package. To execute these tests, navigate to the project's root directory and run the following command in R or RStudio:
+```{r}
+testthat::test_dir("tests/testthat") 
+```
 ## License
 
 For all project code please refer to the [MIT license](https://opensource.org/license/mit/).
