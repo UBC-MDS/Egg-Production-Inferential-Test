@@ -24,17 +24,15 @@ The final report can be found [here](https://ubc-mds.github.io/Egg-Production-In
 
 2.  Clone this GitHub repository.
 
-#### Running the analysis
-# Using  RStudio
+## Running the analysis
+### Using  RStudio
 
 If you are using RStudio:
 1. Open the project and activate the env by running from the command renv::activate().
 2. Go into session (top middle left) and click on the option Restart R and Run all Chunks.
 3. Click Render (top middle) using the Quarto interface in RStudio.
 
-
-# Using docker
-
+### Using Docker
 1.  Navigate to the root of this project on your computer using the command line and enter the following command:
 
 ```         
@@ -47,7 +45,45 @@ docker compose up
 
 -   *password: password*
 
-3.  To run the analysis, clone the repository and run the following command in the terminal.
+3.  To run the analysis, open `Egg_Production_Inferential_Report` in the terminal and copy/paste the following commands to run the RScripts.
+
+```{r}
+#Reading in the data
+Rscript R/importing.R data/egg-production.csv
+
+#Basic data summaries
+Rscript R/general_EDA.R data/egg-production.csv
+
+#EDA for number of eggs
+Rscript R/create_histogram.R data/egg-production.csv n_eggs "number of eggs" result/hist_n_eggs.png
+
+#EDA for number of hens
+Rscript R/create_histogram.R data/egg-production.csv n_hens "number of hens" result/hist_n_hens.png
+
+#EDA for production type
+Rscript R/create_bar_plot.R data/egg-production.csv prod_type "Production type" results/bar_prod.png
+
+#EDA for production process
+Rscript R/create_bar_plot.R data/egg-production.csv prod_process "Production process" results/bar_prod_process.png
+
+#Filters and mutates the data to be used in the null hypothesis permutation
+Rscript R/script_data_wrangling.R data/egg-production.csv
+
+#Groups and summarises the data for the test statistic
+Rscript R/script_data_wrangling2.R data/egg-production.csv
+
+#Calculates the test statistic
+Rscript R/calc_test_stat.R results/data_wrangling.csv n_egg_by_hen
+
+#Generates the null distribution using permutation and calculates the p-value
+Rscript R/permutation.R results/egg_prod.csv n_egg_by_hen prod_type 'table eggs,hatching eggs' results/test_stat.rds 522
+
+#Generates the final visualization of the null distirbution
+Rscript R/scr_generate_null_dist_plot.R results/null_distribution.csv results/test_stat.rds 0.05
+```
+### Not using docker
+
+To run the analysis, clone the repository and run the following command in the terminal.
 
 ```{r}
 make all
@@ -77,6 +113,11 @@ make clean
 
 Here is a link to the full env <https://github.com/UBC-MDS/DSCI_522_group12/blob/main/renv.lock>
 
+## Running Tests
+Testing R Functions: Tests for R functions are implemented using the testthat package. To execute these tests, navigate to the project's root directory and run the following command in R or RStudio:
+```{r}
+testthat::test_dir("tests/testthat") 
+```
 ## License
 
 For all project code please refer to the [MIT license](https://opensource.org/license/mit/).

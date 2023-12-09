@@ -14,7 +14,7 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5bb4cf2d64eca1
 #We added documentation on how to run the tests
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/a4ca9d52ee1eec6eba72ddbee270788074ed61ba
 
-#We updated the link to the issues filder in CONTRIBUTING doc, since it was broken after we updated our directory name
+#We updated the link to the issues folder in the CONTRIBUTING document, since it was broken after we updated our directory name
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/67d84e7cea050c6bace27329830d5bb7d8a6b814
 
 #We added the author names and the time of publishing to the begining of the report
