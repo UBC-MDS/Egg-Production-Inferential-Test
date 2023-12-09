@@ -24,8 +24,8 @@ The final report can be found [here](https://ubc-mds.github.io/Egg-Production-In
 
 2.  Clone this GitHub repository.
 
-#### Running the analysis
-# Using  RStudio
+## Running the analysis
+### Using  RStudio
 
 If you are using RStudio:
 1. Open the project and activate the env by running from the command renv::activate().
@@ -33,7 +33,7 @@ If you are using RStudio:
 3. Click Render (top middle) using the Quarto interface in RStudio.
 
 
-# Using docker
+### Using docker
 
 To run the analysis, clone the repository and run the following command in the terminal.
 
