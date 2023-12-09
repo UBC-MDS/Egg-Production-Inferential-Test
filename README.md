@@ -35,19 +35,7 @@ If you are using RStudio:
 
 # Using docker
 
-1.  Navigate to the root of this project on your computer using the command line and enter the following command:
-
-```         
-docker compose up
-```
-
-2.  Then visit a web browser on your computer and type: <http://localhost:8787> If it worked, then you should be at an RStudio Sign In page. To sign in, use the following credentials:
-
--   *username: rstudio*
-
--   *password: password*
-
-3.  To run the analysis, clone the repository and run the following command in the terminal.
+To run the analysis, clone the repository and run the following command in the terminal.
 
 ```{r}
 make all
