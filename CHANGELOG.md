@@ -14,7 +14,7 @@ https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5bb4cf2d64eca1
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5bb4cf2d64eca12aef9aab0e5f0090e592313cb7
 
 #need to add documentation on how to run the tests
-
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/a4ca9d52ee1eec6eba72ddbee270788074ed61ba
 
 #need to update link in CONTRIBUTING doc
 We update the like in CONTRIBUTING doc to make sure it is functional
