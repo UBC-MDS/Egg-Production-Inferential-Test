@@ -8,10 +8,10 @@ Fixed the docker-compose file to match the readme.
 https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/90037c7f088d8e6453f3ad061eb279c3031ce362
 
 #need to update README instructions for navigating RStudio
-
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5bb4cf2d64eca12aef9aab0e5f0090e592313cb7
 
 #can add instructions back on how to run the renv
-
+https://github.com/UBC-MDS/Egg-Production-Inferential-Test/commit/5bb4cf2d64eca12aef9aab0e5f0090e592313cb7
 
 #need to add documentation on how to run the tests
 
