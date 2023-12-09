@@ -28,7 +28,7 @@ The final report can be found [here](https://ubc-mds.github.io/Egg-Production-In
 # Using  RStudio
 
 If you are using RStudio:
-1. Open the project by clicking on the `.Rproj` file (if one exists). This action will automatically activate the `renv` environment.
+1. Open the project and activate the env by running from the command renv::activate().
 2. Go into session (top middle left) and click on the option Restart R and Run all Chunks.
 3. Click Render (top middle) using the Quarto interface in RStudio.
 
